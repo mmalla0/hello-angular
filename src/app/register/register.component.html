@@ -1,0 +1,33 @@
+<div class="login-container">
+    <h4>Anmelden</h4>
+
+    <form [formGroup]="form">
+
+        <div class="name-input">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" formControlName="name"
+                (input)="handleNameValueChange($event)">
+        </div>
+        <div class="email-input">
+            <label for="email">E-Mail-Adresse</label>
+            <input type="email" id="email" name="email" formControlName="email"
+                (input)="handleEmailValueChange($event)">
+        </div>
+        <div class="password-input">
+            <label for="password">Passwort</label>
+            <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
+        </div>
+
+    </form>
+    <div class="buttons">
+        
+
+        <button class="register-btn" (click)="handleRegister()">Registrieren</button>
+        <p>Bereits ein Kunde?</p>
+        <button class="login-btn" (click)="handleLoginClicked()">Anmelden</button>
+
+    </div>
+   
+
+    <p class="error" *ngIf="formHatFehler">Bitte prüfen Sie Ihre Angaben</p>
+</div>

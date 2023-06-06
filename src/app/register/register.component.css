@@ -1,0 +1,79 @@
+.login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+h4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+.name-input, .email-input, .password-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.name-input label,
+.email-input label,
+.password-input label {
+    font-weight: bold;
+}
+
+.name-input input,
+.email-input input,
+.password-input input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.error {
+    color: red;
+    font-size: 0.75rem;
+    margin-top: 1rem;
+}
+
+.buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons p {
+    font-size: 0.75rem;
+    color: #777;
+}
+
+.register-btn {
+    background-color: lightgreen;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+    background-color: #8bc34a;
+    cursor: pointer;
+}
+
+.login-btn {
+    background-color: transparent;
+    border: none;
+    color: blue;
+    font-weight: bold;
+    font-size: 0.75rem;
+    transition: color 0.3s;
+}
+
+.login-btn:hover {
+    color: #1976d2;
+    cursor: pointer;
+}
