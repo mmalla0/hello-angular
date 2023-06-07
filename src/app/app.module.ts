@@ -10,6 +10,9 @@ import { AddressListItemComponent } from './address-list-item/address-list-item.
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
 
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { ReactiveFormsModule }    from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,10 +24,13 @@ import { CartItemComponent } from './cart-item/cart-item.component';
     CartComponent,
     CartItemComponent,
    
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
