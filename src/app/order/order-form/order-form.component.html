@@ -1,1 +1,61 @@
-<p>order-form works!</p>
+<form (ngSubmit)="submitForm()" #form="ngForm">
+    <label for="firstName">First Name</label>
+    <input
+        firstName="firstName"
+        id="firstName"
+        [(ngModel)]="user.firstName"
+        required>
+
+    <label for="lastName">Last Name</label>
+    <input
+        firstName="lastName"
+        id="lastName"
+        [(ngModel)]="user.lastName"
+        required> 
+
+    <label for="street">Street</label>
+    <input
+        firstName="street"
+        id="street"
+        [(ngModel)]="address.street"
+        required> 
+
+    <label for="houseNumber">House Number</label>
+    <input
+        firstName="houseNumber"
+        id="houseNumber"
+        [(ngModel)]="address.houseNumber"
+        required> 
+
+    <label for="postalCode">Postal Code</label>
+    <input
+        firstName="postalCode"
+        id="postalCode"
+        [(ngModel)]="address.postalCode"
+        required> 
+
+    <label for="city">City</label>
+    <input
+        firstName="city"
+        id="city"
+        [(ngModel)]="address.city"
+        required> 
+
+    <label for="country">Country</label>
+    <input
+        firstName="country"
+        id="country"
+        [(ngModel)]="address.country"
+        required> 
+
+    <label for="planet">Planet</label>
+    <input
+        firstName="planet"
+        id="planet"
+        [(ngModel)]="address.planet"
+        required>        
+        
+    <button type="submit" [disabled]="form.invalid">
+        Save
+    </button>
+</form>  
