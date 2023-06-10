@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule }    from '@angular/forms';
+import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
+import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ReactiveFormsModule }    from '@angular/forms';
    
     LoginComponent,
     RegisterComponent,
+    MitarbeiterDashboardComponent,
+    WarenuebersichtComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+<div class="product-list-container">
+  <div class="product-container">
+    <div class="filter-container">
+      <!-- Filter functionality here -->
+    </div>
+    <div class="product-list">
+      <div class="product-item" *ngFor="let product of filteredProducts">
+        <div class="product-image-container">
+          <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
+        </div>
+        <h3 class="product-name">{{ product.name }}</h3>
+        <p class="product-price">{{ product.price | currency }}</p>
+        <div class="product-quantity">
+          <input type="number" id="quantityInput{{ product.id }}" (input)="onQuantityChange(product, $event)" min="0" [value]="productQuantityMap.get(product)">
+          <button class="add-to-cart-button" (click)="onAddToCart(product)">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
