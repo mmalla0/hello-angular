@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent {
-  /* constructor() {
 
-  } */
 }
