@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { Address } from 'src/app/shared/address';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/shared/user';
+import { Invoice } from 'src/app/shared/invoice';
 
 @Component({
   selector: 'app-order-form',
@@ -8,23 +8,28 @@ import { User } from 'src/app/shared/user';
   styleUrls: ['./order-form.component.css'],
 })
 export class OrderFormComponent {
-  address: Address = {
-    id: null,
-    street: '',
-    houseNumber: 0,
-    postalCode: 0,
-    city: '',
-    country: '',
-    planet: '',
+
+  invoice: Invoice = {
+    id: 0,
+    userId: 0,
+    MethodOfPayment: ''
   }
+
+
   user: User = {
-    id: null,
+    id: 0,
     firstName: '',
     lastName: '',
-    addressId: this.address.id,                 //TODO: hier die addressID der eben angelegten Adresse holen
+    addressId: 0,                
     methodOfPayment: '',
-    cartId: null,
-    stockpileId: null,
+    cartId: 0,
+    stockpileId: 0
+  }
+
+  @Output() submitOrder = new EventEmitter<Invoice>();
+
+  submitForm() {
+    this.submitOrder.emit(this.invoice);  //soll die Rechnung als PDF erstellen und per EMail versenden
   }
 
 }
