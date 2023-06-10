@@ -56,6 +56,11 @@
   margin-bottom: 10px;
 }
 
+.product-list-container {
+  height: 1000px;
+  overflow-y: auto;
+}
+
 .product-quantity input[type="number"] {
   width: 50px; 
   padding: 5px;
@@ -71,7 +76,7 @@
 
 .product-quantity input[type="number"] {
   width: 40px;
-  height: 15px; /* Adjust the height as desired */
+  height: 15px; 
   padding: 5px 10px;
   border: 1px solid #333;
   border-radius: 5px;
@@ -88,7 +93,7 @@
 
 .add-to-cart-button {
   width: 100px;
-  height: 30px; /* Adjust the height as desired */
+  height: 30px; 
   margin-left: 20px;
   background-color: #333;
   color: #fff;
@@ -103,8 +108,116 @@
 .add-to-cart-button:hover {
   background-color: #aaa;
 }
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 50px;
+}
+
+.search-input {
+  width: 500px;
+  height: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-left: 20px;
+  border: 1px solid #333;
+}
+
+.search-button {
+  width: 120px;
+  height: 30px;
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #555555;
+}
+
+.price-slider-container {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.price-slider {
+  flex: 1;
+  height: 12px;
+  width: 300px;
+  background-color: #333333;
+  border-radius: 6px;
+  position: relative;
+}
+
+.price-range-label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.price-range-value {
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dropdown-label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.dropdown-select {
+  width: 220px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 16px;
+}
+
+.dropdown-select option:hover{
+  background-color: black; 
+  color: white; 
+}
 
 
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 
+.square-button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  background-color:  #555555; 
+  color: #fff;
+  font-size: 16px;
+  margin: 0 5px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
+.square-button:hover {
+  background-color: #aaaaaa; 
+}
 

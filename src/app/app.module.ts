@@ -13,6 +13,8 @@ import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule }    from '@angular/forms';
 import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.comp
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

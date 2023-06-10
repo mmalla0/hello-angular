@@ -10,9 +10,13 @@ import { Product } from '../product.model';
 export class WarenuebersichtComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  searchQuery = '';
   productQuantityMap: Map<Product, number> = new Map<Product, number>();
+  searchQuery: string;
+  priceRange: number;
+  selectedCategory: string;
+  categories: string[] = ['Essen', 'Ausrüstung', 'Kleidung']; // Replace with your actual categories
 
+  
 
   ngOnInit() {
     // Hardcoded list of products for testing
@@ -28,10 +32,18 @@ export class WarenuebersichtComponent implements OnInit {
     ];
 
     this.filteredProducts = this.products;
+    this.searchQuery = '';
+    this.priceRange = 50; // Set default price range value
+    this.selectedCategory = '';
 
     this.products.forEach(product => {
       this.productQuantityMap.set(product, 0); // Set default quantity to 0 for all products
     });
+  }
+
+  searchProducts() {
+    // Implement your search logic here based on the searchQuery, priceRange, and selectedCategory
+    // Update your product list accordingly
   }
 
 
