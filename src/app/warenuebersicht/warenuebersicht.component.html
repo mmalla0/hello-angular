@@ -16,10 +16,13 @@
     <div class="product-list">
       <div class="product-item" *ngFor="let product of filteredProducts">
         <div class="product-image-container">
-          <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
+          <img [src]="'assets/images/' + product.pictures[0]" alt="Product Image" class="product-image" />
         </div>
         <h3 class="product-name">{{ product.name }}</h3>
-        <p class="product-price">{{ product.price | currency }}</p>
+        <div class="price-container">
+          <span class="stock">Im Lager: {{ product.storeQuantity }}</span>
+          <span class="price">$<strong>{{ product.price }}</strong></span>
+        </div>
         <div class="product-quantity">
           <input type="number" id="quantityInput{{ product.id }}" (input)="onQuantityChange(product, $event)" min="0" [value]="productQuantityMap.get(product)">
           <button class="add-to-cart-button" (click)="onAddToCart(product)">In Warenkorb</button>

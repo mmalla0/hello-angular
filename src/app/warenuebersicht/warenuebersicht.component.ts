@@ -14,21 +14,19 @@ export class WarenuebersichtComponent implements OnInit {
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
-  categories: string[] = ['Essen', 'Ausrüstung', 'Kleidung']; // Replace with your actual categories
+  categories: string[] = ['Essen', 'Ausrüstung', 'Kleidung','Sonstiges']; // Replace with your actual categories
 
   
 
   ngOnInit() {
     // Hardcoded list of products for testing
     this.products = [
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', 'space_stone.jpeg'),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', 'x_wing.jpeg'),
-      new Product(3, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', 'space_stone.jpeg'),
-      new Product(4, 'X-Wing', 19.99, 'Old relict from previous days', 'x_wing.jpeg'),
-      new Product(5, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', 'space_stone.jpeg'),
-      new Product(6, 'X-Wing', 19.99, 'Old relict from previous days', 'x_wing.jpeg'),
-      new Product(7, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', 'space_stone.jpeg'),
-      new Product(8, 'X-Wing', 19.99, 'Old relict from previous days', 'x_wing.jpeg'),
+      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
+      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30),
+      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
+      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30),
+      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
+      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30)
     ];
 
     this.filteredProducts = this.products;
