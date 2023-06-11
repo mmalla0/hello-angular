@@ -11,11 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule }    from '@angular/forms';
+import { LandingPageComponent } from './landingpage/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddressListComponent,
+    LandingPageComponent,
     OrderComponent,
     AddressListItemComponent,
     CartComponent,
@@ -23,6 +25,7 @@ import { ReactiveFormsModule }    from '@angular/forms';
    
     LoginComponent,
     RegisterComponent,
+    
   ],
   imports: [
     BrowserModule,

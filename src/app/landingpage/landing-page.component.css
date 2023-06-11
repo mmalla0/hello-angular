@@ -1,0 +1,50 @@
+/* Landing Page CSS */
+
+/* Image Carousel */
+.carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+
+/* Diverse Images Section */
+.diverse-images-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.image-card {
+    width: 30%;
+}
+
+.image-card img {
+    width: 100%;
+    height: auto;
+}
+
+/* Menu */
+.menu {
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.menu li a:hover {
+    background-color: #ddd;
+}
