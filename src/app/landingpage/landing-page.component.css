@@ -83,6 +83,35 @@
   }
 
 
+/*Topics Selection*/
+.topics {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-top: 1%;
+}
+
+.topics ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.topics li {
+  display: inline;
+}
+
+.topics li a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.topics li a:hover {
+  background-color: #ddd;
+}
+
 /* Diverse Images Section */
 .diverse-images-section {
     display: flex;
