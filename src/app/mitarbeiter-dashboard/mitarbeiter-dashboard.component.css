@@ -82,15 +82,16 @@ table {
     top: 10px;
     right: 10px;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #97DB4F;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: auto;
   }
   
   .add-button:hover {
-    background-color: #45a049;
+    background-color: #7EB63D;
   }
 
   .action-icons {
@@ -115,11 +116,11 @@ table {
   }
 
   .edit-btn:hover {
-    color: green; 
+    color: #97DB4F; 
   }
   
   .delete-btn:hover {
-    color: red; 
+    color: #F96F5D; 
   }
   
   
