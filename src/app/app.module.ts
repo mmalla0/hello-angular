@@ -36,4 +36,3 @@ import { ItemListComponent } from './cart/item-list/item-list.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-export class OrderModule { }

@@ -12,7 +12,7 @@ export class OrderFormComponent {
   invoice: Invoice = {
     id: 0,
     userId: 0,
-    MethodOfPayment: ''
+    methodOfPayment: ''
   }
 
 
