@@ -29,7 +29,7 @@ export class OrderFormComponent {
   @Output() submitOrder = new EventEmitter<Invoice>();
 
   submitForm() {
-    this.submitOrder.emit(this.invoice);  //soll die Rechnung als PDF erstellen und per EMail versenden
+    this.submitOrder.emit(this.invoice);                 //soll die Rechnung als PDF erstellen und per EMail versenden
   }
 
 }
