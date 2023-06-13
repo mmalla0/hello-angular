@@ -15,6 +15,7 @@ import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeit
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { FormsModule } from '@angular/forms';
 import { ItemListComponent } from './cart/item-list/item-list.component';
+import { LandingPageComponent } from './landingpage/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ItemListComponent } from './cart/item-list/item-list.component';
     AddressListItemComponent,
     CartComponent,
     CartItemComponent,
-
+    LandingPageComponent,
     LoginComponent,
     RegisterComponent,
     MitarbeiterDashboardComponent,
