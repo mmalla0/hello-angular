@@ -16,6 +16,7 @@ import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.comp
 import { FormsModule } from '@angular/forms';
 import { ItemListComponent } from './cart/item-list/item-list.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
