@@ -6,12 +6,11 @@ import { AddressListComponent } from './address-list/address-list.component';
 import { OrderComponent } from './order/order.component';
 import { AddressListItemComponent } from './address-list-item/address-list-item.component';
 import { CartComponent } from './cart/cart.component';
-import { CartItemComponent } from './cart-item/cart-item.component';
+import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule }    from '@angular/forms';
-import { CartCreateComponent } from './cart-create/cart-create.component';
 import { ItemListComponent } from './cart/item-list/item-list.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { ItemListComponent } from './cart/item-list/item-list.component';
    
     LoginComponent,
     RegisterComponent,
-    CartCreateComponent,
     ItemListComponent,
   ],
   imports: [
