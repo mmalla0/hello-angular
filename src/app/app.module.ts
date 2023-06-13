@@ -6,7 +6,7 @@ import { AddressListComponent } from './address-list/address-list.component';
 import { OrderComponent } from './order/order.component';
 import { AddressListItemComponent } from './address-list-item/address-list-item.component';
 import { CartComponent } from './cart/cart.component';
-import { CartItemComponent } from './cart-item/cart-item.component';
+import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -14,7 +14,7 @@ import { ReactiveFormsModule }    from '@angular/forms';
 import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { FormsModule } from '@angular/forms';
-
+import { ItemListComponent } from './cart/item-list/item-list.component';
 
 @NgModule({
   declarations: [
@@ -24,11 +24,12 @@ import { FormsModule } from '@angular/forms';
     AddressListItemComponent,
     CartComponent,
     CartItemComponent,
-   
+
     LoginComponent,
     RegisterComponent,
     MitarbeiterDashboardComponent,
     WarenuebersichtComponent,
+    ItemListComponent,
   ],
   imports: [
     BrowserModule,
