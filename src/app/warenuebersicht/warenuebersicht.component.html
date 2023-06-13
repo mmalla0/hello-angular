@@ -1,15 +1,15 @@
 <div class="filter-container">
   <div class="price-slider-container">
     <span class="price-range-label">Price </span>
-    <input type="range" min="0" max="10000" [(ngModel)]="priceRange" class="price-slider">
     <span class="price-range-value">${{ priceRange }}</span>
+    <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()">
   </div> 
-  <select [(ngModel)]="selectedCategory">
+  <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
     <option value="" disabled>Apply filter</option>
     <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
   </select>
   <input type="text" placeholder="Search products" [(ngModel)]="searchQuery" class="search-input">
-  <button (click)="searchProducts()" class="search-button">Search</button>
+  <button (click)="onSearchProducts()" class="search-button">Search</button>
 </div>
 <div class="product-list-container">
   <div class="product-container">
