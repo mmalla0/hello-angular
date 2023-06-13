@@ -7,5 +7,5 @@ import { Address } from '../shared/address';
   styleUrls: ['./address-list-item.component.css']
 })
 export class AddressListItemComponent {
-  @Input() address?: Address; // ? bedeuted optional
+  @Input() address?: Address;               // ? bedeuted optional
 }
