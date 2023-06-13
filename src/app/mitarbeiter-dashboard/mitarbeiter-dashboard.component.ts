@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product } from '../product.model';
+import { Item } from '../shared/item';
 
 @Component({
   selector: 'app-mitarbeiter-dashboard',
@@ -7,17 +7,15 @@ import { Product } from '../product.model';
   styleUrls: ['./mitarbeiter-dashboard.component.css']
 })
 export class MitarbeiterDashboardComponent {
-  products: Product[] = [];
+  products: Item[] = [];
 
   ngOnInit() {
     // Hardcoded list of products for testing
     this.products = [
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30),
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg', 'x_wing.jpeg'], ['Sonstiges'], 5),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30),
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30)
+      {id: 1, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
+      {id: 2, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
+      {id: 3, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
+      {id: 4, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']}
     ];
   }
 }

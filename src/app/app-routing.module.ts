@@ -8,7 +8,7 @@ import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeit
 
 const routes: Routes = [
 
-  { path: '', component: MitarbeiterDashboardComponent },
+  { path: 'dashboard', component: MitarbeiterDashboardComponent },
   { path: 'warenübersicht', component: WarenuebersichtComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

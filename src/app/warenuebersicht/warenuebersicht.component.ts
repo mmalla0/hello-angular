@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../product.model';
+import { Item } from '../shared/item';
 
 @Component({
   selector: 'app-warenuebersicht',
@@ -8,9 +8,9 @@ import { Product } from '../product.model';
 })
 
 export class WarenuebersichtComponent implements OnInit {
-  products: Product[] = [];
-  filteredProducts: Product[] = [];
-  productQuantityMap: Map<Product, number> = new Map<Product, number>();
+  products: Item[] = [];
+  filteredProducts: Item[] = [];
+  productQuantityMap: Map<Item, number> = new Map<Item, number>();
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
@@ -21,12 +21,12 @@ export class WarenuebersichtComponent implements OnInit {
   ngOnInit() {
     // Hardcoded list of products for testing
     this.products = [
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30),
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30),
-      new Product(1, '2X2Re Stone', 100.99, 'Mystery stone, veryy precious', ['space_stone.jpeg'], ['Sonstiges'], 5),
-      new Product(2, 'X-Wing', 19.99, 'Old relict from previous days', ['x_wing.jpeg'], ['Ausrüstung', 'Sonstiges'], 30)
+      {id: 1, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
+      {id: 2, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
+      {id: 3, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
+      {id: 4, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
+      {id: 5, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
+      {id: 6, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']}
     ];
 
     this.filteredProducts = this.products;
@@ -40,8 +40,7 @@ export class WarenuebersichtComponent implements OnInit {
   }
 
   searchProducts() {
-    // Implement your search logic here based on the searchQuery, priceRange, and selectedCategory
-    // Update your product list accordingly
+    
   }
 
 
@@ -56,14 +55,14 @@ export class WarenuebersichtComponent implements OnInit {
     }
   }
 
-  onQuantityChange(product: Product, event: any) {
+  onQuantityChange(product: Item, event: any) {
     const quantity = parseInt(event.target.value, 10);
     if (!isNaN(quantity)) {
       this.productQuantityMap.set(product, quantity); // Update the quantity in the map
     }
   }
   
-  onAddToCart(product: Product): void {
+  onAddToCart(product: Item): void {
     const quantity = this.productQuantityMap.get(product);
     // Perform the necessary logic to add the product to the cart with the specified quantity
     console.log('Adding to cart:', product, 'Quantity:', quantity);
