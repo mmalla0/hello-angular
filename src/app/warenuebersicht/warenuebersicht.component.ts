@@ -14,19 +14,20 @@ export class WarenuebersichtComponent implements OnInit {
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
-  categories: string[] = ['Essen', 'Ausrüstung', 'Kleidung','Sonstiges']; // Replace with your actual categories
+  categories: string[] = ['Essen', 'Ausrüstung', 'Kleidung','Sonstiges','Kunst','Spielzeug','Gesundheit'];
 
-  
 
   ngOnInit() {
-    // Hardcoded list of products for testing
+
     this.products = [
-      {id: 1, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
-      {id: 2, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
-      {id: 3, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
-      {id: 4, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
-      {id: 5, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
-      {id: 6, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']}
+      {id: 1, name: '2X2Re Stone', description: 'Mysteriöser Stein, suuuper wertvoll', price: 100.99, bestBeforeDate: '02.01.2320', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges','Kunst']},
+      {id: 2, name: 'X-Wing', description: 'Relikt aus vergangenen Zeiten', price: 19.99, bestBeforeDate: '-', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
+      {id: 3, name: 'Spacetronics Starsuit', description: 'Very comfortable!', price: 20000000.99, bestBeforeDate: '-', storeQuantity: 11, pictures: ['spacesuite.jpg'], categories: ['Ausrüstung', 'Kleidung']},
+      {id: 4, name: 'VirtuCare Pets - CatBot Edition', description: 'Macht sich perfekt auf der Raumschiff Armatur', price: 99.99, bestBeforeDate: '-', storeQuantity: 30, pictures: ['virtualpet_cat.jpg'], categories: ['Kunst', 'Spielzeug', 'Sonstiges']},
+      {id: 5, name: 'MediReady NanoBots', description: 'Wirkt immer', price:  50.99, bestBeforeDate: '01.10.2300', storeQuantity: 30, pictures: ['healing_nanobots.jpg'], categories: ['Gesundheit']},
+      {id: 6, name: 'Gravity implant', description: 'Nie wieder schwindel', price:  500.99, bestBeforeDate: '20.08.2300', storeQuantity: 30, pictures: ['gravity_adjusting_implants.jpg'], categories: ['Ausrüstung']},
+      {id: 7, name: 'Repair set', description: 'Damit bekommst du alles heile', price:  30.99, bestBeforeDate: '-', storeQuantity: 20, pictures: ['toolbox_spaceship_repair.jpg'], categories: ['Ausrüstung']},
+      {id: 8, name: 'Underwater breathing implant', description: 'Erkunde neue Welten', price:  300.01, bestBeforeDate: '03.20.2302', storeQuantity: 30, pictures: ['underwaterbreathing_implants.jpg'], categories: ['Ausrüstung']}
     ];
 
     this.filteredProducts = this.products;
@@ -40,8 +41,15 @@ export class WarenuebersichtComponent implements OnInit {
   }
 
   searchProducts() {
-    
+    if (this.searchQuery) {
+      this.filteredProducts = this.products.filter(product => {
+        return this.searchQuery === product.name;
+      });
+    } else {
+      this.filteredProducts = this.products;
+    }
   }
+  
 
 
   filterProducts() {

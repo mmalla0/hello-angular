@@ -4,7 +4,7 @@
 }
 
 .product-container {
-  background-color: #ffffff; 
+  background-color: #ffffff;
 }
 
 .product-list {
@@ -24,6 +24,8 @@
   text-align: center;
   background-color: #ffffff;  
   transition: background-color 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-item:hover {
@@ -48,25 +50,25 @@
 
 .product-name {
   font-weight: bold;
+  font-size: 21px;
   margin-bottom: 5px;
 }
 
-.price-container {
+.price {
   display: flex;
   justify-content: center;
-}
-
-.price {
+  margin-top: 10px;
   font-weight: bold;
-  font-size: 23px;
-  margin-left: 30px;
+  font-size: 19px;
 }
 
 .stock {
   opacity: 0.6;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
 }
-
 
 .product-list-container {
   height: 1000px;
@@ -84,11 +86,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  margin-top: auto;
 }
 
 .product-quantity input[type="number"] {
-  width: 40px;
-  height: 25px; 
+  width: 45px;
+  height: 30px; 
   padding: 5px 10px;
   border: 1px solid #333;
   border-radius: 5px;
@@ -129,7 +132,7 @@
 
 .search-input {
   width: 500px;
-  height: 20px;
+  height: 40px;
   padding: 10px;
   border-radius: 5px;
   background-color: #ffffff;
@@ -142,7 +145,7 @@
 
 .search-button {
   width: 120px;
-  height: 30px;
+  height: 40px;
   background-color: #333333;
   color: #ffffff;
   border: none;
