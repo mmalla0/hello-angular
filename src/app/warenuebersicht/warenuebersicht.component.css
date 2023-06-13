@@ -17,7 +17,7 @@
 
 .product-item { 
   width: 250px;
-  height: 320px; 
+  height: 400px; 
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -88,7 +88,7 @@
 
 .product-quantity input[type="number"] {
   width: 40px;
-  height: 15px; 
+  height: 25px; 
   padding: 5px 10px;
   border: 1px solid #333;
   border-radius: 5px;
@@ -105,7 +105,7 @@
 
 .add-to-cart-button {
   width: 100px;
-  height: 30px; 
+  height: 40px; 
   margin-left: 20px;
   background-color: #333;
   color: #fff;
@@ -129,7 +129,7 @@
 
 .search-input {
   width: 500px;
-  height: 10px;
+  height: 20px;
   padding: 10px;
   border-radius: 5px;
   background-color: #ffffff;
