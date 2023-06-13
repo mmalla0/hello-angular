@@ -1,0 +1,125 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .quantity {
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity input[type="number"]::-webkit-inner-spin-button,
+  .quantity input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: none;
+}
+  
+.quantity .decrement,
+.quantity .increment {
+  padding: 5px 10px;
+  border: none;
+  background-color: #555555;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.quantity .decrement:hover,
+.quantity .increment:hover {
+  background-color: #555555;
+}
+  
+  .decrement:hover,
+  .increment:hover {
+    background-color: #f2f2f2;
+  }
+  
+  input[type="number"] {
+    width: 40px;
+    padding: 5px;
+    border: none;
+    text-align: center;
+  }
+  
+  .category {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    font-size: 14px;
+    color: #333333;
+  }
+  
+
+  .add-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-button:hover {
+    background-color: #45a049;
+  }
+
+  .action-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0 5px; 
+    cursor: pointer;
+  }
+  
+  .edit-btn i,
+  .delete-btn i {
+    width: 20px; 
+    height: 20px; 
+  }
+
+  .edit-btn:hover {
+    color: green; 
+  }
+  
+  .delete-btn:hover {
+    color: red; 
+  }
+  
+  

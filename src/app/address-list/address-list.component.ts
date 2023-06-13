@@ -12,6 +12,7 @@ export class AddressListComponent {
  constructor() {
   this.addresses = [
     {
+      id: 0,
       street: 'Milky Way',
       houseNumber: 785,
       postalCode: 28560,
@@ -20,6 +21,7 @@ export class AddressListComponent {
       planet: 'Hirlpo'
     },
     {
+      id: 1,
       street: 'My Way',
       houseNumber: 66687,
       postalCode: 97856,

@@ -4,4 +4,7 @@ export interface Item {
     description: string;
     price: number;
     bestBeforeDate: string;
+    storeQuantity: number;
+    pictures: string[];
+    categories: string[];
 }

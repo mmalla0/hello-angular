@@ -6,35 +6,39 @@ import { AddressListComponent } from './address-list/address-list.component';
 import { OrderComponent } from './order/order.component';
 import { AddressListItemComponent } from './address-list-item/address-list-item.component';
 import { CartComponent } from './cart/cart.component';
-import { CartItemComponent } from './cart-item/cart-item.component';
+import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule }    from '@angular/forms';
+import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
+import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
+import { FormsModule } from '@angular/forms';
+import { ItemListComponent } from './cart/item-list/item-list.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 @NgModule({
   declarations: [
     AppComponent,
     AddressListComponent,
-    LandingPageComponent,
     OrderComponent,
     AddressListItemComponent,
     CartComponent,
-    CartItemComponent,   
+    CartItemComponent,
+    LandingPageComponent,
     LoginComponent,
     RegisterComponent,
-    
+    MitarbeiterDashboardComponent,
+    WarenuebersichtComponent,
+    ItemListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
-   ],
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

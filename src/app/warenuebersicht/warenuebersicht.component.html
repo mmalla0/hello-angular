@@ -1,0 +1,37 @@
+<div class="filter-container">
+  <div class="price-slider-container">
+    <span class="price-range-label">Preis </span>
+    <input type="range" min="0" max="10000" [(ngModel)]="priceRange" class="price-slider">
+    <span class="price-range-value">${{ priceRange }}</span>
+  </div> 
+  <select [(ngModel)]="selectedCategory">
+    <option value="" disabled>Filter nach Kategorien</option>
+    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+  </select>
+  <input type="text" placeholder="Search products" [(ngModel)]="searchQuery" class="search-input">
+  <button (click)="searchProducts()" class="search-button">Suchen</button>
+</div>
+<div class="product-list-container">
+  <div class="product-container">
+    <div class="product-list">
+      <div class="product-item" *ngFor="let product of filteredProducts">
+        <div class="product-image-container">
+          <img [src]="'assets/images/' + product.pictures[0]" alt="Product Image" class="product-image" />
+        </div>
+        <h3 class="product-name">{{ product.name }}</h3>
+        <div class="price-container">
+          <span class="stock">Im Lager: {{ product.storeQuantity }}</span>
+          <span class="price">$<strong>{{ product.price }}</strong></span>
+        </div>
+        <div class="product-quantity">
+          <input type="number" id="quantityInput{{ product.id }}" (input)="onQuantityChange(product, $event)" min="0" [value]="productQuantityMap.get(product)">
+          <button class="add-to-cart-button" (click)="onAddToCart(product)">In Warenkorb</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="button-container">
+    <button class="square-button">1</button>
+    <button class="square-button">2</button>
+  </div>

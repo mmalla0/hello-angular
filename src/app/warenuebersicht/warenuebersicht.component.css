@@ -1,0 +1,235 @@
+.product-list-container {
+  height: 1000px; 
+  overflow-y: auto; 
+}
+
+.product-container {
+  background-color: #ffffff; 
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: flex-start; 
+  gap: 90px;
+  margin-left: 90px; 
+}
+
+.product-item { 
+  width: 250px;
+  height: 400px; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #ffffff;  
+  transition: background-color 0.3s;
+}
+
+.product-item:hover {
+  background-color: #eaf0ff; 
+  cursor: pointer; 
+}
+
+.product-image-container {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; 
+  border-radius: 10px;
+}
+
+.product-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.price-container {
+  display: flex;
+  justify-content: center;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 23px;
+  margin-left: 30px;
+}
+
+.stock {
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+
+.product-list-container {
+  height: 1000px;
+  overflow-y: auto;
+}
+
+.product-quantity input[type="number"] {
+  width: 50px; 
+  padding: 5px;
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.product-quantity input[type="number"] {
+  width: 40px;
+  height: 25px; 
+  padding: 5px 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 30px;
+}
+
+.product-quantity input[type="number"]::-webkit-inner-spin-button,
+.product-quantity input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Remove the default arrows on WebKit browsers */
+  margin: 0; /* Remove any margin on WebKit browsers */
+}
+
+.add-to-cart-button {
+  width: 100px;
+  height: 40px; 
+  margin-left: 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.add-to-cart-button:hover {
+  background-color: #aaa;
+}
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 50px;
+}
+
+.search-input {
+  width: 500px;
+  height: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 16px;
+  margin-right: 10px;
+  margin-left: 20px;
+  border: 1px solid #333;
+}
+
+.search-button {
+  width: 120px;
+  height: 30px;
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #555555;
+}
+
+.price-slider-container {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.price-slider {
+  flex: 1;
+  height: 12px;
+  width: 300px;
+  background-color: #333333;
+  border-radius: 6px;
+  position: relative;
+}
+
+.price-range-label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.price-range-value {
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dropdown-label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.dropdown-select {
+  width: 220px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #333333;
+  font-size: 16px;
+}
+
+.dropdown-select option:hover{
+  background-color: black; 
+  color: white; 
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.square-button {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  background-color:  #555555; 
+  color: #fff;
+  font-size: 16px;
+  margin: 0 5px; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.square-button:hover {
+  background-color: #aaaaaa; 
+}
+
