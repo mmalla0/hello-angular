@@ -1,0 +1,13 @@
+<form (ngSubmit)="submitForm()" #form="ngForm">
+     
+    <label for="methodOfPayment">Want to change your payment Method?</label>
+    <input
+        firstName="methodOfPayment"
+        id="methodOfPayment"
+        [(ngModel)]="user.methodOfPayment"
+        required>
+        
+    <button type="submit" [disabled]="form.invalid">
+        Order Now!
+    </button>
+</form>  

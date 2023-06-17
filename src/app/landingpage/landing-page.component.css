@@ -1,0 +1,156 @@
+/* Landing Page CSS */
+
+/* Image Slider */
+.image-slider {
+    margin-top: 0%;
+    position: relative;
+    width: 100%;
+  }
+  
+  .image-container {
+    position: relative;
+    height: 500px;
+    overflow: hidden;
+  }
+  
+  .image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-container img {
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+  
+  .image-info {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .image-wrapper:hover .image-info {
+    opacity: 1;
+  }
+  
+  .image-info h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .image-info p {
+    margin: 5px 0;
+  }
+  
+  .item-link {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  .thumbnails {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .thumbnails img {
+    height: 50px;
+    width: 50px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .thumbnails img.active {
+    border: 2px solid #f2f2f2;
+    border-radius: 50%;
+  }
+
+
+/*Topics Selection*/
+.topics {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-top: 1%;
+}
+
+.topics ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.topics li {
+  display: inline;
+}
+
+.topics li a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.topics li a:hover {
+  background-color: #ddd;
+}
+
+/* Diverse Images Section */
+.diverse-images-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.image-card {
+    width: 30%;
+}
+
+.image-card img {
+    width: 100%;
+    height: auto;
+}
+
+/* Menu */
+.menu {
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.menu li a:hover {
+    background-color: #ddd;
+}
