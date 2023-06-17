@@ -31,7 +31,7 @@ export class AuthService {
   usersUpdate: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>(users);
   userLoggedIn: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
 
-  constructor() { };
+ // constructor() { };
   
   updateUsersInLocalStorage(){
     const usersToSave = users.map((user: UserModel)=>{
