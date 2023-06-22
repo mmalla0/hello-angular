@@ -1,4 +1,11 @@
 <div class="filter-background">
+  <h2 class="headline">Spacesavers</h2>
+  <div class="filter-container">
+    <div class="price-slider-container">
+        <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()">  
+        <span class="price-range-value">${{ priceRange }}</span>
+    </div>    
+  </div>
   <div class="filter-container">
     <input type="text" placeholder="Search products" [(ngModel)]="searchQuery" class="search-input">
     <button (click)="onSearchProducts()" class="search-button">Search</button>
@@ -8,16 +15,12 @@
       <option value="" disabled>Apply filter</option>
       <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
     </select>
-    <div class="price-slider-container">
-        <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()">  
-        <span class="price-range-value">${{ priceRange }}</span>
-    </div>    
   </div>
 </div>
 <div class="product-list-container">
   <div class="product-container">
     <div class="product-list">
-      <div class="product-item" *ngFor="let product of filteredProducts">
+      <div class="product-item" *ngFor="let product of paginatedProducts">
         <div class="product-image-container">
           <img [src]="'assets/images/' + product.pictures[0]" alt="Product Image" class="product-image" />
         </div>
@@ -32,6 +35,5 @@
   </div>
   </div>
   <div class="button-container">
-    <button class="square-button">1</button>
-    <button class="square-button">2</button>
+    <button class="square-button" *ngFor="let page of getPageNumbers()" [ngClass]="{ 'current-page': page.isCurrent }" (click)="onPageChange(page.number)"> {{ page.number }} </button>
   </div>
