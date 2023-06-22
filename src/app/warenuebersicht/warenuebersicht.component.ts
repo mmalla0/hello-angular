@@ -10,7 +10,7 @@ import { Item } from '../shared/item';
 export class WarenuebersichtComponent implements OnInit {
   products: Item[] = [];
   filteredProducts: Item[] = [];
-  productQuantityMap: Map<Item, number> = new Map<Item, number>();
+  selectedItems: Item[] = []; 
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
@@ -33,23 +33,11 @@ export class WarenuebersichtComponent implements OnInit {
     this.filteredProducts = this.products;
     this.searchQuery = '';
     this.priceRange = 200000; // Set default price range value
-    this.selectedCategory = '';
-
-    this.products.forEach(product => {
-      this.productQuantityMap.set(product, 0); // Set default quantity to 0 for all products
-    });
-  }
-
-  onQuantityChange(product: Item, event: any) {
-    const quantity = parseInt(event.target.value, 10);
-    if (!isNaN(quantity)) {
-      this.productQuantityMap.set(product, quantity); 
-    }
+    this.selectedCategory = 'No filter';
   }
 
   onAddToCart(product: Item): void {
-    const quantity = this.productQuantityMap.get(product);
-    console.log('Adding to cart:', product, 'Quantity:', quantity);
+    this.selectedItems.push(product);
   }
 
   onPriceRangeChange() {

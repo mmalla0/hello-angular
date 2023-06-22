@@ -75,13 +75,6 @@
   overflow-y: auto;
 }
 
-.product-quantity input[type="number"] {
-  width: 50px; 
-  padding: 5px;
-  border: 1px solid #ccc; 
-  border-radius: 5px;
-}
-
 .product-quantity {
   display: flex;
   align-items: center;
@@ -89,25 +82,10 @@
   margin-top: auto;
 }
 
-.product-quantity input[type="number"] {
-  width: 45px;
-  height: 30px; 
-  padding: 5px 10px;
-  border: 1px solid #333;
-  border-radius: 5px;
-  text-align: center;
-  margin-top: 10px;
-  margin-left: 30px;
-}
-
-.product-quantity input[type="number"]::-webkit-inner-spin-button,
-.product-quantity input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none; /* Remove the default arrows on WebKit browsers */
-  margin: 0; /* Remove any margin on WebKit browsers */
-}
-
 .add-to-cart-button {
-  width: 100px;
+  position: relative;
+  display: flex;
+  width: 150px;
   height: 40px; 
   margin-left: 20px;
   background-color: #97DB4F;
@@ -123,11 +101,23 @@
 .add-to-cart-button:hover {
   background-color: #7EB63D;
 }
+
+.filter-background {
+  background-color: rgba(131, 151, 136, 0.1); 
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
 .filter-container {
   display: flex;
   justify-content: center;
+}
+
+.filter-container2{
+  display: flex;
   margin-bottom: 20px;
-  padding: 50px;
+  margin-top: 10px;
+  justify-content: space-between;
 }
 
 .search-input {
@@ -161,33 +151,53 @@
 
 .price-slider-container {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .price-slider {
-  flex: 1;
-  height: 12px;
-  width: 300px;
-  background-color: #333333;
-  border-radius: 6px;
-  position: relative;
+  height: 18px;
+  width: 600px;
+  display: flex;
+  align-items: center;
+  appearance: none;
+  background: #edf1f4;
+  outline: none;
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 0 auto; 
 }
 
-.price-range-label {
-  font-size: 16px;
-  margin-right: 10px;
+.price-slider::-webkit-slider-thumb{
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #7EB63D;
+  box-shadow: -407px 0 0 400px #7EB63D;
+  cursor: pointer;
 }
 
 .price-range-value {
-  font-weight: bold;
-  font-size: 16px;
-  margin-left: 10px;
+  position: relative;
+  text-align: center;
+  width: 120px;
+  height: 25px;
+  font-size: 1.25em;
+  background: #fff;
+  margin-left: 15px;
+  border-radius: 25px;
+  font-weight: 500;
+  margin-left: auto; 
 }
 
 .dropdown-container {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: left;
   margin-bottom: 20px;
 }
 
@@ -205,6 +215,7 @@
   background-color: #ffffff;
   color: #333333;
   font-size: 16px;
+  margin-right: auto;
 }
 
 .dropdown-select option:hover{
@@ -230,6 +241,7 @@
   margin: 0 5px; 
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-align: center;
 }
 
 .square-button:hover {
