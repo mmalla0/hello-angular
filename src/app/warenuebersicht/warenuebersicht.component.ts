@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
+import { CartServiceService } from '../services/cart-service/cart-service.service';
 
 @Component({
   selector: 'app-warenuebersicht',
@@ -55,8 +56,12 @@ export class WarenuebersichtComponent implements OnInit {
     this.filterProducts();
   }
 
+  constructor(private cartService: CartServiceService) {    
+  }
+
   onAddToCart(product: Item): void {
-    this.selectedItems.push(product);
+    // this.selectedItems.push(product);    
+    this.cartService.addItem(product);
   }
 
   onPriceRangeChange(): void {
