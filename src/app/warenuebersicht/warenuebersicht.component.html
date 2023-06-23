@@ -1,20 +1,26 @@
-<div class="filter-container">
-  <div class="price-slider-container">
-    <span class="price-range-label">Price </span>
-    <span class="price-range-value">${{ priceRange }}</span>
-    <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()">
-  </div> 
-  <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
-    <option value="" disabled>Apply filter</option>
-    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-  </select>
-  <input type="text" placeholder="Search products" [(ngModel)]="searchQuery" class="search-input">
-  <button (click)="onSearchProducts()" class="search-button">Search</button>
+<div class="filter-background">
+  <h2 class="headline">Spacesavers</h2>
+  <div class="filter-container">
+    <div class="price-slider-container">
+        <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()">  
+        <span class="price-range-value">${{ priceRange }}</span>
+    </div>    
+  </div>
+  <div class="filter-container">
+    <input type="text" placeholder="Search products" [(ngModel)]="searchQuery" class="search-input">
+    <button (click)="onSearchProducts()" class="search-button">Search</button>
+  </div>
+  <div class="filter-container2">
+    <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+      <option value="" disabled>Apply filter</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+  </div>
 </div>
 <div class="product-list-container">
   <div class="product-container">
     <div class="product-list">
-      <div class="product-item" *ngFor="let product of filteredProducts">
+      <div class="product-item" *ngFor="let product of paginatedProducts">
         <div class="product-image-container">
           <img [src]="'assets/images/' + product.pictures[0]" alt="Product Image" class="product-image" />
         </div>
@@ -22,14 +28,12 @@
         <span class="price">$<strong>{{ product.price }}</strong></span>
         <span class="stock">In store: {{ product.storeQuantity }}</span>
         <div class="product-quantity">
-          <input type="number" id="quantityInput{{ product.id }}" (input)="onQuantityChange(product, $event)" min="0" [value]="productQuantityMap.get(product)">
-          <button class="add-to-cart-button" (click)="onAddToCart(product)">Add</button>
+          <button class="add-to-cart-button" (click)="onAddToCart(product)">Add to basket</button>
         </div>
       </div>
     </div>
   </div>
   </div>
   <div class="button-container">
-    <button class="square-button">1</button>
-    <button class="square-button">2</button>
+    <button class="square-button" *ngFor="let page of getPageNumbers()" [ngClass]="{ 'current-page': page.isCurrent }" (click)="onPageChange(page.number)"> {{ page.number }} </button>
   </div>

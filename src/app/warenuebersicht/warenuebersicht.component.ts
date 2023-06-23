@@ -6,19 +6,22 @@ import { Item } from '../shared/item';
   templateUrl: './warenuebersicht.component.html',
   styleUrls: ['./warenuebersicht.component.css']
 })
-
 export class WarenuebersichtComponent implements OnInit {
+
   products: Item[] = [];
   filteredProducts: Item[] = [];
-  productQuantityMap: Map<Item, number> = new Map<Item, number>();
+  paginatedProducts: Item[] = [];
+  selectedItems: Item[] = [];
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
-  categories: string[] = ['Food', 'Health', 'Fashion','Art','Equipment','Toys','Science', 'Other', 'No filter'];
+  categories: string[] = ['Food', 'Health', 'Fashion', 'Art', 'Equipment', 'Toys', 'Science', 'Other', 'No filter'];
 
+  pageSize : number; 
+  currentPage : number; 
+  totalPageCount : number; 
 
   ngOnInit() {
-
     this.products = [
       {id: 1, name: '2X2Re Stone', description: 'Mystery stone, veery precious', price: 50000, bestBeforeDate: '02.01.2320', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Other','Art']},
       {id: 2, name: 'X-Wing', description: 'Relic from past times...', price: 67658, bestBeforeDate: '-', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Equipment', 'Other']},
@@ -27,50 +30,78 @@ export class WarenuebersichtComponent implements OnInit {
       {id: 5, name: 'MediReady NanoBots', description: 'Works 100%', price:  5000.99, bestBeforeDate: '01.10.2300', storeQuantity: 30, pictures: ['healing_nanobots.jpg'], categories: ['Health']},
       {id: 6, name: 'Gravity implant', description: 'No more dizziness', price:  500.99, bestBeforeDate: '20.08.2300', storeQuantity: 30, pictures: ['gravity_adjusting_implants.jpg'], categories: ['Equipment']},
       {id: 7, name: 'Repair set', description: 'Repairs everything', price:  3000.99, bestBeforeDate: '-', storeQuantity: 20, pictures: ['toolbox_spaceship_repair.jpg'], categories: ['Equipment']},
-      {id: 8, name: 'Underwater breathing implant', description: 'Discover new worlds', price:  360.01, bestBeforeDate: '03.20.2302', storeQuantity: 30, pictures: ['underwaterbreathing_implants.jpg'], categories: ['Equipment']}
+      {id: 8, name: 'Underwater breathing implant', description: 'Discover new worlds', price:  360.01, bestBeforeDate: '03.20.2302', storeQuantity: 30, pictures: ['underwaterbreathing_implants.jpg'], categories: ['Equipment']},
+      {id: 9, name: 'Gravity implant', description: 'No more dizziness', price:  500.99, bestBeforeDate: '20.08.2300', storeQuantity: 30, pictures: ['gravity_adjusting_implants.jpg'], categories: ['Equipment']},
+      {id: 10, name: 'Repair set', description: 'Repairs everything', price:  3000.99, bestBeforeDate: '-', storeQuantity: 20, pictures: ['toolbox_spaceship_repair.jpg'], categories: ['Equipment']},
+      {id: 11, name: 'Underwater breathing implant', description: 'Discover new worlds', price:  360.01, bestBeforeDate: '03.20.2302', storeQuantity: 30, pictures: ['underwaterbreathing_implants.jpg'], categories: ['Equipment']},
+      {id: 12, name: 'Gravity implant', description: 'No more dizziness', price:  500.99, bestBeforeDate: '20.08.2300', storeQuantity: 30, pictures: ['gravity_adjusting_implants.jpg'], categories: ['Equipment']},
+      {id: 13, name: 'Repair set', description: 'Repairs everything', price:  3000.99, bestBeforeDate: '-', storeQuantity: 20, pictures: ['toolbox_spaceship_repair.jpg'], categories: ['Equipment']},
+      {id: 14, name: 'Underwater breathing implant', description: 'Discover new worlds', price:  360.01, bestBeforeDate: '03.20.2302', storeQuantity: 30, pictures: ['underwaterbreathing_implants.jpg'], categories: ['Equipment']},
+      {id: 15, name: 'Gravity implant', description: 'No more dizziness', price:  500.99, bestBeforeDate: '20.08.2300', storeQuantity: 30, pictures: ['gravity_adjusting_implants.jpg'], categories: ['Equipment']},
+      {id: 16, name: 'Repair set', description: 'Repairs everything', price:  3000.99, bestBeforeDate: '-', storeQuantity: 20, pictures: ['toolbox_spaceship_repair.jpg'], categories: ['Equipment']},
+      {id: 17, name: 'Underwater breathing implant', description: 'Discover new worlds', price:  360.01, bestBeforeDate: '03.20.2302', storeQuantity: 30, pictures: ['underwaterbreathing_implants.jpg'], categories: ['Equipment']},
+      {id: 18, name: 'Gravity implant', description: 'No more dizziness', price:  500.99, bestBeforeDate: '20.08.2300', storeQuantity: 30, pictures: ['gravity_adjusting_implants.jpg'], categories: ['Equipment']}
     ];
 
     this.filteredProducts = this.products;
+
     this.searchQuery = '';
     this.priceRange = 200000; // Set default price range value
-    this.selectedCategory = '';
+    this.selectedCategory = 'No filter';
+    this.pageSize = 8; 
+    this.currentPage = 1; 
+    this.totalPageCount = 0; 
 
-    this.products.forEach(product => {
-      this.productQuantityMap.set(product, 0); // Set default quantity to 0 for all products
-    });
-  }
-
-  onQuantityChange(product: Item, event: any) {
-    const quantity = parseInt(event.target.value, 10);
-    if (!isNaN(quantity)) {
-      this.productQuantityMap.set(product, quantity); 
-    }
+    this.filterProducts();
   }
 
   onAddToCart(product: Item): void {
-    const quantity = this.productQuantityMap.get(product);
-    console.log('Adding to cart:', product, 'Quantity:', quantity);
+    this.selectedItems.push(product);
   }
 
-  onPriceRangeChange() {
-    this.filterProducts(); 
+  onPriceRangeChange(): void {
+    this.filterProducts();
   }
 
-  onCategoryChange() {
-    this.filterProducts(); 
+  onCategoryChange(): void {
+    this.filterProducts();
   }
 
-  onSearchProducts() {
-    this.filteredProducts = this.products.filter(product => {
-      return this.searchQuery ? product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
-    });
+  onSearchProducts(): void {
+    this.filterProducts();
   }
 
-  filterProducts() {
+  filterProducts(): void {
     this.filteredProducts = this.products.filter(product => {
       const isPriceInRange = product.price <= this.priceRange;
       const isCategoryMatch = this.selectedCategory === 'No filter' ? true : product.categories.includes(this.selectedCategory);
       return isPriceInRange && isCategoryMatch;
     });
+    this.totalPageCount = Math.ceil(this.filteredProducts.length / this.pageSize);
+    if (this.currentPage > this.totalPageCount) {
+      this.currentPage = 1;
+    }
+    
+    this.updatePaginatedProducts();
+  }
+
+  updatePaginatedProducts(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.updatePaginatedProducts();
+  }
+
+  getPageNumbers(): { number: number; isCurrent: boolean }[] {
+    return Array(this.totalPageCount)
+      .fill(0)
+      .map((_, index) => ({
+        number: index + 1,
+        isCurrent: index + 1 === this.currentPage,
+      }));
   }
 }
