@@ -20,7 +20,8 @@ export class RegisterComponent implements OnInit {
     this.form = this.fb.group({
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required]
+      password: [null, Validators.required],
+      zahlungsmethode: [null, Validators.required]
     })
   }
 
@@ -36,11 +37,19 @@ export class RegisterComponent implements OnInit {
     this.form.get('password')?.setValue(event.target.value);
   }
 
+  handleZahlungsmethodeValueChange(event: any){
+    console.log(event.target.value, '>==== zahlung');
+    
+    this.form.get('zahlungsmethode')?.setValue(event.target.value);
+  }
+
   handleLoginClicked() {
     this.router.navigate(['/'])
   }
 
   handleRegister() {
+    console.log(this.form.valid);
+    
     if (!this.form.valid) {
       this.formHatFehler = true;
     } else {
@@ -48,7 +57,8 @@ export class RegisterComponent implements OnInit {
       const userToRegister: UserModel = {
         name: this.form.get('name')?.value,
         email: this.form.get('email')?.value.toLowerCase(),
-        password: this.form.get('password')?.value
+        password: this.form.get('password')?.value,
+        zahlungsmethode: this.form.get('zahlungsmethode')?.value
       }
       this.authService.register(userToRegister);
       this.router.navigate(['/']);

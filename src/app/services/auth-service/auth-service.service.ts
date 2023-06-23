@@ -2,11 +2,20 @@ import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+
+export enum Zahlungsmethode {
+  PAYPAL = 'paypal',
+  KREDITKARTE = 'kreditkarte',
+  DEBITKARTE = 'debitkarte',
+  APPLEPAY = 'applepay'
+};
+
 export interface UserModel {
   id?: number,
   name?: string,
   email: string,
-  password: string
+  password: string,
+  zahlungsmethode?: Zahlungsmethode
 }
 
 @Injectable({
@@ -18,13 +27,15 @@ export class AuthService {
       id: 1,
       name: 'Admin',
       email: 'admin@admin.com',
-      password: 'adminPassword123!'
+      password: 'adminPassword123!',
+      zahlungsmethode: Zahlungsmethode.KREDITKARTE
     },
     {
       id: 2,
       name: 'Maya Malla',
       email: 'maya@gmail.com',
-      password: 'mayapassword!'
+      password: 'mayapassword!',
+      zahlungsmethode: Zahlungsmethode.APPLEPAY
     }
   ];
 
@@ -46,12 +57,18 @@ export class AuthService {
     const userIndex = this.users.findIndex((user: UserModel) => user.email === userEmail);
 
     if (userIndex === -1) {
+            
+      const lastUserId: number = this.users[this.users.length - 1].id;
+
+      console.log(lastUserId + 1, '>===== id to addd');
+      
       this.users.push(
         {
-          id: 100,
+          id: lastUserId + 1 ,
           name: user.name,
           email: user.email.toLowerCase(),
-          password: user.password
+          password: user.password,
+          zahlungsmethode: user.zahlungsmethode
         }
       )
       this.updateUsersInLocalStorage();
