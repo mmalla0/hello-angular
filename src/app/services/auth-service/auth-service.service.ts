@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 export enum Zahlungsmethode {
@@ -34,7 +35,7 @@ export class AuthService {
       id: 2,
       name: 'Maya Malla',
       email: 'maya@gmail.com',
-      password: 'mayapassword!',
+      password: 'mayqapassword!',
       zahlungsmethode: Zahlungsmethode.APPLEPAY
     }
   ];
@@ -42,7 +43,8 @@ export class AuthService {
   usersUpdate: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>(this.users);
   userLoggedIn: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient, private router: Router){}
+  
   
   updateUsersInLocalStorage(){
     const usersToSave = this.users.map((user: UserModel)=>{
@@ -59,8 +61,6 @@ export class AuthService {
     if (userIndex === -1) {
             
       const lastUserId: number = this.users[this.users.length - 1].id;
-
-      console.log(lastUserId + 1, '>===== id to addd');
       
       this.users.push(
         {
@@ -88,6 +88,7 @@ export class AuthService {
       if (user.password === userInfoInDb.password){
         console.info('Erfolgreich angemeldet!');
         this.userLoggedIn.next(true);
+        this.router.navigate(['/landing']);
       } else {
         console.warn('Anmeldung fehlgeschlagen!')
       }

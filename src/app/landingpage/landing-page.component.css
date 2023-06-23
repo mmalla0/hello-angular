@@ -152,5 +152,16 @@
 }
 
 .menu li a:hover {
-    background-color: #ddd;
+  background-color: #ddd;
+}
+
+.menu li button {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    border: none
+}
+
+.menu li button:hover {
+  background-color: #ddd;
 }

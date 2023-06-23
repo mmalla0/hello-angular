@@ -37,19 +37,16 @@ export class RegisterComponent implements OnInit {
     this.form.get('password')?.setValue(event.target.value);
   }
 
-  handleZahlungsmethodeValueChange(event: any){
-    console.log(event.target.value, '>==== zahlung');
-    
+  handleZahlungsmethodeValueChange(event: any){   
     this.form.get('zahlungsmethode')?.setValue(event.target.value);
   }
 
   handleLoginClicked() {
-    this.router.navigate(['/'])
+    this.router.navigate(['/login'])
   }
 
   handleRegister() {
-    console.log(this.form.valid);
-    
+        
     if (!this.form.valid) {
       this.formHatFehler = true;
     } else {
@@ -61,9 +58,11 @@ export class RegisterComponent implements OnInit {
         zahlungsmethode: this.form.get('zahlungsmethode')?.value
       }
       this.authService.register(userToRegister);
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     }
   }
 
 
 }
+
+

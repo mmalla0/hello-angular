@@ -1,6 +1,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { AuthService } from '../services/auth-service/auth-service.service';
+import { first } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface Item {
   name: string;
@@ -46,13 +49,28 @@ export class LandingPageComponent implements OnInit {
   ];
 
   autoChangeInterval: any;
+  isLoggedIn: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() { 
     this.autoChangeImages();
+    this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
+        this.isLoggedIn= loggedIn;
+    })
   }
 
+  handleLoginClicked() {
+    this.router.navigate(['/login'])
+  }
+
+  handleRegisterClicked() {
+    this.router.navigate(['/register'])
+  }
+
+  handleLogoutClicked() {
+    this.authService.logout()
+  }
 
   autoChangeImages() {
     this.autoChangeInterval = setInterval(() => {
