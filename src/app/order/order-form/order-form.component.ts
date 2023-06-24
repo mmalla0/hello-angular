@@ -1,9 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { User } from 'src/app/shared/user';
 import { Invoice } from 'src/app/shared/invoice';
-import { PdfService } from 'src/app/services/pdf.service';
-import { EmailService } from 'src/app/services/email.service';
-import { DatabaseService } from 'src/app/services/database.service';
+import { User } from 'src/app/shared/user';
 
 @Component({
   selector: 'app-order-form',
@@ -11,7 +8,6 @@ import { DatabaseService } from 'src/app/services/database.service';
   styleUrls: ['./order-form.component.css'],
 })
 export class OrderFormComponent {
-
   invoice: Invoice = {
     id: 0,
     user: undefined,
@@ -22,7 +18,6 @@ export class OrderFormComponent {
     totalWithoutVat: 0,
     shopName: ''
   }
-
   user: User = {
     id: 0,
     firstName: '',
@@ -30,58 +25,11 @@ export class OrderFormComponent {
     addressId: 0,                
     methodOfPayment: '',
     cartId: 0,
-    stockpileId: 0
+    stockpileId: 0 
   }
-
   @Output() submitOrder = new EventEmitter<Invoice>();
-  orderConfirmation: string;
-
-  constructor(
-    private pdfService: PdfService,
-    private emailService: EmailService,
-    private databaseService: DatabaseService
-  ) {}
 
   submitForm() {  
-  // Schritt 1: Erstellung der Rechnung als PDF
-  this.pdfService.createInvoicePDF(this.invoice).subscribe(pdfData => {
-
-    // Schritt 2: Versenden der E-Mail mit der Rechnung als Anhang
-    this.emailService.sendEmailWithAttachment('invoice@example.com', 'Rechnung', 'Siehe Anhang', pdfData).subscribe(() => {
-
-      // Schritt 3: Aktualisierung des Warenbestands in der Datenbank
-      this.updateStock();
-
-    });
-  });
-  }
-
-  updateStock() {
-    
-    // Hier soll die Logik zum Aktualisieren des Warenbestands in der Datenbank implementiert werden
-    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // und aktualisieren Sie die entsprechenden Felder (z. B. reduceStock()).
-    // Beispiel:
-    this.databaseService.reduceStock( this.invoice.items).subscribe(() => {
-       this.submitOrder.emit(this.invoice);
-     });
-  }
-
-  updateUserStockpile() {
-    
-    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // Annahme: Die Methode updateUserStockpile(stockpileId, items) wird von der DatabaseService-Klasse bereitgestellt.
-
-    this.databaseService.updateUserStockpile(this.user.stockpileId, this.invoice.items).subscribe(() => {
-      // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
-      this.submitOrder.emit(this.invoice);
-
-      // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
-      this.showOrderConfirmation();
-    });
-  }
-  showOrderConfirmation() {
- 
-    this.orderConfirmation = 'Vielen Dank für Ihre Bestellung!';
+  this.submitOrder.emit(this.invoice);
   }
 }

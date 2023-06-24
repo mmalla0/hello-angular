@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddressListComponent } from './address-list/address-list.component';
-import { OrderComponent } from './order/order.component';
 import { AddressListItemComponent } from './address-list-item/address-list-item.component';
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
@@ -19,7 +18,6 @@ import { DatabaseService } from './services/database.service';
     AppComponent,
     AddressListComponent,
     AddressListItemComponent,
-    OrderComponent,
     CartComponent,
     CartItemComponent,
     LoginComponent,

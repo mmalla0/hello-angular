@@ -12,5 +12,6 @@ export class OrderComponent {
   handleOrderCompleted(invoice: Invoice) {
     // Aktionen ausführen, wenn eine Bestellung abgeschlossen wurde
     this.orderConfirmation = 'Bestellung abgeschlossen! Vielen Dank!';
+    console.log(invoice);
   }
 }
