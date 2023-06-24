@@ -1,7 +1,9 @@
 <h1>Addresses</h1>
 <ul class="address">
     <li *ngFor="let address of addresses">
-        
+        {{ address.street }}
+        {{ address.postalCode }} {{ address.city }}
+        {{address.planet}}
     </li> 
     <li *ngIf="!addresses.length">
         No addresses available.

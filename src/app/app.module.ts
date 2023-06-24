@@ -18,11 +18,10 @@ import { DatabaseService } from './services/database.service';
   declarations: [
     AppComponent,
     AddressListComponent,
-    OrderComponent,
     AddressListItemComponent,
+    OrderComponent,
     CartComponent,
     CartItemComponent,
-   
     LoginComponent,
     RegisterComponent,
     ItemListComponent,
