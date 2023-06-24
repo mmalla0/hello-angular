@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OrderFormComponent } from './order-form.component';
 
 describe('OrderFormComponent', () => {
@@ -18,4 +18,10 @@ describe('OrderFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  TestBed.configureTestingModule({
+    imports: [HttpClientTestingModule],
+    // ...
+  });
+  
 });
