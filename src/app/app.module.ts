@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import { ItemListComponent } from './cart/item-list/item-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatabaseService } from './services/database.service';
+import { StockpileListComponent } from './stockpile-list/stockpile-list.component';
+import { StockpileItemComponent } from './stockpile-item/stockpile-item.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { DatabaseService } from './services/database.service';
     LoginComponent,
     RegisterComponent,
     ItemListComponent,
+    StockpileListComponent,
+    StockpileItemComponent,
   ],
   imports: [
     BrowserModule,

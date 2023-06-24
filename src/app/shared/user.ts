@@ -1,3 +1,5 @@
+import { StockpileItem } from 'src/app/stockpile-item.component';
+
 export interface User {
     id: number;
     firstName: string;
@@ -7,3 +9,9 @@ export interface User {
     cartId: number; 
     stockpileId: number;
 }
+export interface StockpileItem {
+    id: string;
+    name: string;
+    quantity: number;
+}
+
