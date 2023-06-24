@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ReactiveFormsModule }    from '@angular/forms';
 import { ItemListComponent } from './cart/item-list/item-list.component';
+import { DatabaseService } from './services/database.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ItemListComponent } from './cart/item-list/item-list.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

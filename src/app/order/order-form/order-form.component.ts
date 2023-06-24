@@ -14,8 +14,13 @@ export class OrderFormComponent {
 
   invoice: Invoice = {
     id: 0,
-    userId: 0,
-    methodOfPayment: ''
+    user: undefined,
+    methodOfPayment: '',
+    items: [],
+    address: undefined,
+    totalWithVat: 0,
+    totalWithoutVat: 0,
+    shopName: ''
   }
 
   user: User = {
@@ -39,19 +44,34 @@ export class OrderFormComponent {
   submitForm() {  
   // Schritt 1: Erstellung der Rechnung als PDF
   this.pdfService.createInvoicePDF(this.invoice).subscribe(pdfData => {
+
     // Schritt 2: Versenden der E-Mail mit der Rechnung als Anhang
     this.emailService.sendEmailWithAttachment('invoice@example.com', 'Rechnung', 'Siehe Anhang', pdfData).subscribe(() => {
+
       // Schritt 3: Aktualisierung des Warenbestands in der Datenbank
-      this.updateStockpile();
+      this.updateStock();
+
     });
   });
   }
-  updateStockpile() {
-    // Hier sollte die Logik zum Aktualisieren des Warenbestands in der Datenbank implementiert werden
-    // Verwenden Sie den this.user.stockpileId, um die entsprechende Warenbestand-Datensatz zu identifizieren
+
+  updateStock() {
+    
+    // Hier soll die Logik zum Aktualisieren des Warenbestands in der Datenbank implementiert werden
+    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
     // und aktualisieren Sie die entsprechenden Felder (z. B. reduceStock()).
     // Beispiel:
-    this.databaseService.reduceStock(this.user.stockpileId, this.invoice.items).subscribe(() => {
+    this.databaseService.reduceStock( this.invoice.items).subscribe(() => {
+       this.submitOrder.emit(this.invoice);
+     });
+  }
+
+  updateUserStockpile() {
+    
+    // Hier soll die Logik zum Aktualisieren des User Stockpiles in der Datenbank implementiert werden
+    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
+    // die entsprechenden Felder werden aktualisert (z. B. reduceStock()).
+    this.databaseService.updateUserStockpile(this.user.stockpileId, this.invoice.items).subscribe(() => {
        this.submitOrder.emit(this.invoice);
      });
   }

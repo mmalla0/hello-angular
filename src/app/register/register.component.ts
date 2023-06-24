@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   form!: FormGroup;
-  formHatFehler: boolean = false;
+  formHatFehler = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
   }

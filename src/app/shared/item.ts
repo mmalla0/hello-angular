@@ -4,4 +4,5 @@ export interface Item {
     description: string;
     price: number;
     bestBeforeDate: string;
+    quantity: number;
 }

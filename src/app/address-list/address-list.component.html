@@ -3,7 +3,7 @@
     <li *ngFor="let address of addresses">
         
     </li> 
-    <li *ngIf!="addresses.length">
+    <li *ngIf="!addresses.length">
         No addresses available.
     </li>
 </ul>
