@@ -32,7 +32,7 @@ export class PdfService {
       content: [
         { text: 'Invoice', style: 'header' },
         { text: 'Invoice ID: ' + invoice.id, style: 'subheader' },
-        { text: this.formatDate(new Date()), style: 'subheader' },
+        { text: 'Date of Purchase: ' + this.formatDate(new Date()), style: 'subheader' },
         { text: this.formatAddress(invoice.address, invoice.user), style: 'subheader' },
         { text: ' ' }, // Leere Zeile für Abstand
 
@@ -88,8 +88,6 @@ export class PdfService {
   }
   
   private formatAddress(address: Address, user: User): string {
-    // Formatieren Sie die Kundenadresse entsprechend Ihren Anforderungen.
-    // Hier ist ein Beispiel, wie es aussehen könnte:
     return `${user.firstName} ${user.lastName}\n${address.street}\n${address.postalCode} ${address.city} \n${address.planet}`;
   }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Invoice } from '../shared/invoice';
 
 @Component({
   selector: 'app-order',
@@ -6,7 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent {
-  /* constructor() {
+  orderConfirmation: string;
 
-  } */
+  handleOrderCompleted(invoice: Invoice) {
+    // Aktionen ausführen, wenn eine Bestellung abgeschlossen wurde
+    this.orderConfirmation = 'Bestellung abgeschlossen! Vielen Dank!';
+  }
 }

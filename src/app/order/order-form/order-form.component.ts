@@ -34,6 +34,7 @@ export class OrderFormComponent {
   }
 
   @Output() submitOrder = new EventEmitter<Invoice>();
+  orderConfirmation: string;
 
   constructor(
     private pdfService: PdfService,
@@ -68,11 +69,19 @@ export class OrderFormComponent {
 
   updateUserStockpile() {
     
-    // Hier soll die Logik zum Aktualisieren des User Stockpiles in der Datenbank implementiert werden
     // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // die entsprechenden Felder werden aktualisert (z. B. reduceStock()).
+    // Annahme: Die Methode updateUserStockpile(stockpileId, items) wird von der DatabaseService-Klasse bereitgestellt.
+
     this.databaseService.updateUserStockpile(this.user.stockpileId, this.invoice.items).subscribe(() => {
-       this.submitOrder.emit(this.invoice);
-     });
+      // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
+      this.submitOrder.emit(this.invoice);
+
+      // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
+      this.showOrderConfirmation();
+    });
+  }
+  showOrderConfirmation() {
+ 
+    this.orderConfirmation = 'Vielen Dank für Ihre Bestellung!';
   }
 }
