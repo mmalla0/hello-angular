@@ -8,4 +8,5 @@ import { Address } from '../shared/address';
 })
 export class AddressListItemComponent {
   @Input() address?: Address;               // ? bedeuted optional
+
 }

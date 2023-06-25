@@ -8,7 +8,7 @@ const routes: Routes = [
   redirectTo: 'order/create'
   },
   {
-    path: 'order/create',
+    path: '**',
     component: OrderCreateComponent,
   }
 ];

@@ -6,16 +6,16 @@ import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.comp
 import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
 
-
 const routes: Routes = [
+
 
   { path: '', component: LandingPageComponent},
   { path: 'dashboard', component: MitarbeiterDashboardComponent },
   { path: 'warenübersicht', component: WarenuebersichtComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
-  
   // Nutzer zur Hauptseite weiterleiten
   { path: '**', redirectTo: '' }
 

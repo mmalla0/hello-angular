@@ -1,0 +1,12 @@
+<div *ngIf="stockpileItems">
+    <h2>My Stockpile</h2>
+    <ul>
+      <li *ngFor="let item of stockpileItems">
+        {{ item.name }} - Quantity: {{ item.quantity }}
+        <p>
+          Best Before: {{ item.bestBeforeDate }}
+        </p>
+      </li>
+    </ul>
+  </div>
+  

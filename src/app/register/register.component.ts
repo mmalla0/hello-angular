@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService, UserModel } from '../services/auth-service/auth-service.service';
+import { AuthService, UserModel } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   form!: FormGroup;
-  formHatFehler: boolean = false;
+  formHatFehler = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
   }
