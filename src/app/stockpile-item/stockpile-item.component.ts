@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { StockpileItem } from 'src/app/shared/user';
+import { Item } from '../shared/item';
 
 @Component({
   selector: 'app-stockpile-item',
@@ -7,6 +7,6 @@ import { StockpileItem } from 'src/app/shared/user';
   styleUrls: ['./stockpile-item.component.css']
 })
 export class StockpileItemComponent {
-  @Input() item: StockpileItem;
+  @Input() item: Item;
 }
 

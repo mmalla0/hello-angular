@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatabaseService } from './services/database.service';
 import { StockpileListComponent } from './stockpile-list/stockpile-list.component';
 import { StockpileItemComponent } from './stockpile-item/stockpile-item.component';
+import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { StockpileItemComponent } from './stockpile-item/stockpile-item.componen
     ItemListComponent,
     StockpileListComponent,
     StockpileItemComponent,
+    StockpileDashboardComponent,
   ],
   imports: [
     BrowserModule,

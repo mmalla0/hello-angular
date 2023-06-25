@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StockpileItem } from '../shared/user';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://api.example.com'; // Replace with your API URL
 
-  constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8080';  
 
-  getStockpile(): Observable<StockpileItem[]> {
-    const userId = '123'; // Replace with the actual user ID
+  constructor(private http: HttpClient, private authService: AuthService) { }
+
+  getStockpileId(): Observable<number> {
+    const userId = this.authService.getCurrentUser().id; // Hier wird die userID des aktuellen Benutzers geholt
     const url = `${this.apiUrl}/users/${userId}/stockpile`;
-    return this.http.get<StockpileItem[]>(url);
+    return this.http.get<number>(url);
   }
 }

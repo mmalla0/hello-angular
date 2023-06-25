@@ -7,7 +7,7 @@ import { Item } from '../shared/item';
   providedIn: 'root'
 })
 export class DatabaseService {
-  apiUrl = 'http://localhost:8080'; // Set the URL of your server.js API
+  apiUrl = 'http://localhost:8080'; // Set the URL of server.js API
 
   constructor(private http: HttpClient) {}
 
