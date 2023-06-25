@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 
+
 interface Item {
   item_ID: number;
   item_name: string;

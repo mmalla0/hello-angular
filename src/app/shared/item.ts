@@ -3,6 +3,15 @@ export interface Item {
     name: string;
     description: string;
     price: number;
+    storeQuantity: number;
+    pictures: string[];
     bestBeforeDate: string;
-    quantity: number;
+    categories: string[];
+}
+
+
+interface Image {
+    imgitemID: number;
+    img_url: string;
+    imgAlt: string;
 }

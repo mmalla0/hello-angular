@@ -16,9 +16,14 @@ import { DatabaseService } from './services/database.service';
 import { StockpileListComponent } from './stockpile-list/stockpile-list.component';
 import { StockpileItemComponent } from './stockpile-item/stockpile-item.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { LandingPageComponent } from './landingpage/landing-page.component';
+import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 
 @NgModule({
   declarations: [
+    LandingPageComponent,
     AppComponent,
     AddressListComponent,
     AddressListItemComponent,
@@ -30,14 +35,17 @@ import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-das
     StockpileListComponent,
     StockpileItemComponent,
     StockpileDashboardComponent,
+    WarenuebersichtComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CommonModule
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]

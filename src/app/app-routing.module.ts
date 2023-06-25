@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'dashboard', component: MitarbeiterDashboardComponent },
   { path: 'warenübersicht', component: WarenuebersichtComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 
   // Nutzer zur Hauptseite weiterleiten
