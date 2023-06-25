@@ -74,22 +74,32 @@ export class LandingPageComponent implements OnInit {
   }
 
 
+  itemsURL = "items"
   getItems(): void {
-    this.http.get<Item[]>('items').subscribe(data => {
+    this.http.get<Item[]>(this.itemsURL).subscribe(data => {
       this.items = data;
-      this.getRandomImages();
+
+      // Get random items from the list
+      const randomItems = this.getRandomItems(3);
+
+      // Assign random items to the component property
+      this.items = randomItems;
     });
   }
 
-  getRandomImages(): void {
-    const allImages: Image[] = [];
+  getRandomItems(count: number): Item[] {
+    const randomItems: Item[] = [];
+    const maxIndex = this.items.length - 1;
 
-    this.items.forEach(item => {
-      allImages.push(...item.images);
-    });
+    for (let i = 0; i < count; i++) {
+      // Get a random index
+      const randomIndex = Math.floor(Math.random() * maxIndex);
 
-    const shuffledImages = allImages.sort(() => 0.5 - Math.random());
-    this.randomImages = shuffledImages.slice(0, 4);
+      // Push the item at the random index into the array
+      randomItems.push(this.items[randomIndex]);
+    }
+
+    return randomItems;
   }
 
 
