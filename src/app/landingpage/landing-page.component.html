@@ -13,17 +13,17 @@
 
 <div class="image-slider">
   <div class="image-container">
-    <div class="image-wrapper" *ngFor="let image of images; let i = index" (click)="setActiveImage(i)">
+    <div class="image-wrapper" *ngFor="let image of randomImages; let i = index" (click)="setActiveImage(i)">
       <img [src]="image" [@imageState]="getImageState(i)" alt="Product Image">
       <div class="image-info" *ngIf="i === activeImageIndex" [@imageState]="getImageState(i)">
-        <h3>{{ getProductInfo().name }}</h3>
-        <p>Price: {{ getProductInfo().price }}</p>
-        <a class="item-link" [routerLink]="getProductInfo().link">View Item</a>
+        <h3>{{ getProductInfo().item_name }}</h3>
+        <p>Price: {{ getProductInfo().item_price }}</p>
+        <a class="item-link" [routerLink]="'items/' + getProductInfo().item_ID">View Item</a>
       </div>
     </div>
   </div>
   <div class="thumbnails">
-    <div *ngFor="let image of images; let i = index" (click)="setActiveImage(i)">
+    <div *ngFor="let image of randomImages; let i = index" (click)="setActiveImage(i)">
       <img [src]="image" [class.active]="i === activeImageIndex">
     </div>
   </div>
@@ -32,6 +32,7 @@
 <div class="topics">
   <ul>
     <li><a href="#">Art</a></li>
+    <li><a href="#">Electronics</a></li>
     <li><a href="#">Fashion</a></li>
     <li><a href="#">Science</a></li>
     <li><a href="#">Tools</a></li>

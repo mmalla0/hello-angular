@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // configuration =================
-app.use(express.static(path.join(__dirname, '/dist/hello-angular-1')));  //TODO rename to your app-name
+app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO rename to your app-name
 
 // listen (start app with node server.js) ======================================
 app.listen(8080, function () {
@@ -24,5 +24,48 @@ app.listen(8080, function () {
 // application -------------------------------------------------------------
 app.get('/', function (req, res) {
     //res.send("Hello World123");     
-    res.sendFile('index.html', { root: __dirname + '/dist/hello-angular-1' });    //TODO rename to your app-name
+    res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO rename to your app-name
 });
+
+app.get('/landing', function (req, res) {
+    res.sendFile('index.html', { root: __dirname + '/dist/angular' }); //TODO rename to your app-name
+});
+
+function getItemsFromDatabase(req, res) {
+    const connection = mysql.createConnection({
+        database: "SpaceShop",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database: ' + err.stack);
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        connection.query('SELECT * FROM item', function (error, results, fields) {
+            if (error) {
+                console.error('Error executing the database query: ' + error.stack);
+                return;
+            }
+
+            console.log('Retrieved items from the database');
+            res.send(results);
+
+            connection.end(function (err) {
+                if (err) {
+                    console.error('Error disconnecting from the database: ' + err.stack);
+                    return;
+                }
+
+                console.log('Disconnected from the database');
+            });
+        });
+    });
+
+}
