@@ -1,4 +1,21 @@
-<h1> My Stockpile Dashboard</h1>
+<h1>My Stockpile Dashboard</h1>
 
 <app-stockpile-list></app-stockpile-list>
+
+<h2>Stockpile Item Summary</h2>
+
+<div>
+    <pre>{{ stockpileItemEntries | json }}</pre>
+  </div>
+  
+
+<ul>
+  <li *ngFor="let entry of stockpileItemEntries">
+    {{ entry.product.name }} - {{ entry.bestBeforeDates[0]?.date | date }} - {{ entry.bestBeforeDates.length }} Products
+  </li>
+</ul>
+
+
+  
+
 

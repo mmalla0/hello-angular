@@ -3,7 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserModel } from 'src/app/services/auth.service';
-import { StockpileItem } from '../shared/user';
+import { StockpileItem, StockpileItemEntry  } from '../shared/user';
 import { EmailService } from 'src/app/services/email.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { EmailService } from 'src/app/services/email.service';
   styleUrls: ['./stockpile-dashboard.component.css']
 })
 export class StockpileDashboardComponent implements OnInit {
+  stockpileItemEntries: StockpileItemEntry[];
   stockpileItems: StockpileItem[];
   currentUser: UserModel | null;
 
@@ -30,28 +31,53 @@ export class StockpileDashboardComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
     if (this.currentUser) {
       this.stockpileService.getStockpileItems(this.currentUser.stockpileId).subscribe(items => {
-        this.stockpileItems = items;
-        this.checkItemsForEmail(items);
+        this.stockpileItemEntries = this.groupItemsByProduct(items);
+        this.checkItemsForEmail(this.stockpileItemEntries);
       });
     }
   }
 
-  checkItemsForEmail(items: StockpileItem[]) {
-    const today = new Date();
+  groupItemsByProduct(items: StockpileItem[]): StockpileItemEntry[] {
+    const itemEntries: StockpileItemEntry[] = [];
   
     items.forEach(item => {
-      const bestBeforeDate = new Date(item.bestBeforeDate);
-  
-      const daysRemaining = Math.floor((bestBeforeDate.getTime() - today.getTime()) / (1000 * 3600 * 24));
-  
-      if (daysRemaining === 7) {
-        const emailSubject = 'Attention: Consume Item';
-        const emailText = `Attention: Consume the item "${item.name}" within 7 days!`;
-          if (this.currentUser) {
-            this.emailService.sendEmail(emailSubject, emailText, this.currentUser.email);
-          }
+      const existingEntry = itemEntries.find(entry => entry.product.id === item.id);
+      if (existingEntry) {
+        const existingBestBeforeDate = existingEntry.bestBeforeDates.find(date => date.date.getTime() === item.bestBeforeDate.getTime());
+        if (existingBestBeforeDate) {
+          existingBestBeforeDate.count += 1;
+        } else {
+          existingEntry.bestBeforeDates.push({ date: new Date(item.bestBeforeDate), count: 1 });
+        }
+      } else {
+        const newEntry: StockpileItemEntry = {
+          product: item,
+          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }]
+        };
+        itemEntries.push(newEntry);
       }
     });
+  
+    return itemEntries;
   }
   
+
+
+  checkItemsForEmail(itemEntries: StockpileItemEntry[]) {
+    const today = new Date();
+
+    itemEntries.forEach(entry => {
+      const { product, bestBeforeDates } = entry;
+      
+      bestBeforeDates.forEach(entryDate => {
+        const daysRemaining = Math.floor((entryDate.date.getTime() - today.getTime()) / (1000 * 3600 * 24));
+  
+        if (daysRemaining === 7) {
+          const emailText = `Attention: Consume the item "${product.name}" within 7 days!`;
+          const recipient = 'recipient@example.com'; // Geben Sie hier die tatsächliche E-Mail-Adresse des Empfängers an
+          this.emailService.sendEmail('Attention: Consume Item', emailText, recipient);
+        }
+      });
+    });
+  }
 }
