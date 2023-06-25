@@ -3,29 +3,16 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../shared/user';
 
-export interface UserModel {   
-  id: number;
-  name?: string;                           // TODO: name rausnehmen
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  addressId: number;
-  methodOfPayment: string;
-  cartId: number;
-  stockpileId: number;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
 
-  private users: UserModel[] = [
+  private users: User[] = [
     {
       id: 1,
-      name: 'Admin',                       // TODO: name rausnehmen
+      //name: 'Admin',                       // TODO: name rausnehmen
       email: 'admin@admin.com',
       password: 'adminPassword123!',
       firstName: 'Ad',
@@ -37,7 +24,7 @@ export class AuthService {
     },
     {
       id: 2,
-      name: 'Maya Malla',                 // TODO: name rausnehmen
+      //name: 'Maya Malla',                 // TODO: name rausnehmen
       email: 'maya@gmail.com',
       password: 'mayapassword!',
       firstName: 'Maya',
@@ -50,29 +37,29 @@ export class AuthService {
   ];
   private currentUser: User | null = null;  
   
-  usersUpdate: Subject<UserModel[]> = new BehaviorSubject<UserModel[]>(this.users);
+  usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
 
   userLoggedIn: Subject<boolean>= new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient){}
   
   updateUsersInLocalStorage(){
-    const usersToSave = this.users.map((user: UserModel)=>{
+    const usersToSave = this.users.map((user: User)=>{
       return JSON.stringify(user)
     });
     localStorage.setItem('users', usersToSave.toString());
   }
 
-  register (user: UserModel) {
+  register (user: User) {
     const userEmail = user.email.toLowerCase();
 
-    const userIndex = this.users.findIndex((user: UserModel) => user.email === userEmail);
+    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
 
     if (userIndex === -1) {
       this.users.push(
         {
           id: 100,
-          name: user.name,                       // TODO: name rausnehmen
+          //name: user.name,                       // TODO: name rausnehmen
           email: user.email.toLowerCase(),
           password: user.password,
           firstName: user.firstName,
@@ -90,10 +77,10 @@ export class AuthService {
     }    
   }
 
-  login (user: UserModel){
+  login (user: User){
     const userEmail = user.email.toLowerCase();
 
-    const userIndex = this.users.findIndex((user: UserModel) => user.email === userEmail);
+    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
   
     if (userIndex !== -1){
       const userInfoInDb = this.users[userIndex];

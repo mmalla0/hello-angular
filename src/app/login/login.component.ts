@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, UserModel } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+//import { User } from '../shared/user';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   form!: FormGroup;
-  formHatFehler: boolean = false;
+  //formHatFehler: boolean = false;                                 // TODO: Fehler korrigieren
 
   constructor (private authService: AuthService, private fb: FormBuilder, private router: Router){}
 
@@ -31,21 +32,21 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin(){
-    if (!this.form.valid){
+    /*if (!this.form.valid){
       this.formHatFehler = true;
       return;
     } else {
       this.formHatFehler = false;
-      const userToLogIn: UserModel = {
+      const userToLogIn: User = {                                                  TODO: umschreiben
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
       this.authService.login(userToLogIn);
-    }
+    }*/
   }
 
   handleRegisterClicked() {
-    this.router.navigate(['/register'])
+    //this.router.navigate(['/register'])
   }
 
 }

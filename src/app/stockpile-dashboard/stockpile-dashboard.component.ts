@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserModel } from 'src/app/services/auth.service';
+import { User } from '../shared/user'; 
 import { StockpileItem, StockpileItemEntry  } from '../shared/user';
 import { EmailService } from 'src/app/services/email.service';
 
@@ -14,7 +14,7 @@ import { EmailService } from 'src/app/services/email.service';
 export class StockpileDashboardComponent implements OnInit {
   stockpileItemEntries: StockpileItemEntry[];
   stockpileItems: StockpileItem[];
-  currentUser: UserModel | null;
+  currentUser: User | null;
 
   constructor(
     private userService: UserService,
