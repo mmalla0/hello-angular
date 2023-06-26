@@ -1,1 +1,37 @@
-<p>item-list works!</p>
+<div *ngIf="!!items.length">
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>{{ "" }}</th>
+      </tr>
+      <ng-container *ngFor="let item of items">
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <div style="display: inline-flex; align-items: center; gap: 8px">
+              <button (click)="onDecreaseClicked(item)">-</button>
+              <span>{{ item.quantity }}</span>
+              <button (click)="onIncreaseClicked(item)">+</button>
+            </div>
+          </td>
+          <td>
+            <button (click)="removeItemFromCartClicked(item.itemId)">
+              Remove Item
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+  
+    <button (click)="emptyCartClicked()">Empty Cart</button>
+  
+    <button (click)="onPurchaseClicked()">Purchase</button>
+  </div>
+  
+  <div *ngIf="!items.length">Cart is empty</div>
+  
