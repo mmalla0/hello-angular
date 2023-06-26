@@ -67,8 +67,11 @@ export class WarenuebersichtComponent implements OnInit {
     this.filterProducts();
   }
 
-  onSearchProducts(): void {
-    this.filterProducts();
+  onSearchProducts() {
+    this.filteredProducts = this.products.filter(product => {
+      return this.searchQuery ? product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
+    });
+    this.updatePaginatedProducts();
   }
 
   filterProducts(): void {
