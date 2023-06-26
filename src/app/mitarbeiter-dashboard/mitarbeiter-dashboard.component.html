@@ -16,7 +16,7 @@
             <td>{{ product.name }}</td>
             <td>
                 <div class="image-container">
-                  <img *ngFor="let picture of product.pictures" [src]="'assets/images/' + picture" alt="Product Image" class="product-image" />
+                  <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
                 </div>
             </td>
           <td>{{ product.description }}</td>

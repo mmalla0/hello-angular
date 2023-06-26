@@ -22,7 +22,7 @@
     <div class="product-list">
       <div class="product-item" *ngFor="let product of paginatedProducts">
         <div class="product-image-container">
-          <img [src]="'assets/images/' + product.pictures[0]" alt="Product Image" class="product-image" />
+          <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
         </div>
         <h3 class="product-name">{{ product.name }}</h3>
         <span class="price">$<strong>{{ product.price }}</strong></span>

@@ -5,6 +5,6 @@ export interface Item {
     price: number;
     bestBeforeDate: string;
     quantity: number;
-    pictures: string[];
+    picture: string;
     categories: string[];
 }
