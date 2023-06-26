@@ -1,10 +1,10 @@
 export interface Item {
     id: number;
     name: string;
-    description: string;
     price: number;
+    //description: string;
     bestBeforeDate: string;
-    storeQuantity: number;
-    pictures: string[];
+    quantity: number;
+    picture: string;
     categories: string[];
 }

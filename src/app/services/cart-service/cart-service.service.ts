@@ -27,7 +27,7 @@ export class CartServiceService {
     if (itemIndexInCart === -1) {
       const item: CartItem = {
         itemId: itemToAdd.id,
-        description: itemToAdd.description,
+      //  description: itemToAdd.description,
         quantity: 1,
         name: itemToAdd.name,
         price: itemToAdd.price,

@@ -2,6 +2,7 @@
   <h2 class="headline">Spacesavers</h2>
   <div class="filter-container">
     <div class="price-slider-container">
+
       <input
         type="range"
         min="0"
@@ -12,6 +13,11 @@
       />
       <span class="price-range-value">${{ priceRange }}</span>
     </div>
+
+      <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()"> 
+      <span class="price-range-value">${{ priceRange }}</span>
+    </div>    
+
   </div>
   <div class="filter-container">
     <input
@@ -33,14 +39,15 @@
       </option>
     </select>
   </div>
-</div>
+
 <div class="product-list-container">
   <div class="product-container">
     <div class="product-list">
       <div class="product-item" *ngFor="let product of paginatedProducts">
         <div class="product-image-container">
+
           <img
-            [src]="'assets/images/' + product.pictures[0]"
+            [src]="'assets/images/' + product.picture[0]"
             alt="Product Image"
             class="product-image"
           />
@@ -49,16 +56,21 @@
         <span class="price"
           >$<strong>{{ product.price }}</strong></span
         >
-        <span class="stock">In store: {{ product.storeQuantity }}</span>
+        <span class="stock">In store: {{ product.quantity }}</span>
+
+          <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
+        </div>
+       
+
         <div class="product-quantity">
-          <button class="add-to-cart-button" (click)="onAddToCart(product)">
+          <button class="add-to-cart-button">
             Add to basket
           </button>
         </div>
       </div>
     </div>
   </div>
-</div>
+
 <div class="button-container">
   <button
     class="square-button"

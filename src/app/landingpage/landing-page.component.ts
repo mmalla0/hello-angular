@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { AuthService } from '../services/auth-service/auth-service.service';
-import { first } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+//import { first } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface Item {

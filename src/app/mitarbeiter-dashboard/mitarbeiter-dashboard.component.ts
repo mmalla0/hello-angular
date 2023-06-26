@@ -12,10 +12,11 @@ export class MitarbeiterDashboardComponent {
   ngOnInit() {
     // Hardcoded list of products for testing
     this.products = [
-      {id: 1, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
-      {id: 2, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']},
-      {id: 3, name: '2X2Re Stone', description: 'Mystery stone, veryy precious', price: 100.99, bestBeforeDate: '12.20.2020', storeQuantity: 3, pictures: ['space_stone.jpeg'], categories: ['Sonstiges']},
-      {id: 4, name: 'X-Wing', description: 'Old relict from previous days', price: 19.99, bestBeforeDate: '12.20.2020', storeQuantity: 30, pictures: ['x_wing.jpeg'], categories: ['Ausrüstung', 'Sonstiges']}
+      {id: 1, name: '2X2Re Stone', price: 50000, bestBeforeDate: '02.01.2320', quantity: 3, picture: 'space_stone.jpeg', categories: ['Other','Art']},
+      {id: 2, name: 'X-Wing', price: 67658, bestBeforeDate: '-', quantity: 30, picture: 'x_wing.jpeg', categories: ['Equipment', 'Other']},
+      {id: 3, name: 'Spacetronics Starsuit', price: 200000, bestBeforeDate: '-', quantity: 11, picture: 'spacesuite.jpg', categories: ['Equipment', 'Fashion']},
+      {id: 4, name: 'VirtuCare Pets - CatBot Edition', price: 99.99, bestBeforeDate: '-', quantity: 30, picture: 'virtualpet_cat.jpg', categories: ['Art', 'Toys', 'Other']},
+      {id: 5, name: 'MediReady NanoBots', price:  5000.99, bestBeforeDate: '01.10.2300', quantity: 30, picture: 'healing_nanobots.jpg', categories: ['Health']}
     ];
   }
 }

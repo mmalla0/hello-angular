@@ -1,10 +1,9 @@
-<button class="add-button">Add new item</button>
+<button class="add-button">+ Add new item</button>
 <table>
     <thead>
       <tr>
         <th>Item</th>
         <th>Images</th>
-        <th>Description</th>
         <th>Price</th>
         <th>In store</th>
         <th>Categories</th>
@@ -16,15 +15,14 @@
             <td>{{ product.name }}</td>
             <td>
                 <div class="image-container">
-                  <img *ngFor="let picture of product.pictures" [src]="'assets/images/' + picture" alt="Product Image" class="product-image" />
+                  <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
                 </div>
             </td>
-          <td>{{ product.description }}</td>
           <td>${{ product.price}}</td>
           <td>
             <div class="quantity">
               <button class="decrement">-</button>
-              <input type="number" [value]="product.storeQuantity">
+              <input type="number" [value]="product.quantity">
               <button class="increment">+</button>
             </div>
           </td>

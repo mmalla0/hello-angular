@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService, UserModel } from '../services/auth-service/auth-service.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-
+import { User } from '../shared/user';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   form!: FormGroup;
-  formHatFehler: boolean = false;
+  formHatFehler = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {
   }
@@ -51,14 +51,19 @@ export class RegisterComponent implements OnInit {
       this.formHatFehler = true;
     } else {
       this.formHatFehler = false;
-      const userToRegister: UserModel = {
+      
+      const userToRegister: any = {
         name: this.form.get('name')?.value,
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value,
         zahlungsmethode: this.form.get('zahlungsmethode')?.value
       }
       this.authService.register(userToRegister);
+
       this.router.navigate(['/login']);
+
+      this.router.navigate(['/']);
+
     }
   }
 

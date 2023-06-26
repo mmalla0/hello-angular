@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, UserModel } from '../services/auth-service/auth-service.service';
+import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from '../shared/user';
 
 @Component({
   selector: 'app-login',
@@ -36,11 +37,13 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.formHatFehler = false;
-      const userToLogIn: UserModel = {
+      
+      const userToLogIn: any = {
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
       this.authService.login(userToLogIn);
+      
     }
   }
 
