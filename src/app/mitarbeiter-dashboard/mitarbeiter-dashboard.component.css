@@ -1,5 +1,6 @@
 .table{
   min-width: 100vw;
+  font-size: 21px;
 }
 
 .table_header{
@@ -24,6 +25,7 @@
 .add_button {
   padding: 10px 20px;
   background-color: #97DB4F;
+  font-size: 16px;
   color: white;
   border: none;
   border-radius: 6px;
@@ -64,7 +66,7 @@ th,td {
 
 td:first-child {
   font-weight: bold;
-  font-size: larger; 
+  font-size: large; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,9 +102,10 @@ td:first-child {
 
   .quantity input[type="number"]::-webkit-inner-spin-button,
   .quantity input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  display: none;
+    flex: 1;
+    -webkit-appearance: none;
+    margin: 0;
+    display: none;
 }
   
 .quantity .decrement,
@@ -138,27 +141,27 @@ input[type="number"] {
   padding: 3px 8px;
   border-radius: 5px;
   background-color: #f2f2f2;
-  font-size: 14px;
+  font-size: 21px;
   color: #333333;
 }
 
 .action-icons {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
   
 .edit-btn, .delete-btn {
-  background-color: transparent;
+  background-color: #f2f2f2;
   border: none;
-  padding: 0;
-  margin: 0 5px; 
+  padding: 8px 16px; 
+  margin: 5px 0; 
   cursor: pointer;
-}
-
-.edit-btn i, .delete-btn i {
-  width: 20px; 
-  height: 20px; 
+  display: block; 
+  width: 100%;
+  margin-bottom: 5px; 
+  border-radius: 6px;
 }
 
 .edit-btn:hover {
@@ -168,4 +171,3 @@ input[type="number"] {
 .delete-btn:hover {
   color: #F96F5D; 
 }
-  
