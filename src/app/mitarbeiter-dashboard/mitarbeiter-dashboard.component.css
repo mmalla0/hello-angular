@@ -1,14 +1,76 @@
+.table{
+  min-width: 100vw;
+}
+
+.table_header{
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  padding: 20px; 
+  background-color: rgb(240, 240, 240);
+}
+
+.table_header p {
+  font-weight: bold;
+  font-size: xx-large; 
+  margin: 0 auto; 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}
+
+
+.add_button {
+  padding: 10px 20px;
+  background-color: #97DB4F;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: auto;
+}
+
+.add-button:hover {
+  background-color: #78B93A;
+}
+
+.table_section{
+  height: 650px;
+  overflow: auto;
+  table-layout: fixed;
+}
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th{
+  position: sticky;
+  top: 0; 
+  background-color: #7EB63D;
+  color: white;
+  font-size: 15px;
+}  
   
-  th,
-  td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
+th,td {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  word-break: break-all;
+}
+
+td:first-child {
+  font-weight: bold;
+  font-size: larger; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none; 
+  padding-bottom: 0; 
+}
   
   th {
     background-color: #f2f2f2;
@@ -19,17 +81,21 @@ table {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+    justify-content: center;
   }
   
   .product-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
+    object-fit: cover;
+    border-radius: 15px;
   }
   
   .quantity {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .quantity input[type="number"]::-webkit-inner-spin-button,
@@ -43,7 +109,7 @@ table {
 .quantity .increment {
   padding: 5px 10px;
   border: none;
-  background-color: #555555;
+  background-color: #839788;
   color: #ffffff;
   font-size: 14px;
   cursor: pointer;
@@ -51,76 +117,55 @@ table {
 
 .quantity .decrement:hover,
 .quantity .increment:hover {
-  background-color: #555555;
+  background-color: #627274;
+
+}
+
+.decrement:hover, .increment:hover {
+  background-color: #f2f2f2;
+}
+
+input[type="number"] {
+  width: 40px;
+  padding: 5px;
+  border: none;
+  text-align: center;
 }
   
-  .decrement:hover,
-  .increment:hover {
-    background-color: #f2f2f2;
-  }
-  
-  input[type="number"] {
-    width: 40px;
-    padding: 5px;
-    border: none;
-    text-align: center;
-  }
-  
-  .category {
-    display: inline-block;
-    margin-right: 5px;
-    padding: 3px 8px;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    font-size: 14px;
-    color: #333333;
-  }
-  
+.category {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  font-size: 14px;
+  color: #333333;
+}
 
-  .add-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 10px 20px;
-    background-color: #97DB4F;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: auto;
-  }
+.action-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
   
-  .add-button:hover {
-    background-color: #7EB63D;
-  }
+.edit-btn, .delete-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0 5px; 
+  cursor: pointer;
+}
 
-  .action-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .edit-btn,
-  .delete-btn {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0 5px; 
-    cursor: pointer;
-  }
-  
-  .edit-btn i,
-  .delete-btn i {
-    width: 20px; 
-    height: 20px; 
-  }
+.edit-btn i, .delete-btn i {
+  width: 20px; 
+  height: 20px; 
+}
 
-  .edit-btn:hover {
-    color: #97DB4F; 
-  }
-  
-  .delete-btn:hover {
-    color: #F96F5D; 
-  }
-  
+.edit-btn:hover {
+  color: #97DB4F; 
+}
+
+.delete-btn:hover {
+  color: #F96F5D; 
+}
   
