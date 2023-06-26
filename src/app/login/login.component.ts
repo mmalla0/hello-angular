@@ -36,11 +36,13 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.formHatFehler = false;
+      /*
       const userToLogIn: UserModel = {
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
       this.authService.login(userToLogIn);
+      */
     }
   }
 

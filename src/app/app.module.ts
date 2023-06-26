@@ -16,6 +16,9 @@ import { DatabaseService } from './services/database.service';
 import { StockpileListComponent } from './stockpile-list/stockpile-list.component';
 import { StockpileItemComponent } from './stockpile-item/stockpile-item.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
+import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
+import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
+import { LandingPageComponent } from './landingpage/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-das
     StockpileListComponent,
     StockpileItemComponent,
     StockpileDashboardComponent,
+    MitarbeiterDashboardComponent,
+    WarenuebersichtComponent,
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,3 +49,4 @@ import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-das
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export class OrderModule { }
