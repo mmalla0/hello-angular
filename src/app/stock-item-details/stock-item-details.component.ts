@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../shared/item';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-stock-item-details',
@@ -13,6 +14,8 @@ export class StockItemDetailsComponent implements OnInit {
   @Output() saveClick: EventEmitter<Item> = new EventEmitter<Item>();
   editedProduct: Item;
   categoriesToAdd: string[] = [];
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     if (this.isEditing) {
@@ -31,13 +34,24 @@ export class StockItemDetailsComponent implements OnInit {
     this.saveClick.emit(editedProduct);
   }
 
-  onFileSelected(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      // Update the picture property of the product or categoriesToAdd array
-    }
+  handleFileUpload(event: any) {
+    const file = event.target.files[0];
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+  
+    this.http.post('/upload', formData).subscribe({
+      next: (response) => {
+        // File uploaded successfully
+        console.log('File uploaded successfully.');
+      },
+      error: (error) => {
+        // Handle error
+        console.error('Error uploading file:', error);
+      }
+    });
   }
+  
+  
 
   addCategory(): void {
     this.categoriesToAdd.push('');

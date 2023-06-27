@@ -1,5 +1,5 @@
 .product-form {
-    background-color: #f2f2f2;
+    background-color: rgba(131, 151, 136, 0.2);
     border-radius: 10px;
     padding: 20px;
     width: 60%;
@@ -22,6 +22,7 @@
   .product-form h2 {
     font-size: 24px;
     margin-bottom: 20px;
+    font-weight: bold;
   }
   
   .product-form form {
@@ -52,19 +53,31 @@
     justify-content: center;
   }
   
-  .product-form button {
+  .product-form .save-button {
     padding: 10px 20px;
     margin: 0 10px;
     border-radius: 5px;
-    background-color: #4CAF50;
+    background-color:#73877B;;
     color: #fff;
     font-size: 16px;
     border: none;
     cursor: pointer;
   }
-  
-  .product-form button:hover {
-    background-color: #45a049;
+
+  .product-form .cancel-button{
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    background-color: #839788;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .product-form .save-button:hover, 
+  .product-form .cancel-button:hover{
+    background-color: #9BB1B9;
   }
 
   .category-input {
@@ -76,15 +89,20 @@
   .category-input input {
     flex: 1;
   }
-  
-  .category-input button {
+
+  .form-group button.add-category{
     margin-left: 5px;
+    margin-bottom: 15px;
+    background-color: #F6AE2D;
+    color: white;
+    border: none;
+    height: 35px;
   }
 
   .category-input button.remove-category {
     margin-left: 5px;
     margin-bottom: 15px;
-    background-color: red;
+    background-color: #F6AE2D;
     color: white;
     border: none;
     height: 35px; 
