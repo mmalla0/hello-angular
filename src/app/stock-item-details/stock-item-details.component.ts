@@ -50,4 +50,8 @@ export class StockItemDetailsComponent implements OnInit {
   cancel() {
     this.cancelClick.emit();
   }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
+  }
 }

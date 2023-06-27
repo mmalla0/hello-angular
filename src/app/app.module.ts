@@ -45,6 +45,7 @@ import { StockItemDetailsComponent } from './stock-item-details/stock-item-detai
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule
   ],
   providers: [DatabaseService],
