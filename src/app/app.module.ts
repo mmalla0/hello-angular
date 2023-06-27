@@ -19,6 +19,7 @@ import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-das
 import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
+import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
     MitarbeiterDashboardComponent,
     WarenuebersichtComponent,
     LandingPageComponent,
+    StockItemDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +45,7 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule
   ],
   providers: [DatabaseService],

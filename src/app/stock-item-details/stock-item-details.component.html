@@ -1,0 +1,45 @@
+<div class="product-form">
+  <h2>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h2>
+  <form>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" [(ngModel)]="editedProduct.name" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" [(ngModel)]="editedProduct.price" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="bestBeforeDate">Best Before Date:</label>
+        <input type="text" id="bestBeforeDate" name="bestBeforeDate" [(ngModel)]="editedProduct.bestBeforeDate">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" [(ngModel)]="editedProduct.quantity" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="picture">Picture:</label>
+        <input type="file" id="picture" name="picture" (change)="onFileSelected($event)">
+      </div>
+      <div class="form-group">
+        <label for="categories">Categories:</label>
+        <ng-container *ngFor="let category of categoriesToAdd; let i = index; trackBy: trackByIndex">
+          <div class="category-input">
+            <input type="text" [id]="'category' + i" [name]="'category' + i" [(ngModel)]="categoriesToAdd[i]">
+            <button type="button" class="remove-category" (click)="removeCategory(i)">-</button>
+          </div>
+        </ng-container>
+        <button type="button" class="add-category" (click)="addCategory()">+</button>
+      </div>
+    </div>
+    <div class="buttons">
+      <button type="button" (click)="save()">Save</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>
