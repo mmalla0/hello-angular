@@ -12,43 +12,42 @@ export class StockItemDetailsComponent implements OnInit {
   @Output() cancelClick: EventEmitter<void> = new EventEmitter<void>();
   @Output() saveClick: EventEmitter<Item> = new EventEmitter<Item>();
   editedProduct: Item;
+  categoriesToAdd: string[] = [];
 
-  
   ngOnInit() {
     if (this.isEditing) {
-      this.editedProduct = { ...this.product }; // Assign a copy of product to editedProduct
-
+      this.editedProduct = { ...this.product };
+      this.categoriesToAdd = [...this.editedProduct.categories];
     } else {
       this.editedProduct = { id: 0, name: '', price: null, bestBeforeDate: '', quantity: null, picture: '', categories: [] };
     }
   }
 
   save(): void {
-    this.saveClick.emit(this.editedProduct);
-      this.editedProduct.categories = this.editedProduct.categories.filter((category: string) => category.trim() !== '');
+    const editedProduct: Item = {
+      ...this.editedProduct,
+      categories: this.categoriesToAdd.filter((category) => category.trim() !== '')
+    };
+    this.saveClick.emit(editedProduct);
   }
-  
+
   onFileSelected(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      this.editedProduct.picture = file.name;
+      // Update the picture property of the product or categoriesToAdd array
     }
   }
 
   addCategory(): void {
-    this.editedProduct.categories.push('');
+    this.categoriesToAdd.push('');
   }
 
   removeCategory(index: number): void {
-    this.editedProduct.categories.splice(index, 1);
+    this.categoriesToAdd.splice(index, 1);
   }
 
   cancel() {
     this.cancelClick.emit();
-  }
-
-  updateCategories(): void {
-    this.editedProduct.categories = this.editedProduct.categories.filter((category: string) => category.trim() !== '');
   }
 }
