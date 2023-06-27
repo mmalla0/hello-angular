@@ -2,6 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+//import { first } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 interface Item {
@@ -19,13 +22,8 @@ interface Item {
 interface Image {
   imgitemID: number;
   img_url: string;
-  imgAlt: string;}
-
-import { AuthService } from '../services/auth.service';
-//import { first } from 'rxjs';
-import { Router } from '@angular/router';
-
-
+  imgAlt: string;
+}
 
 @Component({
   selector: 'app-landing-page',
@@ -44,11 +42,10 @@ import { Router } from '@angular/router';
       //transition('inactive => active', animate('500ms ease-in')),
       //transition('active => inactive', animate('500ms ease-out'))
       transition('inactive <=> active', animate('2s ease-in-out'))
-
-
     ])
   ]
 })
+
 export class LandingPageComponent implements OnInit {
 
 
@@ -72,12 +69,16 @@ export class LandingPageComponent implements OnInit {
   randomImages: Image[] = [];
 
   autoChangeInterval: any;
+  isLoggedIn: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.getItems();
     this.autoChangeImages();
+    this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    })
   }
 
 
@@ -107,19 +108,6 @@ export class LandingPageComponent implements OnInit {
     }
 
     return randomItems;
-  }
-
-
-  autoChangeInterval: any;
-  isLoggedIn: boolean = false;
-
-  constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit() {
-    this.autoChangeImages();
-    this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
-        this.isLoggedIn= loggedIn;
-    })
   }
 
   handleLoginClicked() {

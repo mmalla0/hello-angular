@@ -52,7 +52,7 @@ import { StockItemDetailsComponent } from './stock-item-details/stock-item-detai
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    CommonModule
+    CommonModule,
     ReactiveFormsModule
   ],
   providers: [DatabaseService],
