@@ -3,9 +3,10 @@
 <!-- Menu -->
 <nav class="menu">
     <ul>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Register</a></li>
-        <li><a href="#">About Us</a></li>
+        <li *ngIf="!isLoggedIn"><button (click)="handleLoginClicked()">Login</button></li>
+        <li *ngIf="!isLoggedIn"><button (click)="handleRegisterClicked()">Register</button></li>
+        <li *ngIf="isLoggedIn" ><button (click)="handleLogoutClicked()">Logout</button></li>
+        <!--<li><a href="#">About Us</a></li>-->
     </ul>
 </nav>
 
@@ -40,7 +41,7 @@
     <li><a href="#">Health</a></li>
 </ul>
 </div>
- 
+
 
 <!-- Diverse Images Section -->
 <div class="diverse-images-section">

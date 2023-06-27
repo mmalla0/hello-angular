@@ -16,10 +16,14 @@ import { DatabaseService } from './services/database.service';
 import { StockpileListComponent } from './stockpile-list/stockpile-list.component';
 import { StockpileItemComponent } from './stockpile-item/stockpile-item.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
+
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LandingPageComponent } from './landingpage/landing-page.component';
+import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
+import { LandingPageComponent } from './landingpage/landing-page.component';
+import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +39,10 @@ import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.comp
     StockpileListComponent,
     StockpileItemComponent,
     StockpileDashboardComponent,
-    WarenuebersichtComponent
+    MitarbeiterDashboardComponent,
+    WarenuebersichtComponent,
+    LandingPageComponent,
+    StockItemDetailsComponent
   ],
   imports: [
     RouterModule,
@@ -46,8 +53,10 @@ import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.comp
     FormsModule,
     BrowserAnimationsModule,
     CommonModule
+    ReactiveFormsModule
   ],
   providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export class OrderModule { }

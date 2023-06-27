@@ -19,8 +19,13 @@ interface Item {
 interface Image {
   imgitemID: number;
   img_url: string;
-  imgAlt: string;
-}
+  imgAlt: string;}
+
+import { AuthService } from '../services/auth.service';
+//import { first } from 'rxjs';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-landing-page',
@@ -39,13 +44,14 @@ interface Image {
       //transition('inactive => active', animate('500ms ease-in')),
       //transition('active => inactive', animate('500ms ease-out'))
       transition('inactive <=> active', animate('2s ease-in-out'))
-     
+
 
     ])
   ]
 })
 export class LandingPageComponent implements OnInit {
-  
+
+
   /*images: string[] = [
     '../assets/images/spacesuite.jpg',
     '../assets/images/virtualpet_cat.jpg',
@@ -69,7 +75,7 @@ export class LandingPageComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getItems();
     this.autoChangeImages();
   }
@@ -104,6 +110,29 @@ export class LandingPageComponent implements OnInit {
   }
 
 
+  autoChangeInterval: any;
+  isLoggedIn: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit() {
+    this.autoChangeImages();
+    this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
+        this.isLoggedIn= loggedIn;
+    })
+  }
+
+  handleLoginClicked() {
+    this.router.navigate(['/login'])
+  }
+
+  handleRegisterClicked() {
+    this.router.navigate(['/register'])
+  }
+
+  handleLogoutClicked() {
+    this.authService.logout()
+  }
 
   autoChangeImages() {
     this.autoChangeInterval = setInterval(() => {
@@ -122,17 +151,18 @@ export class LandingPageComponent implements OnInit {
 
   getProductInfo(): Item {
     return this.items[this.activeImageIndex];
+
   }
 
   getImageState(index: number) {
     return index === this.activeImageIndex ? 'active' : 'inactive';
   }
 }
-  
-  
-  
-  
- 
+
+
+
+
+
 
 
 

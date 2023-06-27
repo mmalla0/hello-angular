@@ -17,6 +17,15 @@
             <label for="password">Passwort</label>
             <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
         </div>
+        <div class="zahlungsmethode-optionlist">
+            <label for="zahlungsmethode">Zahlungsmethode</label>
+            <select id="zahlungsmethode" formControlName="zahlungsmethode" (input)="handleZahlungsmethodeValueChange($event)">
+                <option value="kreditkarte">Kreditkarte</option>
+                <option value="debitkarte">Debitkarte</option>
+                <option value="paypal">Paypal</option>
+                <option value="applepay">Apple Pay</option>
+            </select>
+        </div>
 
     </form>
     <div class="buttons">
