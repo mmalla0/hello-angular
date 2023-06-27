@@ -45,12 +45,14 @@ export class RegisterComponent implements OnInit {
       this.formHatFehler = true;
     } else {
       this.formHatFehler = false;
+      /*
       const userToRegister: UserModel = {
         name: this.form.get('name')?.value,
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       }
       this.authService.register(userToRegister);
+      */
       this.router.navigate(['/']);
     }
   }

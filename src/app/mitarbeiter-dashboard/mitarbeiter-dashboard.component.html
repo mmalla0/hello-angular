@@ -1,42 +1,56 @@
-<button class="add-button">Add new item</button>
-<table>
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Images</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>In store</th>
-        <th>Categories</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
+<div *ngIf="showForm">
+  <app-stock-item-details
+    [product]="selectedProduct"
+    [isEditing]="selectedProduct !== null"
+    (cancelClick)="hideProductForm()"
+    (saveClick)="saveProduct($event)"
+  ></app-stock-item-details>
+</div>
+<div class="table">
+  <div class="table_header">
+    <p>Stock</p>
+    <button class="add_button" (click)="showProductForm()">+ Add new item</button>
+  </div>
+  <div class="table_section">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sortItems()">Item <i class="fas fa-sort" [ngClass]="getSortIcon('name')"></i></th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>In Store</th>
+          <th>Best before date</th>
+          <th>Categories</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
         <tr *ngFor="let product of products">
-            <td>{{ product.name }}</td>
-            <td>
-                <div class="image-container">
-                  <img *ngFor="let picture of product.pictures" [src]="'assets/images/' + picture" alt="Product Image" class="product-image" />
-                </div>
-            </td>
-          <td>{{ product.description }}</td>
-          <td>${{ product.price}}</td>
+          <td>{{ product.name }}</td>
           <td>
-            <div class="quantity">
-              <button class="decrement">-</button>
-              <input type="number" [value]="product.storeQuantity">
-              <button class="increment">+</button>
+            <div class="image-container">
+              <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
             </div>
           </td>
+          <td>${{ product.price }}</td>
+          <td>
+            <div class="quantity">
+              <button class="decrement" (click)="decreaseQuantity(product)">-</button>
+              <input type="number" [(ngModel)]="product.quantity">
+              <button class="increment" (click)="increaseQuantity(product)">+</button>
+            </div>
+          </td>
+          <td>{{ product.bestBeforeDate }}</td>
           <td>
             <div *ngFor="let category of product.categories" class="category">{{ category }}</div>
           </td>
           <td>
             <div class="action-icons">
-              <button class="edit-btn"><i class="fas fa-edit"></i></button>
-              <button class="delete-btn"><i class="fas fa-trash"></i></button>
+              <button class="edit-btn" (click)="editItem(product)"><i class="fas fa-edit"></i></button>
+              <button class="delete-btn" (click)="deleteItem(product)"><i class="fas fa-trash"></i></button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
