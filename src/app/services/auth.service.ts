@@ -3,7 +3,6 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-
 export enum Zahlungsmethode {
   PAYPAL = 'paypal',
   KREDITKARTE = 'kreditkarte',
@@ -36,7 +35,6 @@ export interface UserModel {
 }
 */
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -63,11 +61,8 @@ export class AuthService {
       id: 2,
      // name: 'Maya Malla',                 // TODO: name rausnehmen
       email: 'maya@gmail.com',
-
       password: 'mayqapassword!',
      // zahlungsmethode: Zahlungsmethode.APPLEPAY
-
-      //password: 'mayapassword!',
       firstName: 'Maya',
       lastName: 'Malla',
       addressId: 2,

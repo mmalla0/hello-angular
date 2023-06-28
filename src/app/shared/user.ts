@@ -15,5 +15,13 @@ export interface StockpileItem {
     name: string;
     quantity: number;
     bestBeforeDate: Date;
+    product: string;
 }
+export interface StockpileItemEntry {
+    product: StockpileItem;
+    bestBeforeDates: {
+      date: Date;
+      count: number;
+    }[];
+  }
 

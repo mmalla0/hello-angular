@@ -5,8 +5,9 @@ import { RegisterComponent } from './register/register.component';
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
-
 import { CartComponent } from './cart/cart.component';
+import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
+
 
 const routes: Routes = [
   { path: 'landing', component: LandingPageComponent },
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'cart', component: CartComponent },
-
+  { path: 'stockpile', component: StockpileDashboardComponent },
   // Nutzer zur Hauptseite weiterleiten
   { path: '**', redirectTo: '' },
 ];
