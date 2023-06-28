@@ -8,7 +8,7 @@ export enum Zahlungsmethode {
   KREDITKARTE = 'kreditkarte',
   DEBITKARTE = 'debitkarte',
   APPLEPAY = 'applepay'
-};
+}
 /*
 export interface UserModel {
   id?: number,

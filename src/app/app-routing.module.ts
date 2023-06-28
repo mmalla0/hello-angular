@@ -8,7 +8,6 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
 import { CartComponent } from './cart/cart.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
 
-
 const routes: Routes = [
   { path: 'landing', component: LandingPageComponent },
   { path: 'dashboard', component: MitarbeiterDashboardComponent },

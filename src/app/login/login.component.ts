@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-import { User } from '../shared/user';
-=======
-//import { User } from '../shared/user';
->>>>>>> userStockpile
+
 
 @Component({
   selector: 'app-login',
@@ -41,22 +37,16 @@ export class LoginComponent implements OnInit {
       return;
     } else {
       this.formHatFehler = false;
-<<<<<<< HEAD
       
-      const userToLogIn: any = {
-=======
+      //const userToLogIn: any = {   So war es in Main
+
       const userToLogIn: User = {                                                  TODO: umschreiben
->>>>>>> userStockpile
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
       this.authService.login(userToLogIn);
-<<<<<<< HEAD
-      
-    }
-=======
+
     }*/
->>>>>>> userStockpile
   }
 
   handleRegisterClicked() {
