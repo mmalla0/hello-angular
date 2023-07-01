@@ -14,7 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // configuration =================
 app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO rename to your app-name
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'src')));
+
 
 
 // listen (start app with node server.js) ======================================
@@ -50,27 +51,28 @@ app.get('/test', (req, res) => {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/'); // Change 'uploads/' to the desired folder name
+      cb(null, 'src/assets/images/'); // Destination folder for storing uploaded images
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, file.originalname); // Use the original filename for the uploaded image
     }
-});
+  });
   
-const upload = multer({ storage: storage });
-
-app.post('/api/fileupload', upload.single('file'), function (req, res) {
+  const upload = multer({ storage: storage });
+  
+  app.post('/api/fileupload', upload.single('file'), function (req, res) {
     console.log('Received file:', req.file);
+  
     if (!req.file) {
       console.log('No file uploaded');
       res.status(400).json({ error: 'No file uploaded' });
       return;
     }
   
+    const uploadedFileName = req.file.originalname;
+    res.json({ fileName: uploadedFileName });
     console.log('File uploaded:', req.file);
-    res.json({ message: 'File uploaded successfully' });
   });
-  
   
 
 app.get('/items/', function (req, res) {
