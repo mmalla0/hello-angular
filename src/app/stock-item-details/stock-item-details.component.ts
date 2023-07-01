@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../shared/item';
-import { HttpClient } from '@angular/common/http';
+import { FileUploadService } from '../services/file-upload-service/file-upload.service';
 
 @Component({
   selector: 'app-stock-item-details',
@@ -14,8 +14,7 @@ export class StockItemDetailsComponent implements OnInit {
   @Output() saveClick: EventEmitter<Item> = new EventEmitter<Item>();
   editedProduct: Item;
   categoriesToAdd: string[] = [];
-
-  constructor(private http: HttpClient) {}
+  filePath : String;
 
   ngOnInit() {
     if (this.isEditing) {
@@ -25,6 +24,8 @@ export class StockItemDetailsComponent implements OnInit {
       this.editedProduct = { id: 0, name: '', price: null, bestBeforeDate: '', quantity: null, picture: '', categories: [] };
     }
   }
+
+  constructor(private fileUploadService: FileUploadService) {}
 
   save(): void {
     const editedProduct: Item = {
@@ -36,23 +37,18 @@ export class StockItemDetailsComponent implements OnInit {
 
   handleFileUpload(event: any) {
     const file = event.target.files[0];
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-  
-    this.http.post('/upload', formData).subscribe({
-      next: (response) => {
-        // File uploaded successfully
+    this.fileUploadService.uploadFile(file)
+      .then(response => {
         console.log('File uploaded successfully.');
-      },
-      error: (error) => {
-        // Handle error
+        const fileName = file.name;
+        this.filePath = "uploads/" + fileName; 
+      })
+      .catch(error => {
         console.error('Error uploading file:', error);
-      }
-    });
+      });
   }
   
   
-
   addCategory(): void {
     this.categoriesToAdd.push('');
   }

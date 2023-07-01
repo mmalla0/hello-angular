@@ -3,9 +3,8 @@ var express = require('express');
 var app = express();                               // create our app w/ express 
 var path = require('path');
 var mysql = require('mysql');
-
+const multer = require('multer');
 bodyParser = require('body-parser');
-
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
@@ -15,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // configuration =================
 app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO rename to your app-name
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // listen (start app with node server.js) ======================================
 app.listen(8080, function () {
@@ -39,7 +40,38 @@ const connection = mysql.createConnection({
 //app.get('/landing', function (req, res) {
 //    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
 //});
+app.get('/test', (req, res) => {
+    res.send('This is a test route!');
+  });
 
+/**
+ * Logic for file uploads
+ */
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/'); // Change 'uploads/' to the desired folder name
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+});
+  
+const upload = multer({ storage: storage });
+
+app.post('/api/fileupload', upload.single('file'), function (req, res) {
+    console.log('Received file:', req.file);
+    if (!req.file) {
+      console.log('No file uploaded');
+      res.status(400).json({ error: 'No file uploaded' });
+      return;
+    }
+  
+    console.log('File uploaded:', req.file);
+    res.json({ message: 'File uploaded successfully' });
+  });
+  
+  
 
 app.get('/items/', function (req, res) {
     connection.connect(function (err) {
