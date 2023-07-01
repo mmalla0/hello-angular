@@ -9,7 +9,7 @@ import { Item } from '../shared/item';
 export class MitarbeiterDashboardComponent {
 
   products: Item[] = [
-    { id: 1, name: '2X2Re Stone', price: 50000, bestBeforeDate: '02.01.2320', quantity: 3, picture: '../../../uploads/x_wing.jpeg', categories: ['Other', 'Art'] },
+    { id: 1, name: '2X2Re Stone', price: 50000, bestBeforeDate: '02.01.2320', quantity: 3, picture: 'space_stone.jpeg', categories: ['Other', 'Art'] },
     { id: 2, name: 'X-Wing', price: 67658, bestBeforeDate: '-', quantity: 30, picture: 'x_wing.jpeg', categories: ['Equipment', 'Other'] },
     { id: 3, name: 'Spacetronics Starsuit', price: 200000, bestBeforeDate: '-', quantity: 11, picture: 'spacesuite.jpg', categories: ['Equipment', 'Fashion'] },
     { id: 4, name: 'VirtuCare Pets - CatBot Edition', price: 99.99, bestBeforeDate: '-', quantity: 30, picture: 'virtualpet_cat.jpg', categories: ['Art', 'Toys', 'Other'] },

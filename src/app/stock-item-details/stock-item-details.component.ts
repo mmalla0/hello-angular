@@ -14,7 +14,7 @@ export class StockItemDetailsComponent implements OnInit {
   @Output() saveClick: EventEmitter<Item> = new EventEmitter<Item>();
   editedProduct: Item;
   categoriesToAdd: string[] = [];
-  filePath : string;
+  file: File;
 
   ngOnInit() {
     if (this.isEditing) {
@@ -32,23 +32,27 @@ export class StockItemDetailsComponent implements OnInit {
       ...this.editedProduct,
       categories: this.categoriesToAdd.filter((category) => category.trim() !== '')
     };
-    this.saveClick.emit(editedProduct);
+
+    if (this.file) {
+      this.fileUploadService.uploadFile(this.file)
+        .then(response => {
+          console.log('File uploaded successfully.');
+          const fileName = response.fileName;
+          editedProduct.picture = fileName;
+          this.editedProduct.picture = fileName;
+          this.saveClick.emit(editedProduct);
+        })
+        .catch(error => {
+          console.error('Error uploading file:', error);
+        });
+    } else {
+      this.saveClick.emit(editedProduct);
+    }
   }
 
   handleFileUpload(event: any) {
-    const file = event.target.files[0];
-    this.fileUploadService.uploadFile(file)
-      .then(response => {
-        console.log('File uploaded successfully.');
-        const fileName = response.fileName; 
-        this.filePath = "assets/images/" + fileName; 
-      })
-      .catch(error => {
-        console.error('Error uploading file:', error);
-      });
+    this.file = event.target.files[0];
   }
-  
-  
   
   addCategory(): void {
     this.categoriesToAdd.push('');
