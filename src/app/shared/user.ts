@@ -10,6 +10,9 @@ export interface User {
     cartId: number; 
     stockpileId: number;
 }
+
+
+
 export interface StockpileItem {
     id: string;
     name: string;

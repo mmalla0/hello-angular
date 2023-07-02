@@ -19,6 +19,8 @@ export interface UserModel {
 }
 */
 import { User } from '../shared/user';
+import { LoginComponent } from '../login/login.component';
+import { LoginCredentials } from '../shared/loginCredentials';
 /*
 export interface UserModel {   
   id: number;
@@ -125,7 +127,7 @@ export class AuthService {
       console.warn('Benutzer schon vorhanden!')
     }    
   }
-
+/*
   login (user: User){
     const userEmail = user.email.toLowerCase();
 
@@ -148,6 +150,30 @@ export class AuthService {
       console.warn('Anmeldung fehlgeschlagen!')
     }
   }
+  */
+  login (user: LoginCredentials){
+    const userEmail = user.email.toLowerCase();
+
+    const userIndex = this.users.findIndex((user: LoginCredentials) => user.email === userEmail);
+  
+    if (userIndex !== -1){
+      const userInfoInDb = this.users[userIndex];
+      if (user.password === userInfoInDb.password){
+        console.info('Erfolgreich angemeldet!');
+        this.userLoggedIn.next(true);
+
+        this.router.navigate(['/landing']);
+
+        this.currentUser = userInfoInDb; //  Setze den aktuellen Benutzer auf den angemeldeten Benutzer
+
+      } else {
+        console.warn('Anmeldung fehlgeschlagen!')
+      }
+    } else {
+      console.warn('Anmeldung fehlgeschlagen!')
+    }
+  }
+
 
   logout (){
     this.userLoggedIn.next(false);
