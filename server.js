@@ -86,36 +86,40 @@ const storage = multer.diskStorage({
 
         console.log('Connected to the database');
 
-        connection.query('SELECT * FROM item', function (error, results, fields) {
-            if (error) {
-                console.error('Error executing the database query:', error.stack);
-                res.status(500).json({ error: 'Failed to retrieve items' });
-                connection.end(); // Close the connection here in case of an error
-                return;
-            }
+        connection.query('SELECT item.*, GROUP_CONCAT(category.category_name) AS categories ' +
+            'FROM item ' +
+            'JOIN category_items ON item.item_ID = category_items.ci_item_id ' +
+            'JOIN category ON category_items.ci_category_id = category.category_id ' +
+            'GROUP BY item.item_ID', function (error, results, fields) {
+                if (error) {
+                    console.error('Error executing the database query:', error.stack);
+                    res.status(500).json({ error: 'Failed to retrieve items' });
+                    connection.end(); // Close the connection here in case of an error
+                    return;
+                }
 
-            console.log('Retrieved items from the database');
+                console.log('Retrieved items from the database');
 
-            const items = results.map(itemResult => {
-                const item = {
-                    item_ID: itemResult.item_ID,
-                    item_name: itemResult.item_name,
-                    item_description: itemResult.item_description,
-                    item_price: itemResult.item_price,
-                    stock: itemResult.stock,
-                    employee_id: itemResult.employee_id,
-                    best_before: itemResult.best_before,
-                    item_imgpath: itemResult.item_imgpath
-                };
+                const items = results.map(itemResult => {
+                    const item = {
+                        item_ID: itemResult.item_ID,
+                        item_name: itemResult.item_name,
+                        item_description: itemResult.item_description,
+                        item_price: itemResult.item_price,
+                        stock: itemResult.stock,
+                        employee_id: itemResult.employee_id,
+                        best_before: itemResult.best_before,
+                        item_imgpath: itemResult.item_imgpath,
+                        categories: itemResult.categories.split(',') // Split the category names into an array
+                    };
 
-                return item;
-            });
+                    return item;
+                });
 
-            res.json(items);
+                res.json(items);
 
-
-            connection.end(); // Close the connection here after retrieving the items
-            console.log('Disconnected from the database');
+                connection.end(); // Close the connection here after retrieving the items
+                console.log('Disconnected from the database');
         });
     });
 });

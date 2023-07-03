@@ -12,11 +12,11 @@ interface Item {
   item_name: string;
   item_description: string;
   item_price: number;
-  category_id: number;
   stock: number;
   employee_id: number;
   best_before: string;
   item_imgpath: string;
+  categories: string[];
 }
 
 interface Image {
@@ -70,6 +70,8 @@ export class LandingPageComponent implements OnInit {
 
   autoChangeInterval: any;
   isLoggedIn: boolean = false;
+
+  selectedCategoryItems: Item[] = [];
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
@@ -147,8 +149,13 @@ export class LandingPageComponent implements OnInit {
   getImageState(index: number) {
     return index === this.activeImageIndex ? 'active' : 'inactive';
   }
-}
 
+  changeCategory(category: string) {
+    const categoryItems = this.items.filter(item => item.categories.includes(category));
+    this.selectedCategoryItems = categoryItems.slice(0, 3);
+  }
+
+}
 
 
 
