@@ -1,11 +1,10 @@
-// set up ======================== 
+// set up ========================
 var express = require('express');
-var app = express();                               // create our app w/ express 
+var app = express();                               // create our app w/ express
 var path = require('path');
 var mysql = require('mysql');
-
+const multer = require('multer');
 bodyParser = require('body-parser');
-
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
@@ -15,6 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // configuration =================
 app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO rename to your app-name
+app.use(express.static(path.join(__dirname, 'src')));
+
+
 
 // listen (start app with node server.js) ======================================
 app.listen(8080, function () {
@@ -23,7 +25,7 @@ app.listen(8080, function () {
 
 // application -------------------------------------------------------------
 app.get('/', function (req, res) {
-    //res.send("Hello World123");     
+    //res.send("Hello World123");
     res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO rename to your app-name
 });
 
@@ -33,6 +35,10 @@ app.get('/', function (req, res) {
 //app.get('/landing', function (req, res) {
 //    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
 //});
+app.get('/test', (req, res) => {
+    res.send('This is a test route!');
+  });
+
 
 app.get('/landing', function (req, res) {
 
@@ -43,6 +49,37 @@ app.get('/landing', function (req, res) {
         user: "23_IT_Grp_5",
         password: "JJQGNC8h79VkiSNmK}8I"
     });
+
+/**
+ * Logic for file uploads
+ */
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'src/assets/images/'); // Destination folder for storing uploaded images
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname); // Use the original filename for the uploaded image
+    }
+  });
+
+  const upload = multer({ storage: storage });
+
+  app.post('/api/fileupload', upload.single('file'), function (req, res) {
+    console.log('Received file:', req.file);
+
+    if (!req.file) {
+      console.log('No file uploaded');
+      res.status(400).json({ error: 'No file uploaded' });
+      return;
+    }
+
+    const uploadedFileName = req.file.originalname;
+    res.json({ fileName: uploadedFileName });
+    console.log('File uploaded:', req.file);
+  });
+
+
 
     connection.connect(function (err) {
         if (err) {
@@ -79,7 +116,7 @@ app.get('/landing', function (req, res) {
             });
 
             res.json(items);
-            
+
 
             connection.end(); // Close the connection here after retrieving the items
             console.log('Disconnected from the database');

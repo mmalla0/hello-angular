@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../shared/item';
-import { HttpClient } from '@angular/common/http';
+import { FileUploadService } from '../services/file-upload-service/file-upload.service';
 
 @Component({
   selector: 'app-stock-item-details',
@@ -14,8 +14,7 @@ export class StockItemDetailsComponent implements OnInit {
   @Output() saveClick: EventEmitter<Item> = new EventEmitter<Item>();
   editedProduct: Item;
   categoriesToAdd: string[] = [];
-
-  constructor(private http: HttpClient) {}
+  file: File;
 
   ngOnInit() {
     if (this.isEditing) {
@@ -26,33 +25,35 @@ export class StockItemDetailsComponent implements OnInit {
     }
   }
 
+  constructor(private fileUploadService: FileUploadService) {}
+
   save(): void {
     const editedProduct: Item = {
       ...this.editedProduct,
       categories: this.categoriesToAdd.filter((category) => category.trim() !== '')
     };
-    this.saveClick.emit(editedProduct);
+
+    if (this.file) {
+      this.fileUploadService.uploadFile(this.file)
+        .then(response => {
+          console.log('File uploaded successfully.');
+          const fileName = response.fileName;
+          editedProduct.picture = fileName;
+          this.editedProduct.picture = fileName;
+          this.saveClick.emit(editedProduct);
+        })
+        .catch(error => {
+          console.error('Error uploading file:', error);
+        });
+    } else {
+      this.saveClick.emit(editedProduct);
+    }
   }
 
   handleFileUpload(event: any) {
-    const file = event.target.files[0];
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-  
-    this.http.post('/upload', formData).subscribe({
-      next: (response) => {
-        // File uploaded successfully
-        console.log('File uploaded successfully.');
-      },
-      error: (error) => {
-        // Handle error
-        console.error('Error uploading file:', error);
-      }
-    });
+    this.file = event.target.files[0];
   }
   
-  
-
   addCategory(): void {
     this.categoriesToAdd.push('');
   }

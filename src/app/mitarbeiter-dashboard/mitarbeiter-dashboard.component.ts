@@ -7,6 +7,7 @@ import { Item } from '../shared/item';
   styleUrls: ['./mitarbeiter-dashboard.component.css']
 })
 export class MitarbeiterDashboardComponent {
+
   products: Item[] = [
     { id: 1, name: '2X2Re Stone', price: 50000, bestBeforeDate: '02.01.2320', quantity: 3, picture: 'space_stone.jpeg', categories: ['Other', 'Art'] },
     { id: 2, name: 'X-Wing', price: 67658, bestBeforeDate: '-', quantity: 30, picture: 'x_wing.jpeg', categories: ['Equipment', 'Other'] },

@@ -52,7 +52,6 @@ export class WarenuebersichtComponent implements OnInit {
       {id: 16, name: 'Repair set', price:  3000.99, bestBeforeDate: '-', quantity: 20, picture: 'toolbox_spaceship_repair.jpg', categories: ['Equipment']},
       {id: 17, name: 'Underwater breathing implant', price:  360.01, bestBeforeDate: '03.20.2302', quantity: 30, picture: 'underwaterbreathing_implants.jpg', categories: ['Equipment']},
       {id: 18, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']}
-
     ];
 
     this.filteredProducts = this.products;
@@ -77,8 +76,6 @@ export class WarenuebersichtComponent implements OnInit {
     this.cartService.addItem(product);
   }
   
-  
-
   onPriceRangeChange(): void {
     this.filterProducts();
   }
