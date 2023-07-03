@@ -35,10 +35,6 @@ app.get('/', function (req, res) {
 //app.get('/landing', function (req, res) {
 //    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
 //});
-app.get('/test', (req, res) => {
-    res.send('This is a test route!');
-  });
-
 
 app.get('/landing', function (req, res) {
 
