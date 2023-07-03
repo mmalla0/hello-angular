@@ -76,10 +76,10 @@ export class MitarbeiterDashboardComponent {
     if (product.id) {
       const index = this.products.findIndex(p => p.id === product.id);
       if (index !== -1) {
-        this.products[index] = { ...product }; // Update the original product object
+        this.products[index] = { ...product }; 
       }
     } else {
-      this.products.push({ ...product }); // Add the new product
+      this.products.push({ ...product }); 
     }
   
     this.hideProductForm();
