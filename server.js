@@ -28,20 +28,22 @@ app.get('/', function (req, res) {
 });
 
 
-const connection = mysql.createConnection({
-    database: "SpaceShop",
-    host: "195.37.176.178",
-    port: "20133",
-    user: "23_IT_Grp_5",
-    password: "JJQGNC8h79VkiSNmK}8I"
-});
+
 
 //app.get('/landing', function (req, res) {
 //    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
 //});
 
+app.get('/landing', function (req, res) {
 
-app.get('/items/', function (req, res) {
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
     connection.connect(function (err) {
         if (err) {
             console.error('Error connecting to the database:', err.stack);
@@ -55,12 +57,12 @@ app.get('/items/', function (req, res) {
             if (error) {
                 console.error('Error executing the database query:', error.stack);
                 res.status(500).json({ error: 'Failed to retrieve items' });
+                connection.end(); // Close the connection here in case of an error
                 return;
             }
 
             console.log('Retrieved items from the database');
 
-            // Transform the database results into item objects
             const items = results.map(itemResult => {
                 const item = {
                     item_ID: itemResult.item_ID,
@@ -70,59 +72,18 @@ app.get('/items/', function (req, res) {
                     stock: itemResult.stock,
                     employee_id: itemResult.employee_id,
                     best_before: itemResult.best_before,
-                    images: []
+                    item_imgpath: itemResult.item_imgpath
                 };
 
                 return item;
             });
 
-            // Fetch images for each item
-            const itemPromises = items.map(item => {
-                return new Promise((resolve, reject) => {
-                    connection.query('SELECT * FROM images WHERE imgitemID = ?', [item.item_ID], function (err, imageResults) {
-                        if (err) {
-                            console.error('Error executing the image database query:', err.stack);
-                            reject(err);
-                            return;
-                        }
+            res.json(items);
+            
 
-                        // Transform the image results into image objects
-                        const images = imageResults.map(imageResult => {
-                            const image = {
-                                imgitemID: imageResult.imgitemID,
-                                img_url: imageResult.img_url,
-                                imgAlt: imageResult.imgAlt
-                            };
-
-                            return image;
-                        });
-
-                        item.images = images;
-                        resolve();
-                    });
-                });
-            });
-
-            // Wait for all image promises to resolve before sending the response
-            Promise.all(itemPromises)
-                .then(() => {
-                    res.json(items);
-                })
-                .catch(error => {
-                    console.error('Error fetching item images:', error);
-                    res.status(500).json({ error: 'Failed to fetch item images' });
-                });
-        });
-
-        connection.end(function (err) {
-            if (err) {
-                console.error('Error disconnecting from the database:', err.stack);
-                return;
-            }
-
+            connection.end(); // Close the connection here after retrieving the items
             console.log('Disconnected from the database');
         });
     });
 });
-
 

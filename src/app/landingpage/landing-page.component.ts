@@ -16,7 +16,7 @@ interface Item {
   stock: number;
   employee_id: number;
   best_before: string;
-  images: Image[];
+  item_imgpath: string;
 }
 
 interface Image {
@@ -82,10 +82,12 @@ export class LandingPageComponent implements OnInit {
   }
 
 
-  itemsURL = "items"
+  itemsURL = "landing"
   getItems(): void {
     this.http.get<Item[]>(this.itemsURL).subscribe(data => {
       this.items = data;
+
+      console.log(this.items);
 
       // Get random items from the list
       const randomItems = this.getRandomItems(3);

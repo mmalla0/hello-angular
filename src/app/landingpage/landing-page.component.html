@@ -14,8 +14,8 @@
 
 <div class="image-slider">
   <div class="image-container">
-    <div class="image-wrapper" *ngFor="let image of randomImages; let i = index" (click)="setActiveImage(i)">
-      <img [src]="image" [@imageState]="getImageState(i)" alt="Product Image">
+    <div class="image-wrapper" *ngFor="let item of items; let i = index" (click)="setActiveImage(i)">
+      <img [src]="'../assets/images/'+ item.item_imgpath" [@imageState]="getImageState(i)" alt="Product Image">
       <div class="image-info" *ngIf="i === activeImageIndex" [@imageState]="getImageState(i)">
         <h3>{{ getProductInfo().item_name }}</h3>
         <p>Price: {{ getProductInfo().item_price }}</p>
@@ -24,8 +24,8 @@
     </div>
   </div>
   <div class="thumbnails">
-    <div *ngFor="let image of randomImages; let i = index" (click)="setActiveImage(i)">
-      <img [src]="image" [class.active]="i === activeImageIndex">
+    <div *ngFor="let item of items; let i = index" (click)="setActiveImage(i)">
+      <img [src]="'../assets/images/'+ item.item_imgpath" [class.active]="i === activeImageIndex">
     </div>
   </div>
 </div>
@@ -47,17 +47,17 @@
 <div class="diverse-images-section">
     <div class="image-card">
         <a href="item1.html">
-            <img src="../assets/images/gravity_adjusting_implants.jpg" alt="Item 1">
+            <img src="../assets/images/gravifree.jpg" alt="Item 1">
         </a>
     </div>
     <div class="image-card">
         <a href="item2.html">
-            <img src="../assets/images/toolbox_spaceship_repair.jpg" alt="Item 2">
+            <img src="../assets/images/toolstax_nii.jpg" alt="Item 2">
         </a>
     </div>
     <div class="image-card">
         <a href="item3.html">
-            <img src="../assets/images/underwaterbreathing_implants.jpg" alt="Item 3">
+            <img src="../assets/images/h2o2o.jpg" alt="Item 3">
         </a>
     </div>
     <!-- Add more diverse images and links as needed -->
