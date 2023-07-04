@@ -82,11 +82,10 @@ export class LandingPageComponent implements OnInit {
   }
 
 
-  itemsURL = "landing"
+  itemsURL = "http://localhost:8080/landing"
   getItems(): void {
     this.http.get<Item[]>(this.itemsURL).subscribe(data => {
-      this.items = data;
-
+      this.items = data; 
       console.log(this.items);
 
       // Get random items from the list

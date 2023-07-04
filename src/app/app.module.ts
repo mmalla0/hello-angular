@@ -23,6 +23,7 @@ import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeit
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
 import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { StockItemDetailsComponent } from './stock-item-details/stock-item-detai
     FormsModule,
     BrowserAnimationsModule,
     CommonModule,
+    ToastrModule.forRoot(),
     ReactiveFormsModule
   ],
   providers: [DatabaseService],

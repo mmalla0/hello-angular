@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../shared/user';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,12 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   formHatFehler: boolean = false;
 
-  constructor (private authService: AuthService, private fb: FormBuilder, private router: Router){}
+  constructor (
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private toastr: ToastrService
+    ){}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -42,7 +48,20 @@ export class LoginComponent implements OnInit {
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
-      this.authService.login(userToLogIn);
+      console.log(userToLogIn)
+      this.authService.login2(userToLogIn).subscribe(res => {
+        //Anmeldung erfolgreich 
+        this.router.navigate(['/landing']);
+
+        this.authService.userLoggedIn.next(true);
+
+        this.authService.currentUser = res;
+        this.toastr.success('Sie wurden angemeldet!', 'Erfolg');
+
+      }, error => {
+        //Fehlermeldung
+        this.toastr.error('Die E-Mail-Adresse oder das Passwort ist falsh!', 'Fehler');
+      });
       
     }
   }
