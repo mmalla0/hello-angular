@@ -81,6 +81,7 @@ export class LandingPageComponent implements OnInit {
     this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
     })
+    this.selectedCategoryItems = this.getRandomItems(3);
   }
 
 
