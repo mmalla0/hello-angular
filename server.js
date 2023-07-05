@@ -1,6 +1,6 @@
-// set up ======================== 
+// set up ========================
 var express = require('express');
-var app = express();                               // create our app w/ express 
+var app = express();                               // create our app w/ express
 var path = require('path');
 var mysql = require('mysql');
 const multer = require('multer');
@@ -25,25 +25,11 @@ app.listen(8080, function () {
 
 // application -------------------------------------------------------------
 app.get('/', function (req, res) {
-    //res.send("Hello World123");     
+    //res.send("Hello World123");
     res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO rename to your app-name
 });
 
 
-const connection = mysql.createConnection({
-    database: "SpaceShop",
-    host: "195.37.176.178",
-    port: "20133",
-    user: "23_IT_Grp_5",
-    password: "JJQGNC8h79VkiSNmK}8I"
-});
-
-//app.get('/landing', function (req, res) {
-//    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
-//});
-app.get('/test', (req, res) => {
-    res.send('This is a test route!');
-  });
 
 /**
  * Logic for file uploads
@@ -57,25 +43,38 @@ const storage = multer.diskStorage({
       cb(null, file.originalname); // Use the original filename for the uploaded image
     }
   });
-  
+
   const upload = multer({ storage: storage });
-  
+
   app.post('/api/fileupload', upload.single('file'), function (req, res) {
     console.log('Received file:', req.file);
-  
+
     if (!req.file) {
       console.log('No file uploaded');
       res.status(400).json({ error: 'No file uploaded' });
       return;
     }
-  
+
     const uploadedFileName = req.file.originalname;
     res.json({ fileName: uploadedFileName });
     console.log('File uploaded:', req.file);
   });
-  
 
-app.get('/items/', function (req, res) {
+
+//app.get('/landing', function (req, res) {
+//    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
+//});
+
+app.get('/landing', function (req, res) {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
     connection.connect(function (err) {
         if (err) {
             console.error('Error connecting to the database:', err.stack);
@@ -85,78 +84,41 @@ app.get('/items/', function (req, res) {
 
         console.log('Connected to the database');
 
-        connection.query('SELECT * FROM item', function (error, results, fields) {
-            if (error) {
-                console.error('Error executing the database query:', error.stack);
-                res.status(500).json({ error: 'Failed to retrieve items' });
-                return;
-            }
+        connection.query('SELECT item.*, GROUP_CONCAT(category.category_name) AS categories ' +
+            'FROM item ' +
+            'JOIN category_items ON item.item_ID = category_items.ci_item_id ' +
+            'JOIN category ON category_items.ci_category_id = category.category_id ' +
+            'GROUP BY item.item_ID', function (error, results, fields) {
+                if (error) {
+                    console.error('Error executing the database query:', error.stack);
+                    res.status(500).json({ error: 'Failed to retrieve items' });
+                    connection.end(); // Close the connection here in case of an error
+                    return;
+                }
 
-            console.log('Retrieved items from the database');
+                console.log('Retrieved items from the database');
 
-            // Transform the database results into item objects
-            const items = results.map(itemResult => {
-                const item = {
-                    item_ID: itemResult.item_ID,
-                    item_name: itemResult.item_name,
-                    item_description: itemResult.item_description,
-                    item_price: itemResult.item_price,
-                    stock: itemResult.stock,
-                    employee_id: itemResult.employee_id,
-                    best_before: itemResult.best_before,
-                    images: []
-                };
+                const items = results.map(itemResult => {
+                    const item = {
+                        item_ID: itemResult.item_ID,
+                        item_name: itemResult.item_name,
+                        item_description: itemResult.item_description,
+                        item_price: itemResult.item_price,
+                        stock: itemResult.stock,
+                        employee_id: itemResult.employee_id,
+                        best_before: itemResult.best_before,
+                        item_imgpath: itemResult.item_imgpath,
+                        categories: itemResult.categories.split(',') // Split the category names into an array
+                    };
 
-                return item;
-            });
-
-            // Fetch images for each item
-            const itemPromises = items.map(item => {
-                return new Promise((resolve, reject) => {
-                    connection.query('SELECT * FROM images WHERE imgitemID = ?', [item.item_ID], function (err, imageResults) {
-                        if (err) {
-                            console.error('Error executing the image database query:', err.stack);
-                            reject(err);
-                            return;
-                        }
-
-                        // Transform the image results into image objects
-                        const images = imageResults.map(imageResult => {
-                            const image = {
-                                imgitemID: imageResult.imgitemID,
-                                img_url: imageResult.img_url,
-                                imgAlt: imageResult.imgAlt
-                            };
-
-                            return image;
-                        });
-
-                        item.images = images;
-                        resolve();
-                    });
+                    return item;
                 });
-            });
 
-            // Wait for all image promises to resolve before sending the response
-            Promise.all(itemPromises)
-                .then(() => {
-                    res.json(items);
-                })
-                .catch(error => {
-                    console.error('Error fetching item images:', error);
-                    res.status(500).json({ error: 'Failed to fetch item images' });
-                });
-        });
+                res.json(items);
 
-        connection.end(function (err) {
-            if (err) {
-                console.error('Error disconnecting from the database:', err.stack);
-                return;
-            }
-
-            console.log('Disconnected from the database');
+                connection.end(); // Close the connection here after retrieving the items
+                console.log('Disconnected from the database');
         });
     });
 });
-
 

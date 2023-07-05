@@ -5,19 +5,20 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 //import { first } from 'rxjs';
 import { Router } from '@angular/router';
+import {Item} from '../shared/item'
 
 
-interface Item {
+/*interface Item {
   item_ID: number;
   item_name: string;
   item_description: string;
   item_price: number;
-  category_id: number;
   stock: number;
   employee_id: number;
   best_before: string;
-  images: Image[];
-}
+  item_imgpath: string;
+  categories: string[];
+} */
 
 interface Image {
   imgitemID: number;
@@ -71,6 +72,8 @@ export class LandingPageComponent implements OnInit {
   autoChangeInterval: any;
   isLoggedIn: boolean = false;
 
+  selectedCategoryItems: Item[] = [];
+
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -79,13 +82,16 @@ export class LandingPageComponent implements OnInit {
     this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
     })
+    //this.selectedCategoryItems = this.getRandomItems(3);
   }
 
 
-  itemsURL = "items"
+  itemsURL = "landing"
   getItems(): void {
     this.http.get<Item[]>(this.itemsURL).subscribe(data => {
       this.items = data;
+
+      console.log(this.items);
 
       // Get random items from the list
       const randomItems = this.getRandomItems(3);
@@ -145,8 +151,13 @@ export class LandingPageComponent implements OnInit {
   getImageState(index: number) {
     return index === this.activeImageIndex ? 'active' : 'inactive';
   }
-}
 
+  changeCategory(category: string) {
+    const categoryItems = this.items.filter(item => item.categories.includes(category));
+    this.selectedCategoryItems = categoryItems.slice(0, 3);
+  }
+
+}
 
 
 

@@ -21,16 +21,16 @@ export class CartServiceService {
    */
   addItem(itemToAdd: Item) {
     const itemIndexInCart: number = this.cartItems.findIndex(
-      (cartItem: CartItem) => cartItem.itemId === itemToAdd.id
+      (cartItem: CartItem) => cartItem.itemId === itemToAdd.item_ID
     );
 
     if (itemIndexInCart === -1) {
       const item: CartItem = {
-        itemId: itemToAdd.id,
+        itemId: itemToAdd.item_ID,
       //  description: itemToAdd.description,
         quantity: 1,
-        name: itemToAdd.name,
-        price: itemToAdd.price,
+        name: itemToAdd.item_name,
+        price: itemToAdd.item_price,
       };
       this.cartItems.push(item);
     } else {

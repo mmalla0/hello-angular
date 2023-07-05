@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../shared/user';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -51,12 +52,25 @@ export class RegisterComponent implements OnInit {
       this.formHatFehler = true;
     } else {
       this.formHatFehler = false;
-      
+
+      /*  so war es in Main
       const userToRegister: any = {
         name: this.form.get('name')?.value,
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value,
-        zahlungsmethode: this.form.get('zahlungsmethode')?.value
+        zahlungsmethode: this.form.get('zahlungsmethode')?.value*/             
+
+      const userToRegister: User = {
+        //name: this.form.get('name')?.value,
+        email: this.form.get('email')?.value.toLowerCase(),
+        password: this.form.get('password')?.value,
+        id: 0,
+        firstName: '',                                  //TODO: Werte aus der Form holen
+        lastName: '',
+        addressId: 0,
+        methodOfPayment: '',
+        cartId: 0,
+        stockpileId: 0
       }
       this.authService.register(userToRegister);
 

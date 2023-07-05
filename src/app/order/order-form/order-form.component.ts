@@ -20,6 +20,8 @@ export class OrderFormComponent {
   }
   user: User = {
     id: 0,
+    email: '',
+    password: '',
     firstName: '',
     lastName: '',
     addressId: 0,                

@@ -1,5 +1,6 @@
 <!-- Landing Page HTML -->
 
+
 <!-- Menu -->
 <nav class="menu">
     <ul>
@@ -14,8 +15,8 @@
 
 <div class="image-slider">
   <div class="image-container">
-    <div class="image-wrapper" *ngFor="let image of randomImages; let i = index" (click)="setActiveImage(i)">
-      <img [src]="image" [@imageState]="getImageState(i)" alt="Product Image">
+    <div class="image-wrapper" *ngFor="let item of items; let i = index" (click)="setActiveImage(i)">
+      <img [src]="'../assets/images/'+ item.item_imgpath" [@imageState]="getImageState(i)" alt="Product Image">
       <div class="image-info" *ngIf="i === activeImageIndex" [@imageState]="getImageState(i)">
         <h3>{{ getProductInfo().item_name }}</h3>
         <p>Price: {{ getProductInfo().item_price }}</p>
@@ -24,41 +25,31 @@
     </div>
   </div>
   <div class="thumbnails">
-    <div *ngFor="let image of randomImages; let i = index" (click)="setActiveImage(i)">
-      <img [src]="image" [class.active]="i === activeImageIndex">
+    <div *ngFor="let item of items; let i = index" (click)="setActiveImage(i)">
+      <img [src]="'../assets/images/'+ item.item_imgpath" [class.active]="i === activeImageIndex">
     </div>
   </div>
 </div>
 
 <div class="topics">
   <ul>
-    <li><a href="#">Art</a></li>
-    <li><a href="#">Electronics</a></li>
-    <li><a href="#">Fashion</a></li>
-    <li><a href="#">Science</a></li>
-    <li><a href="#">Tools</a></li>
-    <li><a href="#">Toys</a></li>
-    <li><a href="#">Health</a></li>
-</ul>
+    <li><a (click)="changeCategory('Art')">Art</a></li>
+    <li><a (click)="changeCategory('Electronics')">Electronics</a></li>
+    <li><a (click)="changeCategory('Fashion')">Fashion</a></li>
+    <li><a (click)="changeCategory('Science')">Science</a></li>
+    <li><a (click)="changeCategory('Tools')">Tools</a></li>
+    <li><a (click)="changeCategory('Toys')">Toys</a></li>
+    <li><a (click)="changeCategory('Health')">Health</a></li>
+    <li><a (click)="changeCategory('Food')">Food</a></li>
+  </ul>
 </div>
-
 
 <!-- Diverse Images Section -->
 <div class="diverse-images-section">
-    <div class="image-card">
-        <a href="item1.html">
-            <img src="../assets/images/gravity_adjusting_implants.jpg" alt="Item 1">
-        </a>
-    </div>
-    <div class="image-card">
-        <a href="item2.html">
-            <img src="../assets/images/toolbox_spaceship_repair.jpg" alt="Item 2">
-        </a>
-    </div>
-    <div class="image-card">
-        <a href="item3.html">
-            <img src="../assets/images/underwaterbreathing_implants.jpg" alt="Item 3">
-        </a>
-    </div>
-    <!-- Add more diverse images and links as needed -->
+  <div class="image-card" *ngFor="let item of selectedCategoryItems">
+    <a [routerLink]="'items/' + item.item_ID">
+      <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name">
+    </a>
+  </div>
 </div>
+

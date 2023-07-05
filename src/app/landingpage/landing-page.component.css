@@ -1,5 +1,9 @@
 /* Landing Page CSS */
 
+:host {
+  width: 100%;
+}
+
 /* Image Slider */
 .image-slider {
     margin-top: 0%;
