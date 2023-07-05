@@ -57,7 +57,7 @@ export class WarenuebersichtComponent implements OnInit {
   }
 
   constructor(
-    private cartService: CartServiceService,
+    public cartService: CartServiceService,
     private router: Router,
     private itemService: ItemService
   ) {}
