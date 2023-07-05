@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { CartServiceService } from '../services/cart-service/cart-service.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-warenuebersicht',
@@ -19,14 +19,14 @@ export class WarenuebersichtComponent implements OnInit {
   priceRange: number;
   selectedCategory: string;
   categories: string[] = [
+    'Art',
+    'Electronics',
+    'Fashion',
     'Food',
     'Health',
-    'Fashion',
-    'Art',
-    'Equipment',
-    'Toys',
     'Science',
-    'Other',
+    'Tools',
+    'Toys',
     'No filter',
   ];
 
@@ -35,32 +35,47 @@ export class WarenuebersichtComponent implements OnInit {
   totalPageCount: number;
 
   ngOnInit() {
-    this.itemService.getAllItems().subscribe({
-      next: items => {
-        this.products = items;
-        this.filteredProducts = items;
-        this.paginatedProducts = items;
-      },
-      error: error => {
-        console.error(error);
-      }
-    });
-    
-    this.searchQuery = '';
-    this.priceRange = 200000; 
-    this.selectedCategory = 'No filter';
-    this.pageSize = 8;
-    this.currentPage = 1;
-    this.totalPageCount = 0;
-
-    this.filterProducts();
+    this.setUpFilterValues();
+    this.setUpItems();
   }
 
   constructor(
     public cartService: CartServiceService,
     private router: Router,
+    private route: ActivatedRoute,
     private itemService: ItemService
   ) {}
+
+  setUpFilterValues() : void{
+    this.searchQuery = '';
+    this.priceRange = 210000;
+    this.pageSize = 8;
+    this.currentPage = 1;
+    this.totalPageCount = 0;
+  
+    this.route.queryParams.subscribe(params => {
+      if (params && params['extraParam']) {
+        const receivedString = params['extraParam'];
+        this.selectedCategory = receivedString;
+      } else {
+        this.selectedCategory = "No filter";
+      }
+    });
+  }
+
+  setUpItems() : void{
+    this.itemService.getAllItems().subscribe({
+      next: items => {
+        this.products = items;
+        this.filteredProducts = items;
+        this.paginatedProducts = items;
+        this.filterProducts();
+      },
+      error: error => {
+        console.error(error);
+      }
+    });
+  }
 
   onMouseEnter(product: Item): void {
     this.hoveredProduct = product;
