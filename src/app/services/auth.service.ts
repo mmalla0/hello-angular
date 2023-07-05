@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 export enum Zahlungsmethode {
@@ -74,7 +74,7 @@ export class AuthService {
 
     }
   ];
-  private currentUser: User | null = null;  
+  currentUser: User | null = null;  
   
   usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
 
@@ -90,6 +90,14 @@ export class AuthService {
     localStorage.setItem('users', usersToSave.toString());
   }
 
+  register2 (data) {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    return this.http.post<any>("http://localhost:8080/" + "register", data, options
+    )
+  }
   register (user: User) {
     const userEmail = user.email.toLowerCase();
 
@@ -132,7 +140,7 @@ export class AuthService {
     const userEmail = user.email.toLowerCase();
 
     const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
-  
+     
     if (userIndex !== -1){
       const userInfoInDb = this.users[userIndex];
       if (user.password === userInfoInDb.password){
@@ -151,7 +159,7 @@ export class AuthService {
     }
   }
   */
-  login (user: LoginCredentials){
+/*   login (user: LoginCredentials){
     const userEmail = user.email.toLowerCase();
 
     const userIndex = this.users.findIndex((user: LoginCredentials) => user.email === userEmail);
@@ -172,8 +180,17 @@ export class AuthService {
     } else {
       console.warn('Anmeldung fehlgeschlagen!')
     }
-  }
+  } */
 
+
+  login2(data) : Observable<any> { 
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    return this.http.post<any>("http://localhost:8080/" + "login", data, options
+    )
+  }
 
   logout (){
     this.userLoggedIn.next(false);

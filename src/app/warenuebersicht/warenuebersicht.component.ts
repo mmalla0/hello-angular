@@ -52,7 +52,7 @@ export class WarenuebersichtComponent implements OnInit {
     this.pageSize = 8;
     this.currentPage = 1;
     this.totalPageCount = 0;
-  
+
     this.route.queryParams.subscribe(params => {
       if (params && params['extraParam']) {
         const receivedString = params['extraParam'];
@@ -76,7 +76,46 @@ export class WarenuebersichtComponent implements OnInit {
       }
     });
   }
+  }
 
+  constructor(
+    public cartService: CartServiceService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private itemService: ItemService
+  ) {}
+
+  setUpFilterValues() : void{
+    this.searchQuery = '';
+    this.priceRange = 210000;
+    this.pageSize = 8;
+    this.currentPage = 1;
+    this.totalPageCount = 0;
+
+    this.route.queryParams.subscribe(params => {
+      if (params && params['extraParam']) {
+        const receivedString = params['extraParam'];
+        this.selectedCategory = receivedString;
+      } else {
+        this.selectedCategory = "No filter";
+      }
+    });
+  }
+
+  setUpItems() : void{
+    this.itemService.getAllItems().subscribe({
+      next: items => {
+        this.products = items;
+        this.filteredProducts = items;
+        this.paginatedProducts = items;
+        this.filterProducts();
+      },
+      error: error => {
+        console.error(error);
+      }
+    });
+  }
+  
   onMouseEnter(product: Item): void {
     this.hoveredProduct = product;
   }
@@ -84,12 +123,12 @@ export class WarenuebersichtComponent implements OnInit {
   onMouseLeave(): void {
     this.hoveredProduct = null;
   }
-  
+
   onAddToCart(product: Item): void {
     this.selectedItems.push(product);
     this.cartService.addItem(product);
   }
-  
+
   onPriceRangeChange(): void {
     this.filterProducts();
   }
@@ -114,19 +153,19 @@ export class WarenuebersichtComponent implements OnInit {
           : product.categories.includes(this.selectedCategory);
       return isPriceInRange && isCategoryMatch;
     });
-  
-  
+
+
     this.totalPageCount = Math.ceil(
       this.filteredProducts.length / this.pageSize
     );
-    
+
     if (this.currentPage > this.totalPageCount) {
       this.currentPage = 1;
     }
 
     this.updatePaginatedProducts();
   }
-  
+
 
   updatePaginatedProducts(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;
