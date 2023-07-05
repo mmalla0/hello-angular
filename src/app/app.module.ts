@@ -28,6 +28,8 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { OrderFormComponent } from './order/order-form/order-form.component';
 
+import { TesterComponent } from "./testing";
+
 
 
 @NgModule({
@@ -48,7 +50,8 @@ import { OrderFormComponent } from './order/order-form/order-form.component';
     WarenuebersichtComponent,
     LandingPageComponent,
     StockItemDetailsComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    TesterComponent
   ],
   imports: [
     RouterModule,
