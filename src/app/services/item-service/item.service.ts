@@ -14,5 +14,23 @@ export class ItemService {
   getAllItems(): Observable<Item[]> {
     return this.http.get<Item[]>(this.itemsURL);
   }
+
+
+  private additemURL = 'additem';
+  addItem(item: any): void {
+    this.http.post(this.additemURL, item).subscribe(
+      (response) => {
+        // Handle success response
+        console.log('Item added successfully');
+      },
+      (error) => {
+        // Handle error
+        console.error('Error adding item:', error);
+      }
+    );
+  }
+
 }
+
+
 
