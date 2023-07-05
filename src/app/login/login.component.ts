@@ -3,6 +3,9 @@ import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../shared/user';
+import { LoginCredentials } from '../shared/loginCredentials';
+
+
 
 @Component({
   selector: 'app-login',
@@ -12,7 +15,7 @@ import { User } from '../shared/user';
 export class LoginComponent implements OnInit {
 
   form!: FormGroup;
-  formHatFehler: boolean = false;
+  formHatFehler: boolean = false;                                 
 
   constructor (private authService: AuthService, private fb: FormBuilder, private router: Router){}
 
@@ -30,7 +33,7 @@ export class LoginComponent implements OnInit {
   handlePasswordValueChange(event: any){
     this.form.get('password')?.setValue(event.target.value);
   }
-
+/*
   handleLogin(){
     if (!this.form.valid){
       this.formHatFehler = true;
@@ -38,18 +41,35 @@ export class LoginComponent implements OnInit {
     } else {
       this.formHatFehler = false;
       
-      const userToLogIn: any = {
+      
+
+      const userToLogIn: User = {                                                  
         email: this.form.get('email')?.value.toLowerCase(),
-        password: this.form.get('password')?.value
+        password: this.form.get('password')?.value,
+       // id= this.form.get('id')?.value,
       };
       this.authService.login(userToLogIn);
-      
+
     }
+  }
+  */
+  handleLogin() {
+    if (!this.form.valid) {
+      this.formHatFehler = true;
+      return;
+    }
+    
+    this.formHatFehler = false;
+    
+    const userToLogIn: LoginCredentials = {
+      email: this.form.get('email')?.value.toLowerCase(),
+      password: this.form.get('password')?.value
+    };
+    this.authService.login(userToLogIn);
   }
 
   handleRegisterClicked() {
-    this.router.navigate(['/register'])
+    //this.router.navigate(['/register'])
   }
-
 
 }
