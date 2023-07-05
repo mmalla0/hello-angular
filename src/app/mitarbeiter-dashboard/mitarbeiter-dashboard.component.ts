@@ -34,8 +34,8 @@ export class MitarbeiterDashboardComponent {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
 
     this.products.sort((a, b) => {
-      const nameA = a.name.toLowerCase();
-      const nameB = b.name.toLowerCase();
+      const nameA = a.item_name.toLowerCase();
+      const nameB = b.item_name.toLowerCase();
 
       if (nameA < nameB) {
         return this.sortDirection === 'asc' ? -1 : 1;
@@ -64,13 +64,13 @@ export class MitarbeiterDashboardComponent {
   }
 
   decreaseQuantity(product: Item) {
-    if (product.quantity > 0) {
-      product.quantity--;
+    if (product.stock > 0) {
+      product.stock--;
     }
   }
 
   increaseQuantity(product: Item) {
-    product.quantity++;
+    product.stock++;
   }
 
   showProductForm() {
@@ -84,8 +84,8 @@ export class MitarbeiterDashboardComponent {
   }
 
   saveProduct(product: Item) {
-    if (product.id) {
-      const index = this.products.findIndex(p => p.id === product.id);
+    if (product.item_ID) {
+      const index = this.products.findIndex(p => p.item_ID === product.item_ID);
       if (index !== -1) {
         this.products[index] = { ...product }; 
       }

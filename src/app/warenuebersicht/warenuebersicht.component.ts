@@ -35,7 +35,7 @@ export class WarenuebersichtComponent implements OnInit {
 
   ngOnInit() {
     
-    /*
+    
     this.itemService.getAllItems().subscribe({
       next: items => {
         this.products = items;
@@ -44,7 +44,7 @@ export class WarenuebersichtComponent implements OnInit {
         console.error(error);
       }
     });
-    */
+    /*
     this.products = [
       {id: 1, name: '2X2Re Stone', price: 50000, bestBeforeDate: '02.01.2320', quantity: 3, picture: 'space_stone.jpeg', categories: ['Other','Art']},
       {id: 2, name: 'X-Wing', price: 67658, bestBeforeDate: '-', quantity: 30, picture: 'x_wing.jpeg', categories: ['Equipment', 'Other']},
@@ -52,7 +52,7 @@ export class WarenuebersichtComponent implements OnInit {
       {id: 4, name: 'VirtuCare Pets - CatBot Edition', price: 99.99, bestBeforeDate: '-', quantity: 30, picture: 'virtualpet_cat.jpg', categories: ['Art', 'Toys', 'Other']},
       {id: 5, name: 'MediReady NanoBots', price:  5000.99, bestBeforeDate: '01.10.2300', quantity: 30, picture: 'healing_nanobots.jpg', categories: ['Health']},
       {id: 6, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']}
-    ]
+    ]*/
     this.filteredProducts = this.products;
 
     this.searchQuery = '';
@@ -86,14 +86,14 @@ export class WarenuebersichtComponent implements OnInit {
 
   onSearchProducts() {
     this.filteredProducts = this.products.filter(product => {
-      return this.searchQuery ? product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
+      return this.searchQuery ? product.item_name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
     });
     this.updatePaginatedProducts();
   }
 
   filterProducts(): void {
     this.filteredProducts = this.products.filter((product) => {
-      const isPriceInRange = product.price <= this.priceRange;
+      const isPriceInRange = product.item_price <= this.priceRange;
       const isCategoryMatch =
         this.selectedCategory === 'No filter'
           ? true

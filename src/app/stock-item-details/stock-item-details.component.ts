@@ -38,8 +38,8 @@ export class StockItemDetailsComponent implements OnInit {
         .then(response => {
           console.log('File uploaded successfully.');
           const fileName = response.fileName;
-          editedProduct.picture = fileName;
-          this.editedProduct.picture = fileName;
+          editedProduct.item_imgpath = fileName;
+          this.editedProduct.item_imgpath = fileName;
           this.saveClick.emit(editedProduct);
         })
         .catch(error => {

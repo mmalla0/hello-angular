@@ -5,9 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 //import { first } from 'rxjs';
 import { Router } from '@angular/router';
+import {Item} from '../shared/item'
 
 
-interface Item {
+/*interface Item {
   item_ID: number;
   item_name: string;
   item_description: string;
@@ -17,7 +18,7 @@ interface Item {
   best_before: string;
   item_imgpath: string;
   categories: string[];
-}
+} */
 
 interface Image {
   imgitemID: number;
