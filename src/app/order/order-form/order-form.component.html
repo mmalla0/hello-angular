@@ -1,13 +1,14 @@
 <form (ngSubmit)="submitForm()" #form="ngForm">
     
-    //NICE TO HAVE: Bezahlmethode soll geändert werden können
+    <!--NICE TO HAVE: Bezahlmethode soll geändert werden können-->
 
-    <label for="methodOfPayment">Want to change your payment Method?</label>
-    <input
-        name="methodOfPayment"
-        id="methodOfPayment"
-        [(ngModel)]="user.methodOfPayment"
-        required>
+    <label for="methodOfPayment">Want to change your payment Method? </label>
+    <select name="methodOfPayment" id="methodOfPayment" [(ngModel)]="user.methodOfPayment" required>
+        <option value="" disabled>Select a payment method</option>
+        <option value="creditCard">Credit Card</option>
+        <option value="paypal">PayPal</option>
+        <option value="bankTransfer">Bank Transfer</option>
+      </select>
         
     <button type="submit" [disabled]="form.invalid">
         Order Now!
