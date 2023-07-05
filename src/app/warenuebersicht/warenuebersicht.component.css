@@ -243,16 +243,21 @@
 
 .product-name {
   font-weight: bold;
-  font-size: 21px;
+  font-size: 18px;
   margin-bottom: 5px;
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;
+  flex-shrink: 0; 
 }
+
 
 .price {
   display: flex;
   justify-content: center;
   margin-top: 10px;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 18px;
 }
 
 .stock {
