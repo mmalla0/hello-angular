@@ -4,7 +4,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 //import { first } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import {Item} from '../shared/item'
 
 
@@ -74,6 +74,8 @@ export class LandingPageComponent implements OnInit {
 
   selectedCategoryItems: Item[] = [];
 
+  selectedCategory : string; 
+
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -82,6 +84,7 @@ export class LandingPageComponent implements OnInit {
     this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
     })
+    this.selectedCategory = "No filter";
     //this.selectedCategoryItems = this.getRandomItems(3);
   }
 
@@ -153,10 +156,17 @@ export class LandingPageComponent implements OnInit {
   }
 
   changeCategory(category: string) {
+    this.selectedCategory = category; 
     const categoryItems = this.items.filter(item => item.categories.includes(category));
     this.selectedCategoryItems = categoryItems.slice(0, 3);
   }
 
+  handleCategoryImageClick(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: { extraParam: this.selectedCategory }
+    };
+    this.router.navigate(['/warenübersicht'], navigationExtras);
+  }
 }
 
 
