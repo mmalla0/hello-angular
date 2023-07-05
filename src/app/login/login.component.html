@@ -1,5 +1,8 @@
+<h5 class="login-header">Welcome to Spacesavers' Shop</h5>
+
 <div class="login-container">
-    <h4>Anmelden</h4>
+    
+    <h4>Sign in</h4>
 
     <form [formGroup]="form">
 
@@ -9,15 +12,15 @@
                 (input)="handleUsernameValueChange($event)">
         </div>
         <div class="password-input">
-            <label for="password">Passwort</label>
+            <label for="password">Password</label>
             <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
         </div>
 
     </form>
     <div class="buttons">
-        <button class="login-btn" (click)="handleLogin()">Anmelden</button>
-        <p>Neuer Kunde?</p>
-        <button class="register-btn" (click)="handleRegisterClicked()">Konto anlegen</button>
+        <button class="login-btn" (click)="handleLogin()">Sign in</button>
+        <p>new Customer?</p>
+        <button class="register-btn" (click)="handleRegisterClicked()">Sign up</button>
 
     </div>
    

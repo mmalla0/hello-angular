@@ -21,21 +21,7 @@ export interface UserModel {
 import { User } from '../shared/user';
 import { LoginComponent } from '../login/login.component';
 import { LoginCredentials } from '../shared/loginCredentials';
-/*
-export interface UserModel {   
-  id: number;
-  name?: string;                           // TODO: name rausnehmen
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  addressId: number;
-  methodOfPayment: string;
-  cartId: number;
-  stockpileId: number;
 
-}
-*/
 
 @Injectable({
   providedIn: 'root'
@@ -135,52 +121,6 @@ export class AuthService {
       console.warn('Benutzer schon vorhanden!')
     }    
   }
-/*
-  login (user: User){
-    const userEmail = user.email.toLowerCase();
-
-    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
-     
-    if (userIndex !== -1){
-      const userInfoInDb = this.users[userIndex];
-      if (user.password === userInfoInDb.password){
-        console.info('Erfolgreich angemeldet!');
-        this.userLoggedIn.next(true);
-
-        this.router.navigate(['/landing']);
-
-        this.currentUser = userInfoInDb; //  Setze den aktuellen Benutzer auf den angemeldeten Benutzer
-
-      } else {
-        console.warn('Anmeldung fehlgeschlagen!')
-      }
-    } else {
-      console.warn('Anmeldung fehlgeschlagen!')
-    }
-  }
-  */
-/*   login (user: LoginCredentials){
-    const userEmail = user.email.toLowerCase();
-
-    const userIndex = this.users.findIndex((user: LoginCredentials) => user.email === userEmail);
-  
-    if (userIndex !== -1){
-      const userInfoInDb = this.users[userIndex];
-      if (user.password === userInfoInDb.password){
-        console.info('Erfolgreich angemeldet!');
-        this.userLoggedIn.next(true);
-
-        this.router.navigate(['/landing']);
-
-        this.currentUser = userInfoInDb; //  Setze den aktuellen Benutzer auf den angemeldeten Benutzer
-
-      } else {
-        console.warn('Anmeldung fehlgeschlagen!')
-      }
-    } else {
-      console.warn('Anmeldung fehlgeschlagen!')
-    }
-  } */
 
 
   login2(data) : Observable<any> { 

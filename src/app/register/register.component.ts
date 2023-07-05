@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../shared/user';
+//import { User } from '../shared/user';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

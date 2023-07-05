@@ -1,79 +1,70 @@
 .login-container {
-    width: 100%;
     max-width: 400px;
-    margin: 0 auto;
-}
-
-h4 {
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: #333;
-}
-
-.name-input, .email-input, .password-input {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 0.25rem;
-}
-
-.name-input label,
-.email-input label,
-.password-input label {
-    font-weight: bold;
-}
-
-.name-input input,
-.email-input input,
-.password-input input {
-    padding: 0.5rem;
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.error {
-    color: red;
-    font-size: 0.75rem;
-    margin-top: 1rem;
+.login-container h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
 }
 
-.buttons {
-    margin-top: 1.5rem;
+.login-container label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.login-container input[type="text"],
+.login-container input[type="email"],
+.login-container input[type="password"],
+.login-container select {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.login-container .buttons {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 
-.buttons p {
-    font-size: 0.75rem;
-    color: #777;
-}
-
-.register-btn {
-    background-color: lightgreen;
+.login-container .register-btn,
+.login-container .login-btn {
+    width: 120px;
+    height: 40px;
+    margin: 0 10px;
+    font-size: 16px;
     font-weight: bold;
-    margin-bottom: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.register-btn:hover {
-    background-color: #8bc34a;
+    text-transform: uppercase;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.login-btn {
-    background-color: transparent;
+.login-container .register-btn {
+    background-color: #7EB63D;
+    color: #fff;
     border: none;
-    color: blue;
-    font-weight: bold;
-    font-size: 0.75rem;
-    transition: color 0.3s;
 }
 
-.login-btn:hover {
-    color: #1976d2;
-    cursor: pointer;
+.login-container .login-btn {
+    background-color: #73877B;
+    color: #fff;
+    border: none;
+}
+
+.login-container .error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
 }
