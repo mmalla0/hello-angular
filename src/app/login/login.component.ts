@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../shared/user';
 import { ToastrService } from 'ngx-toastr';
+import { LoginCredentials } from '../shared/loginCredentials';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   formHatFehler: boolean = false;
 
+  
   constructor (
     private authService: AuthService,
     private fb: FormBuilder,
@@ -44,10 +46,11 @@ export class LoginComponent implements OnInit {
     } else {
       this.formHatFehler = false;
       
-      const userToLogIn: any = {
+      const userToLogIn: LoginCredentials = {
         email: this.form.get('email')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
+    
       console.log(userToLogIn)
       this.authService.login2(userToLogIn).subscribe(res => {
         //Anmeldung erfolgreich 

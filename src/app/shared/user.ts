@@ -10,10 +10,21 @@ export interface User {
     cartId: number; 
     stockpileId: number;
 }
+
+
+
 export interface StockpileItem {
     id: string;
     name: string;
     quantity: number;
     bestBeforeDate: Date;
+    product: string;
 }
+export interface StockpileItemEntry {
+    product: StockpileItem;
+    bestBeforeDates: {
+      date: Date;
+      count: number;
+    }[];
+  }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
+import { ItemService } from '../services/item-service/item.service';
 import { CartServiceService } from '../services/cart-service/cart-service.service';
 import { Router } from '@angular/router';
 
@@ -33,27 +34,25 @@ export class WarenuebersichtComponent implements OnInit {
   totalPageCount: number;
 
   ngOnInit() {
+    
+    
+    this.itemService.getAllItems().subscribe({
+      next: items => {
+        this.products = items;
+      },
+      error: error => {
+        console.error(error);
+      }
+    });
+    /*
     this.products = [
       {id: 1, name: '2X2Re Stone', price: 50000, bestBeforeDate: '02.01.2320', quantity: 3, picture: 'space_stone.jpeg', categories: ['Other','Art']},
       {id: 2, name: 'X-Wing', price: 67658, bestBeforeDate: '-', quantity: 30, picture: 'x_wing.jpeg', categories: ['Equipment', 'Other']},
       {id: 3, name: 'Spacetronics Starsuit', price: 200000, bestBeforeDate: '-', quantity: 11, picture: 'spacesuite.jpg', categories: ['Equipment', 'Fashion']},
       {id: 4, name: 'VirtuCare Pets - CatBot Edition', price: 99.99, bestBeforeDate: '-', quantity: 30, picture: 'virtualpet_cat.jpg', categories: ['Art', 'Toys', 'Other']},
       {id: 5, name: 'MediReady NanoBots', price:  5000.99, bestBeforeDate: '01.10.2300', quantity: 30, picture: 'healing_nanobots.jpg', categories: ['Health']},
-      {id: 6, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']},
-      {id: 7, name: 'Repair set', price:  3000.99, bestBeforeDate: '-', quantity: 20, picture: 'toolbox_spaceship_repair.jpg', categories: ['Equipment']},
-      {id: 8, name: 'Underwater breathing implant', price:  360.01, bestBeforeDate: '03.20.2302', quantity: 30, picture: 'underwaterbreathing_implants.jpg', categories: ['Equipment']},
-      {id: 9, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']},
-      {id: 10, name: 'Repair set', price:  3000.99, bestBeforeDate: '-', quantity: 20, picture: 'toolbox_spaceship_repair.jpg', categories: ['Equipment']},
-      {id: 11, name: 'Underwater breathing implant', price:  360.01, bestBeforeDate: '03.20.2302', quantity: 30, picture: 'underwaterbreathing_implants.jpg', categories: ['Equipment']},
-      {id: 12, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']},
-      {id: 13, name: 'Repair set', price:  3000.99, bestBeforeDate: '-', quantity: 20, picture: 'toolbox_spaceship_repair.jpg', categories: ['Equipment']},
-      {id: 14, name: 'Underwater breathing implant', price:  360.01, bestBeforeDate: '03.20.2302', quantity: 30, picture: 'underwaterbreathing_implants.jpg', categories: ['Equipment']},
-      {id: 15, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']},
-      {id: 16, name: 'Repair set', price:  3000.99, bestBeforeDate: '-', quantity: 20, picture: 'toolbox_spaceship_repair.jpg', categories: ['Equipment']},
-      {id: 17, name: 'Underwater breathing implant', price:  360.01, bestBeforeDate: '03.20.2302', quantity: 30, picture: 'underwaterbreathing_implants.jpg', categories: ['Equipment']},
-      {id: 18, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']}
-    ];
-
+      {id: 6, name: 'Gravity implant', price:  500.99, bestBeforeDate: '20.08.2300', quantity: 30, picture: 'gravity_adjusting_implants.jpg', categories: ['Equipment']}
+    ]*/
     this.filteredProducts = this.products;
 
     this.searchQuery = '';
@@ -68,7 +67,8 @@ export class WarenuebersichtComponent implements OnInit {
 
   constructor(
     private cartService: CartServiceService,
-    private router: Router
+    private router: Router,
+    private itemService: ItemService
   ) {}
 
   onAddToCart(product: Item): void {
@@ -86,14 +86,14 @@ export class WarenuebersichtComponent implements OnInit {
 
   onSearchProducts() {
     this.filteredProducts = this.products.filter(product => {
-      return this.searchQuery ? product.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
+      return this.searchQuery ? product.item_name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
     });
     this.updatePaginatedProducts();
   }
 
   filterProducts(): void {
     this.filteredProducts = this.products.filter((product) => {
-      const isPriceInRange = product.price <= this.priceRange;
+      const isPriceInRange = product.item_price <= this.priceRange;
       const isCategoryMatch =
         this.selectedCategory === 'No filter'
           ? true

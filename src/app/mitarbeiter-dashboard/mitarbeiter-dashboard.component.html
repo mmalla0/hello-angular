@@ -26,21 +26,21 @@
       </thead>
       <tbody>
         <tr *ngFor="let product of products">
-          <td>{{ product.name }}</td>
+          <td>{{ product.item_name }}</td>
           <td>
             <div class="image-container">
-              <img [src]="'assets/images/' + product.picture" alt="Product Image" class="product-image" />
+              <img [src]="'assets/images/' + product.item_imgpath" alt="Product Image" class="product-image" />
             </div>
           </td>
-          <td>${{ product.price }}</td>
+          <td>${{ product.item_price }}</td>
           <td>
             <div class="quantity">
               <button class="decrement" (click)="decreaseQuantity(product)">-</button>
-              <input type="number" [(ngModel)]="product.quantity">
+              <input type="number" [(ngModel)]="product.stock">
               <button class="increment" (click)="increaseQuantity(product)">+</button>
             </div>
           </td>
-          <td>{{ product.bestBeforeDate }}</td>
+          <td>{{ product.best_before }}</td>
           <td>
             <div *ngFor="let category of product.categories" class="category">{{ category }}</div>
           </td>
