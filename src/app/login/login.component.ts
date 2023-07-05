@@ -26,13 +26,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: [null,[ Validators.required, Validators.email]],
+      username: [null,[ Validators.required]],
       password: [null, Validators.required]
     })
   }
 
-  handleEmailValueChange(event: any){
-    this.form.get('email')?.setValue(event.target.value);        
+  handleUsernameValueChange(event: any){
+    this.form.get('username')?.setValue(event.target.value);        
   }
 
   handlePasswordValueChange(event: any){
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       this.formHatFehler = false;
       
       const userToLogIn: LoginCredentials = {
-        email: this.form.get('email')?.value.toLowerCase(),
+        username: this.form.get('username')?.value.toLowerCase(),
         password: this.form.get('password')?.value
       };
     

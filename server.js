@@ -121,12 +121,12 @@ app.get('/landing', function (req, res) {
 
                 connection.end(); // Close the connection here after retrieving the items
                 console.log('Disconnected from the database');
-        });
+            });
     });
 });
 
 app.post('/login', (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     const connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
@@ -144,8 +144,8 @@ app.post('/login', (req, res) => {
         }
         console.log('Connected to the database');
 
-        const query = 'SELECT * FROM customer WHERE email = ? AND password = ?';
-        connection.query(query, [email, password], (error, results) => {
+        const query = 'SELECT * FROM customer WHERE username = ? AND password = ?';
+        connection.query(query, [username, password], (error, results) => {
             if (error) {
                 console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
                 res.status(500).json({ message: 'Interner Serverfehler' });
@@ -161,18 +161,38 @@ app.post('/login', (req, res) => {
         });
     });
 })
- 
-app.post('/register', (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
 
-    // Führe die MySQL-Abfrage aus, um den Customer in die Datenbank einzufügen
-    const query = 'INSERT INTO customer (first_name, last_name, email, password) VALUES (?, ?, ?, ?)';
-    connection.query(query, [firstName, lastName, email, password], (error, results) => {
-        if (error) {
-            console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
-            res.status(500).json({ message: 'Interner Serverfehler' });
-        } else {
-            res.status(200).json({ message: 'Registrierung erfolgreich' });
-        }
+app.post('/register', (req, res) => {
+    const {  first_name, last_name, password, username, email, paymentMethod } = req.body;
+
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
     });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+        console.log('Connected to the database');
+        // Führe die MySQL-Abfrage aus, um den Customer in die Datenbank einzufügen
+        const query = 'INSERT INTO customer (first_name, last_name, password , username , email, paymentMethod ) VALUES (?, ?, ?, ?,?,?)';
+        connection.query(query, [ first_name, last_name,password,username, email, paymentMethod], (error, results) => {
+            if (error) {
+                console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
+                res.status(500).json({ message: 'Interner Serverfehler' });
+            } else {
+                res.status(200).json({ message: 'Registrierung erfolgreich' });
+            }
+        });
+
+    });
+
+
 });

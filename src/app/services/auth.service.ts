@@ -90,6 +90,14 @@ export class AuthService {
     localStorage.setItem('users', usersToSave.toString());
   }
 
+  register2 (data) {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    let options = { headers: headers };
+    return this.http.post<any>("http://localhost:8080/" + "register", data, options
+    )
+  }
   register (user: User) {
     const userEmail = user.email.toLowerCase();
 
@@ -151,7 +159,7 @@ export class AuthService {
     }
   }
   */
-  login (user: LoginCredentials){
+/*   login (user: LoginCredentials){
     const userEmail = user.email.toLowerCase();
 
     const userIndex = this.users.findIndex((user: LoginCredentials) => user.email === userEmail);
@@ -172,7 +180,7 @@ export class AuthService {
     } else {
       console.warn('Anmeldung fehlgeschlagen!')
     }
-  }
+  } */
 
 
   login2(data) : Observable<any> { 
