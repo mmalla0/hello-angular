@@ -244,3 +244,41 @@ app.post('/additem', (req, res) => {
     });
     });
 });
+
+app.delete('/deleteitem/:itemId', (req, res) => {
+    const itemId = req.params.itemId;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        // Delete the item from the item table
+        const query = 'DELETE FROM item WHERE item_ID = ?';
+        const values = [itemId];
+
+        connection.query(query, values, (error, result) => {
+            if (error) {
+                console.error('Error deleting item:', error);
+                res.status(500).json({ error: 'Failed to delete item' });
+            } else {
+                console.log('Item deleted successfully');
+                res.status(200).json({ message: 'Item deleted successfully' });
+            }
+        });
+
+        connection.end(); // Close the database connection
+    });
+});

@@ -30,6 +30,24 @@ export class ItemService {
     );
   }
 
+
+  private deleteItemURL = 'deleteitem';
+
+  deleteItem(itemId: number): void {
+    const url = `${this.deleteItemURL}/${itemId}`;
+
+    this.http.delete(url).subscribe(
+      (response) => {
+        // Handle success response
+        console.log('Item deleted successfully');
+      },
+      (error) => {
+        // Handle error
+        console.error('Error deleting item:', error);
+      }
+    );
+  }
+
 }
 
 
