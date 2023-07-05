@@ -221,27 +221,53 @@ app.post('/additem', (req, res) => {
 
     const newItem = req.body;
 
-    // Insert the new item into the item table
-    const query = 'INSERT INTO item (item_name, item_description, item_price, stock, employee_id, best_before, item_imgpath) VALUES (?, ?, ?, ?, ?, ?, ?)';
-    const values = [
-        newItem.item_name,
-        newItem.item_description,
-        newItem.item_price,
-        newItem.stock,
-        newItem.employee_id,
-        newItem.best_before,
-        newItem.item_imgpath
-    ];
+        // Insert the new item into the item table
+        const query = `INSERT INTO item (item_name, item_description, item_price, stock, employee_id, best_before, item_imgpath) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        const itemValues = [
+            newItem.item_name,
+            newItem.item_description,
+            newItem.item_price,
+            newItem.stock,
+            newItem.employee_id,
+            newItem.best_before,
+            newItem.item_imgpath
+        ];
 
-    connection.query(query, values, (error, result) => {
-        if (error) {
-            console.error('Error adding item:', error);
-            res.status(500).json({ error: 'Failed to add item' });
-        } else {
-            console.log('Item added successfully');
-            res.status(200).json({ message: 'Item added successfully' });
-        }
-    });
+        connection.query(query, itemValues, (error, itemResult) => {
+            if (error) {
+                console.error('Error adding item:', error);
+                res.status(500).json({ error: 'Failed to add item' });
+            } else {
+                console.log('Item added successfully');
+                const itemId = itemResult.insertId;
+
+                // Fetch category IDs based on category names
+                const categoryNames = newItem.categories;
+                const getCategoryIdsQuery = `SELECT category_id FROM category WHERE category_name IN (?)`;
+                connection.query(getCategoryIdsQuery, [categoryNames], (error, categoryResults) => {
+                    if (error) {
+                        console.error('Error fetching category IDs:', error);
+                        res.status(500).json({ error: 'Failed to fetch category IDs' });
+                    } else {
+                        console.log('Category IDs fetched successfully');
+                        const categoryIds = categoryResults.map((row) => row.category_id);
+
+                        // Insert category IDs and item ID into category_items table
+                        const insertCategoryItemsQuery = `INSERT INTO category_items (ci_category_id, ci_item_id) VALUES ?`;
+                        const categoryItemValues = categoryIds.map((categoryId) => [categoryId, itemId]);
+                        connection.query(insertCategoryItemsQuery, [categoryItemValues], (error) => {
+                            if (error) {
+                                console.error('Error inserting into category_items:', error);
+                                res.status(500).json({ error: 'Failed to insert into category_items' });
+                            } else {
+                                console.log('Category items inserted successfully');
+                                res.status(200).json({ message: 'Item added successfully' });
+                            }
+                        });
+                    }
+                });
+            }
+        });
     });
 });
 

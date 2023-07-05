@@ -7,17 +7,47 @@ import { Item } from './shared/item';
     template: `
     <h2>Item Tester</h2>
 
-    <button (click)="testGetAllItems()">Test Get All Items</button>
-    <p *ngIf="getAllItemsResult">{{ getAllItemsResult | json }}</p>
+    <div>
+      <h3>Add Item</h3>
+      <input type="text" [(ngModel)]="newItem.item_name" placeholder="Item Name" />
+      <input type="text" [(ngModel)]="newItem.item_description" placeholder="Item Description" />
+      <input type="number" [(ngModel)]="newItem.item_price" placeholder="Item Price" />
+      <input type="number" [(ngModel)]="newItem.stock" placeholder="Stock" />
+      <input type="number" [(ngModel)]="newItem.employee_id" placeholder="Employee ID" />
+      <input type="date" [(ngModel)]="newItem.best_before" placeholder="Best Before" />
+      <input type="text" [(ngModel)]="newItem.item_imgpath" placeholder="Image Path" />
+      <button (click)="testAddItem()">Add Item</button>
+      <p *ngIf="addItemResult">{{ addItemResult }}</p>
+    </div>
 
-    <button (click)="testAddItem()">Test Add Item</button>
-    <p *ngIf="addItemResult">{{ addItemResult }}</p>
+    <div>
+      <h3>Delete Item</h3>
+      <input type="number" [(ngModel)]="deleteItemId" placeholder="Item ID" />
+      <button (click)="testDeleteItem()">Delete Item</button>
+      <p *ngIf="deleteItemResult">{{ deleteItemResult }}</p>
+    </div>
 
-    <button (click)="testDeleteItem()">Test Delete Item</button>
-    <p *ngIf="deleteItemResult">{{ deleteItemResult }}</p>
+    <div>
+      <h3>Get All Items</h3>
+      <button (click)="testGetAllItems()">Get All Items</button>
+      <p *ngIf="getAllItemsResult">{{ getAllItemsResult | json }}</p>
+    </div>
   `
 })
 export class TesterComponent {
+
+
+    newItem: any = {
+        item_name: '',
+        item_description: '',
+        item_price: 0,
+        stock: 0,
+        employee_id: 0,
+        best_before: '',
+        item_imgpath: ''
+    };
+    deleteItemId: number = 0;
+
     getAllItemsResult: Item[] | undefined;
     addItemResult: string | undefined;
     deleteItemResult: string | undefined;
@@ -37,25 +67,26 @@ export class TesterComponent {
     }
 
     testAddItem(): void {
-        const newItem: any = {
-            // Define properties for the new item
-            item_name: 'New Item',
-            item_description: 'New Item Description',
-            item_price: 10.99,
-            stock: 10,
-            employee_id: 1,
-            best_before: '2023-07-05',
-            item_imgpath: 'new-item.jpg'
-        };
-
-        this.itemService.addItem(newItem);
+        this.itemService.addItem(this.newItem);
         this.addItemResult = 'Item added successfully';
+
+        // Clear the input fields
+        this.newItem = {
+            item_name: '',
+            item_description: '',
+            item_price: 0,
+            stock: 0,
+            employee_id: 0,
+            best_before: '',
+            item_imgpath: ''
+        };
     }
 
     testDeleteItem(): void {
-        const itemId = 1; // Provide an existing item ID to delete
-
-        this.itemService.deleteItem(itemId);
+        this.itemService.deleteItem(this.deleteItemId);
         this.deleteItemResult = 'Item deleted successfully';
+
+        // Clear the input field
+        this.deleteItemId = 0;
     }
 }
