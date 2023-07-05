@@ -13,9 +13,9 @@ export interface Item {
     id: number;
     name: string;
     price: number;
-    category_id: number;
+    //category_id: number;
     quantity: number;
-    employee_id: number;
+    //employee_id: number;
     bestBeforeDate: string;
     picture: string;
     categories: string[];

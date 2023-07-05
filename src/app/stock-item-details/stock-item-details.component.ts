@@ -21,7 +21,7 @@ export class StockItemDetailsComponent implements OnInit {
       this.editedProduct = { ...this.product };
       this.categoriesToAdd = [...this.editedProduct.categories];
     } else {
-      this.editedProduct = { id: 0, name: '', price: null, category_id: null, quantity: null, employee_id: null, bestBeforeDate: '', picture: '', categories: [] };
+      //this.editedProduct = { id: 0, name: '', price: null, category_id: null, quantity: null, employee_id: null, bestBeforeDate: '', picture: '', categories: [] };
     }
   }
 
