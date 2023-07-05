@@ -33,6 +33,7 @@ export class ItemListComponent {
   }
 
   onPurchaseClicked() {
+    this.router.navigateByUrl('/order')
     // TODO add the path to the purchase formular
     // this.router.navigate([])
   }

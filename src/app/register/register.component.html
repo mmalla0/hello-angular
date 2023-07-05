@@ -4,9 +4,19 @@
     <form [formGroup]="form">
 
         <div class="name-input">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" formControlName="name"
-                (input)="handleNameValueChange($event)">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" formControlName="username"
+                (input)="handleUserNameValueChange($event)">
+        </div>
+        <div class="name-input">
+            <label for="firstname">Firstname</label>
+            <input type="text" id="firstname" name="firstname" formControlName="firstname"
+                (input)="handleFirstNameValueChange($event)">
+        </div>
+        <div class="name-input">
+            <label for="lastname">Lastname</label>
+            <input type="text" id="lastname" name="lastname" formControlName="lastname"
+                (input)="handleLastNameValueChange($event)">
         </div>
         <div class="email-input">
             <label for="email">E-Mail-Adresse</label>
@@ -18,8 +28,8 @@
             <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
         </div>
         <div class="zahlungsmethode-optionlist">
-            <label for="zahlungsmethode">Zahlungsmethode</label>
-            <select id="zahlungsmethode" formControlName="zahlungsmethode" (input)="handleZahlungsmethodeValueChange($event)">
+            <label for="methodofpayment">MethodofPayment</label>
+            <select id="methodofpayment" formControlName="methodofpayment" (input)="handleZahlungsmethodeValueChange($event)">
                 <option value="kreditkarte">Kreditkarte</option>
                 <option value="debitkarte">Debitkarte</option>
                 <option value="paypal">Paypal</option>

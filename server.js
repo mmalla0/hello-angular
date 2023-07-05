@@ -5,6 +5,7 @@ var path = require('path');
 var mysql = require('mysql');
 const multer = require('multer');
 bodyParser = require('body-parser');
+const cors = require('cors');
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
@@ -12,11 +13,13 @@ app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(cors());
+
 // configuration =================
 app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO rename to your app-name
 app.use(express.static(path.join(__dirname, 'src')));
 
-
+app.use(express.json());
 
 // listen (start app with node server.js) ======================================
 app.listen(8080, function () {
@@ -37,28 +40,28 @@ app.get('/', function (req, res) {
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'src/assets/images/'); // Destination folder for storing uploaded images
+        cb(null, 'src/assets/images/'); // Destination folder for storing uploaded images
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname); // Use the original filename for the uploaded image
+        cb(null, file.originalname); // Use the original filename for the uploaded image
     }
-  });
+});
 
-  const upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
-  app.post('/api/fileupload', upload.single('file'), function (req, res) {
+app.post('/api/fileupload', upload.single('file'), function (req, res) {
     console.log('Received file:', req.file);
 
     if (!req.file) {
-      console.log('No file uploaded');
-      res.status(400).json({ error: 'No file uploaded' });
-      return;
+        console.log('No file uploaded');
+        res.status(400).json({ error: 'No file uploaded' });
+        return;
     }
 
     const uploadedFileName = req.file.originalname;
     res.json({ fileName: uploadedFileName });
     console.log('File uploaded:', req.file);
-  });
+});
 
 
 //app.get('/landing', function (req, res) {
@@ -118,8 +121,80 @@ app.get('/landing', function (req, res) {
 
                 connection.end(); // Close the connection here after retrieving the items
                 console.log('Disconnected from the database');
+            });
+    });
+});
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+        console.log('Connected to the database');
+
+        const query = 'SELECT * FROM customer WHERE username = ? AND password = ?';
+        connection.query(query, [username, password], (error, results) => {
+            if (error) {
+                console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
+                res.status(500).json({ message: 'Interner Serverfehler' });
+            } else {
+                if (results.length > 0) {
+                    // Erfolgreiche Authentifizierung
+                    res.status(200).json({ message: 'Login erfolgreich' });
+                } else {
+                    // Fehlgeschlagene Authentifizierung
+                    res.status(401).json({ message: 'Falsche E-Mail oder Passwort' });
+                }
+            }
         });
     });
+})
+
+app.post('/register', (req, res) => {
+    const {  first_name, last_name, password, username, email, paymentMethod } = req.body;
+
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+        console.log('Connected to the database');
+        // Führe die MySQL-Abfrage aus, um den Customer in die Datenbank einzufügen
+        const query = 'INSERT INTO customer (first_name, last_name, password , username , email, paymentMethod ) VALUES (?, ?, ?, ?,?,?)';
+        connection.query(query, [ first_name, last_name,password,username, email, paymentMethod], (error, results) => {
+            if (error) {
+                console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
+                res.status(500).json({ message: 'Interner Serverfehler' });
+            } else {
+                res.status(200).json({ message: 'Registrierung erfolgreich' });
+            }
+        });
+
+    });
+
+
 });
 
 

@@ -7,7 +7,7 @@ import { Item } from '../../shared/item';
   providedIn: 'root'
 })
 export class ItemService {
-  private itemsURL = 'landing'; 
+  private itemsURL = 'http://localhost:8080/landing'; 
 
   constructor(private http: HttpClient) { }
 
