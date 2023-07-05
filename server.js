@@ -67,7 +67,7 @@ const storage = multer.diskStorage({
 
 app.get('/landing', function (req, res) {
 
-    const connection = mysql.createConnection({
+    var connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
         host: "195.37.176.178",
         port: "20133",
@@ -122,3 +122,50 @@ app.get('/landing', function (req, res) {
     });
 });
 
+
+// Define the API endpoint for adding an item
+app.post('/additem', (req, res) => {
+
+    var connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+    console.log('Connected to the database');
+
+
+    const newItem = req.body;
+
+    // Insert the new item into the item table
+    const query = 'INSERT INTO item (item_name, item_description, item_price, stock, employee_id, best_before, item_imgpath) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const values = [
+        newItem.item_name,
+        newItem.item_description,
+        newItem.item_price,
+        newItem.stock,
+        newItem.employee_id,
+        newItem.best_before,
+        newItem.item_imgpath
+    ];
+
+    connection.query(query, values, (error, result) => {
+        if (error) {
+            console.error('Error adding item:', error);
+            res.status(500).json({ error: 'Failed to add item' });
+        } else {
+            console.log('Item added successfully');
+            res.status(200).json({ message: 'Item added successfully' });
+        }
+    });
+    });
+});
