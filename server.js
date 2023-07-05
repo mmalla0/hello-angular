@@ -31,21 +31,6 @@ app.get('/', function (req, res) {
 
 
 
-
-//app.get('/landing', function (req, res) {
-//    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
-//});
-
-app.get('/landing', function (req, res) {
-
-    const connection = mysql.createConnection({
-        database: "23_IT_Gruppe5",
-        host: "195.37.176.178",
-        port: "20133",
-        user: "23_IT_Grp_5",
-        password: "JJQGNC8h79VkiSNmK}8I"
-    });
-
 /**
  * Logic for file uploads
  */
@@ -76,6 +61,19 @@ const storage = multer.diskStorage({
   });
 
 
+//app.get('/landing', function (req, res) {
+//    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
+//});
+
+app.get('/landing', function (req, res) {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
 
     connection.connect(function (err) {
         if (err) {
