@@ -2,7 +2,7 @@
   <h2 class="headline">Spacesavers</h2>
   <div class="filter-container">
     <div class="price-slider-container">
-      <input type="range" min="0" max="200000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()"> 
+      <input type="range" min="0" max="210000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()"> 
       <span class="price-range-value">${{ priceRange }}</span>
     </div>    
   </div>
@@ -35,8 +35,8 @@
         </div>
         <h3 class="product-name">{{ product.item_name }}</h3>
         <p class="product-description" *ngIf="product === hoveredProduct">{{ product.item_description }}</p>
-        <span class="price">$<strong>{{ product.item_price }}</strong></span>
         <span class="stock">In store: {{ product.stock }}</span>
+        <span class="price">$<strong>{{ product.item_price }}</strong></span>
         <div class="product-quantity">
           <button class="add-to-cart-button" (click)="onAddToCart(product)">Add to basket</button>
         </div>
