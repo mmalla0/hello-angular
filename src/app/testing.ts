@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ItemService } from 'services/item.service';
-import { Item } from 'shared/item';
+import { ItemService } from './services/item-service/item.service';
+import { Item } from './shared/item';
 
 @Component({
     selector: 'app-tester',
