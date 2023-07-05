@@ -14,6 +14,7 @@ export class WarenuebersichtComponent implements OnInit {
   filteredProducts: Item[] = [];
   paginatedProducts: Item[] = [];
   selectedItems: Item[] = [];
+  hoveredProduct: Item | null = null;
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
@@ -46,7 +47,7 @@ export class WarenuebersichtComponent implements OnInit {
     });
     
     this.searchQuery = '';
-    this.priceRange = 200000; // Set default price range value
+    this.priceRange = 200000; 
     this.selectedCategory = 'No filter';
     this.pageSize = 8;
     this.currentPage = 1;
@@ -61,6 +62,14 @@ export class WarenuebersichtComponent implements OnInit {
     private itemService: ItemService
   ) {}
 
+  onMouseEnter(product: Item): void {
+    this.hoveredProduct = product;
+  }
+
+  onMouseLeave(): void {
+    this.hoveredProduct = null;
+  }
+  
   onAddToCart(product: Item): void {
     this.selectedItems.push(product);
     this.cartService.addItem(product);
@@ -82,7 +91,6 @@ export class WarenuebersichtComponent implements OnInit {
   }
 
   filterProducts(): void {
-    
     this.filteredProducts = this.products.filter((product) => {
       const isPriceInRange = product.item_price <= this.priceRange;
       const isCategoryMatch =

@@ -190,28 +190,40 @@
 
 .product-list {
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: flex-start; 
+  flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 90px;
-  margin-left: 90px; 
+  margin-left: 90px;
 }
 
-.product-item { 
+.product-item {
   width: 250px;
   height: 400px; 
-  padding: 10px;
+  padding-bottom: 50px;
+  padding-top: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
   text-align: center;
-  background-color: #ffffff;  
+  background-color: #ffffff;
   transition: background-color 0.3s;
   display: flex;
   flex-direction: column;
 }
 
+.product-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
 .product-item:hover {
   background-color: #839788; 
   cursor: pointer; 
+  width: 300px;
+  height: auto;
+  min-height: 400px;
 }
 
 .product-image-container {
