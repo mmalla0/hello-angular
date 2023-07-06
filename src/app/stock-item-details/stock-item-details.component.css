@@ -79,31 +79,61 @@
   .product-form .cancel-button:hover{
     background-color: #9BB1B9;
   }
-
-  .category-input {
+  .categories-container {
     display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 7px; 
+    margin: 10px;
   }
   
-  .category-input input {
-    flex: 1;
+  .checkbox-label {
+    display: fixed;
+    align-items: center;
+    margin-bottom: 0.7rem;
+    cursor: pointer;
+    flex-basis: calc(25% - 1rem); 
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    display: none;
+  }
+  
+  .checkbox-custom {
+    position: relative;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .checkbox-label:hover .checkbox-custom {
+    background-color: #839788;
+  }
+  
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    background-color: #97DB4F;
+  }
+  
+  .checkbox-custom::after {
+    content: '\2713'; /* Checked symbol character code (✓) */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.9rem;
+    color: black;
+    visibility: hidden;
+  }
+  
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    visibility: visible;
   }
 
-  .form-group button.add-category{
-    margin-left: 5px;
-    margin-bottom: 15px;
-    background-color: #F6AE2D;
-    color: white;
-    border: none;
-    height: 35px;
+  label.category {
+    font-size: 1.6rem;
+    font-weight: bold;
   }
-
-  .category-input button.remove-category {
-    margin-left: 5px;
-    margin-bottom: 15px;
-    background-color: #F6AE2D;
-    color: white;
-    border: none;
-    height: 35px; 
-  }
+  

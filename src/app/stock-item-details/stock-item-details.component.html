@@ -33,19 +33,17 @@
     </div>
     <div class="form-row">
       <div class="form-group">
-        <label for="categories">Categories:</label>
-        <ng-container *ngFor="let category of categories">
-          <input type="checkbox" [(ngModel)]="category.selected" /> {{ category.category_name }}
-        </ng-container>
-        <ng-container *ngFor="let category of categoriesToAdd; let i = index; trackBy: trackByIndex">
-          <label for="categories">Add a new category:</label>
-        <div class="category-input">
-          <input type="text" [id]="'category' + i" [name]="'category' + i" [(ngModel)]="categoriesToAdd[i]">
-          <button type="button" class="remove-category" (click)="removeCategory(i)">-</button>
-        </div>
-        <button type="button" class="add-category" (click)="addCategory()">+</button>
-        </ng-container>
-        </div>
+        <label class="category">Categories:</label>
+        <div class="categories-container">
+          <ng-container *ngFor="let category of categories">
+            <label class="checkbox-label">
+              <input type="checkbox" [checked]="category.selected" (change)="updateCategorySelection(category.category_name, checkbox.checked)" #checkbox />
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-label-text">{{ category.category_name }}</span>
+            </label>
+          </ng-container>                           
+        </div> 
+      </div>
     </div>
     <div class="buttons">
       <button type="button" class="save-button" (click)="save()">Save</button>
@@ -53,3 +51,4 @@
     </div>
   </form>
 </div>
+
