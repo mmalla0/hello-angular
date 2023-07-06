@@ -44,7 +44,12 @@ export class PdfService {
             widths: ['*', 'auto', 'auto', 'auto'],
             body: [
               ['Items', 'Price', 'Quantity', 'Total'],
-              ...invoice.items.map(item => [item.item_name, item.item_price, item.quantity, (item.item_price * item.quantity).toFixed(2)])
+              ...invoice.orderItems.map(item => [
+                item.itemId, 
+                item.price, 
+                item.quantity, 
+                (item.price * item.quantity).toFixed(2)
+              ])
             ]
           }
         },
@@ -94,4 +99,5 @@ export class PdfService {
   constructor() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs; // Importieren der benötigten Schriftarten für pdfmake
   }
+
 }
