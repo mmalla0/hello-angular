@@ -1,16 +1,27 @@
-<form (ngSubmit)="submitForm()" #form="ngForm">
-    
-    <!--NICE TO HAVE: Bezahlmethode soll geändert werden können-->
+<div class="flexBox">
+    <h2>Your order will be spaceshipped to</h2>
+    <p>{{ user.addressId }}</p>
+    <p>-- Hier soll die Adresse des eingeloggten Users angezeigt werden --</p>
 
-    <label for="methodOfPayment">Want to change your payment Method? </label>
-    <select name="methodOfPayment" id="methodOfPayment" [(ngModel)]="user.methodOfPayment" required>
-        <option value="" disabled>Select a payment method</option>
-        <option value="creditCard">Credit Card</option>
-        <option value="paypal">PayPal</option>
-        <option value="bankTransfer">Bank Transfer</option>
-      </select>
+
+    <form (ngSubmit)="submitForm()" #form="ngForm" class="formFlex">
         
-    <button type="submit" [disabled]="form.invalid">
-        Order Now!
-    </button>
-</form>  
+        <!--NICE TO HAVE: Bezahlmethode soll geändert werden können-->
+
+        <label for="methodOfPayment" class="label"><h2>Want to change your payment Method?</h2></label>
+        <select name="methodOfPayment" id="methodOfPayment" [(ngModel)]="user.methodOfPayment" required>
+            <option value="" disabled>Select a payment method</option>
+            <option value="creditCard">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="bankTransfer">Bank Transfer</option>
+        </select>
+        <div class="buttonGroup">  
+            <button type="submit" class="order_button" [disabled]="form.invalid">
+                Order Now!
+            </button>
+            <button type="cancel" class="cancel_button" [disabled]="form.invalid">
+                Cancel
+            </button>
+        </div> 
+    </form>  
+</div>

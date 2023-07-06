@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { Invoice } from 'src/app/shared/invoice';
 import { User } from 'src/app/shared/user';
 
@@ -12,23 +13,18 @@ export class OrderFormComponent {
     id: 0,
     user: undefined,
     methodOfPayment: '',
-    items: [],
+    orderItems: [],
     address: undefined,
     totalWithVat: 0,
     totalWithoutVat: 0,
     shopName: ''
   }
-  user: User = {
-    id: 0,
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    addressId: 0,                
-    methodOfPayment: '',
-    cartId: 0,
-    stockpileId: 0 
+  user: User | null = null;
+
+  constructor(private authService: AuthService) {
+    this.user = this.authService.getCurrentUser();
   }
+
   @Output() submitOrder = new EventEmitter<Invoice>();
 
   submitForm() {  

@@ -8,6 +8,8 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
 import { CartComponent } from './cart/cart.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
 import { OrderFormComponent } from './order/order-form/order-form.component';
+import { TesterComponent } from "./testing";
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'stockpile', component: StockpileDashboardComponent },
   { path: 'order', component: OrderFormComponent },
+  { path: 'testing', component: TesterComponent},
   // Nutzer zur Hauptseite weiterleiten
   { path: '**', redirectTo: '' },
 ];
@@ -25,5 +28,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthService],
 })
 export class AppRoutingModule {}
