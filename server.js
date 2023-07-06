@@ -385,7 +385,7 @@ app.get('/getAllCategoryNames', (req, res) => {
             console.error('Error retrieving category names:', err);
             res.status(500).json({ error: 'Failed to retrieve category names' });
         } else {
-            const categoryNames = results.map((category) => category.categoryName);
+            const categoryNames = results.map((category) => category.category_name);
             res.json(categoryNames);
         }
     });

@@ -17,8 +17,8 @@ export class CategoryService {
   }
 
   categoryNameURL = "getAllCategoryNames"
-  getAllCategoryNames(): Observable<String[]> {
-    return this.http.get<String[]>(this.categoryNameURL);
+  getAllCategoryNames(): Observable<string[]> {
+    return this.http.get<string[]>(this.categoryNameURL);
   }
 
 
