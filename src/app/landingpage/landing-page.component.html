@@ -47,9 +47,9 @@
 <!-- Diverse Images Section -->
 <div class="diverse-images-section">
   <div class="image-card" *ngFor="let item of selectedCategoryItems">
-    <a [routerLink]="'items/' + item.item_ID">
-      <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name">
-    </a>
-  </div>
+    <!---a [routerLink]="'items/' + item.item_ID"--->
+      <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" (click)="handleCategoryImageClick()">
+    </div>
+  <!---/a--->
 </div>
 
