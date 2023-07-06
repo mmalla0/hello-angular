@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
-import { CartServiceService } from '../services/cart-service/cart-service.service';
+import { CartServiceService } from '../services/cart-service/cart-service.service'
+import { CategoryService } from '../services/category-service/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,17 +19,7 @@ export class WarenuebersichtComponent implements OnInit {
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
-  categories: string[] = [
-    'Art',
-    'Electronics',
-    'Fashion',
-    'Food',
-    'Health',
-    'Science',
-    'Tools',
-    'Toys',
-    'No filter',
-  ];
+  categories: String[] = [];
 
   pageSize: number;
   currentPage: number;
@@ -43,7 +34,8 @@ export class WarenuebersichtComponent implements OnInit {
     public cartService: CartServiceService,
     private router: Router,
     private route: ActivatedRoute,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private categoryService: CategoryService
   ) {}
 
   setUpFilterValues() : void{
@@ -52,6 +44,13 @@ export class WarenuebersichtComponent implements OnInit {
     this.pageSize = 8;
     this.currentPage = 1;
     this.totalPageCount = 0;
+
+    this.categoryService.getAllCategoryNames().subscribe({
+      next: categoryNames => {
+        this.categories = categoryNames;
+        this.categories.push("No filter");
+      }
+    });
   
     this.route.queryParams.subscribe(params => {
       if (params && params['extraParam']) {
