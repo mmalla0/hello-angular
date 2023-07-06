@@ -200,7 +200,6 @@ app.post('/register', (req, res) => {
 
 // Define the API endpoint for adding an item
 app.post('/additem', (req, res) => {
-
     var connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
         host: "195.37.176.178",
@@ -216,10 +215,11 @@ app.post('/additem', (req, res) => {
             return;
         }
 
-    console.log('Connected to the database');
+        console.log('Connected to the database');
 
+        const newItem = req.body;
 
-    const newItem = req.body;
+        console.log('Categories reaching the server side: ' + newItem.categories);
 
         // Insert the new item into the item table
         const query = `INSERT INTO item (item_name, item_description, item_price, stock, employee_id, best_before, item_imgpath) VALUES (?, ?, ?, ?, ?, ?, ?)`;
@@ -240,36 +240,50 @@ app.post('/additem', (req, res) => {
             } else {
                 console.log('Item added successfully');
                 const itemId = itemResult.insertId;
+                console.log(itemId);
 
                 // Fetch category IDs based on category names
                 const categoryNames = newItem.categories;
-                const getCategoryIdsQuery = `SELECT category_id FROM category WHERE category_name IN (?)`;
-                connection.query(getCategoryIdsQuery, [categoryNames], (error, categoryResults) => {
-                    if (error) {
-                        console.error('Error fetching category IDs:', error);
-                        res.status(500).json({ error: 'Failed to fetch category IDs' });
-                    } else {
-                        console.log('Category IDs fetched successfully');
-                        const categoryIds = categoryResults.map((row) => row.category_id);
+                console.log(categoryNames);
+                if (categoryNames.length > 0) {
+                    const placeholders = categoryNames.map(() => '?').join(', ');
+                    const getCategoryIdsQuery = `SELECT category_id FROM category WHERE category_name IN (${placeholders})`;
 
-                        // Insert category IDs and item ID into category_items table
-                        const insertCategoryItemsQuery = `INSERT INTO category_items (ci_category_id, ci_item_id) VALUES ?`;
-                        const categoryItemValues = categoryIds.map((categoryId) => [categoryId, itemId]);
-                        connection.query(insertCategoryItemsQuery, [categoryItemValues], (error) => {
-                            if (error) {
-                                console.error('Error inserting into category_items:', error);
-                                res.status(500).json({ error: 'Failed to insert into category_items' });
-                            } else {
-                                console.log('Category items inserted successfully');
-                                res.status(200).json({ message: 'Item added successfully' });
-                            }
-                        });
-                    }
-                });
+                    connection.query(getCategoryIdsQuery, categoryNames, (error, categoryResults) => {
+                        if (error) {
+                            console.error('Error fetching category IDs:', error);
+                            res.status(500).json({ error: 'Failed to fetch category IDs' });
+                        } else {
+                            console.log('Category IDs fetched successfully');
+                            const categoryIds = categoryResults.map((row) => row.category_id);
+
+                            // Insert category IDs and item ID into category_items table
+                            const insertCategoryItemsQuery = 'INSERT INTO category_items (ci_category_id, ci_item_id) VALUES ?';
+                            const categoryItemValues = categoryIds.map((categoryId) => [categoryId, itemId]);
+                            console.log(categoryItemValues);
+
+                            connection.query(insertCategoryItemsQuery, [categoryItemValues], (error) => {
+                                if (error) {
+                                    console.error('Error inserting into category_items:', error);
+                                    res.status(500).json({ error: 'Failed to insert into category_items' });
+                                } else {
+                                    console.log('Category items inserted successfully');
+                                    res.status(200).json({ message: 'Item added successfully' });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    console.log('No category names provided');
+                    res.status(200).json({ message: 'Item added successfully' });
+                }
             }
         });
     });
 });
+
+
+
 
 app.delete('/deleteitem/:itemId', (req, res) => {
     const itemId = req.params.itemId;
