@@ -322,3 +322,152 @@ app.delete('/deleteitem/:itemId', (req, res) => {
         connection.end(); // Close the database connection
     });
 });
+
+
+// GET endpoint to retrieve all categories
+app.get('/getAllCategories', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+    const query = 'SELECT * FROM category';
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving categories:', err);
+            res.status(500).json({ error: 'Failed to retrieve categories' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+});
+
+// GET endpoint to retrieve all category names
+app.get('/getAllCategoryNames', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+    const query = 'SELECT category_name FROM category';
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving category names:', err);
+            res.status(500).json({ error: 'Failed to retrieve category names' });
+        } else {
+            const categoryNames = results.map((category) => category.categoryName);
+            res.json(categoryNames);
+        }
+    });
+});
+
+});
+
+
+
+// POST endpoint to add a category
+app.post('/addCategory', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const { category, description } = req.body;
+
+        const query = 'INSERT INTO category (category_name, category_description) VALUES (?, ?)';
+        const values = [category, description];
+
+        connection.query(query, values, (err) => {
+            if (err) {
+                console.error('Error adding category:', err);
+                res.status(500).json({ error: 'Failed to add category' });
+            } else {
+                console.log('Category added successfully');
+                res.sendStatus(200);
+            }
+        });
+    });
+});
+
+
+// DELETE endpoint to delete a category
+app.delete('/deleteCategory/:categoryId', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+    const categoryId = req.params.categoryId;
+
+    const query = 'DELETE FROM category WHERE category_id = ?';
+
+    connection.query(query, categoryId, (err, result) => {
+        if (err) {
+            console.error('Error deleting category:', err);
+            res.status(500).json({ error: 'Failed to delete category' });
+        } else if (result.affectedRows === 0) {
+            res.status(404).json({ error: 'Category not found' });
+        } else {
+            console.log('Category deleted successfully');
+            res.sendStatus(200);
+        }
+    });
+});
+
+});
