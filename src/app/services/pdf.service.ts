@@ -37,7 +37,7 @@ export class PdfService {
         { text: ' ' }, // Leere Zeile für Abstand
 
         // Rechnungspositionen
-        { text: 'Positionen:', style: 'subheader' },
+        { text: 'Purchased Items:', style: 'subheader' },
         {
           table: {
             headerRows: 1,
@@ -51,14 +51,14 @@ export class PdfService {
         { text: ' ' }, // Leere Zeile für Abstand
 
         // Gesamtsummen
-        { text: 'Gesamt:', style: 'subheader' },
+        { text: 'Total:', style: 'subheader' },
         {
           table: {
             widths: ['*', 'auto'],
             body: [
-              ['Summe (ohne MwSt)', invoice.totalWithoutVat.toFixed(2)],
-              ['MwSt (20%)', (invoice.totalWithVat - invoice.totalWithoutVat).toFixed(2)],
-              ['Gesamt (mit MwSt)', invoice.totalWithVat.toFixed(2)]
+              ['Total (without VAT)', invoice.totalWithoutVat.toFixed(2)],
+              ['VAT (20%)', (invoice.totalWithVat - invoice.totalWithoutVat).toFixed(2)],
+              ['Total (incl. VAT)', invoice.totalWithVat.toFixed(2)]
             ]
           }
         },
