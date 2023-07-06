@@ -23,8 +23,10 @@ export class CategoryService {
 
 
   private addCategoryURL = 'addCategory';
-  addItem(category: any): void {
-    this.http.post(this.addCategoryURL, category).subscribe(
+  addItem(category: any, description: string): void {
+    const categoryWithDescription = { category, description };
+
+    this.http.post(this.addCategoryURL, categoryWithDescription).subscribe(
       (response) => {
         // Handle success response
         console.log('Category added successfully');
