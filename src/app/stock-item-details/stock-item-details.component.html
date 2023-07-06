@@ -7,35 +7,45 @@
         <input type="text" id="name" name="name" [(ngModel)]="editedProduct.item_name" required>
       </div>
       <div class="form-group">
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" [(ngModel)]="editedProduct.item_price" required>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" [(ngModel)]="editedProduct.item_description">
       </div>
     </div>
     <div class="form-row">
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" [(ngModel)]="editedProduct.item_price" required>
+      </div>
       <div class="form-group">
         <label for="bestBeforeDate">Best Before Date:</label>
         <input type="text" id="bestBeforeDate" name="bestBeforeDate" [(ngModel)]="editedProduct.best_before">
       </div>
+    </div>
+    <div class="form-row">
       <div class="form-group">
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" [(ngModel)]="editedProduct.stock" required>
       </div>
-    </div>
-    <div class="form-row">
       <div class="form-group">
         <label for="picture">Picture:</label>
         <input type="file" id="file" name="file" (change)="handleFileUpload($event)">
       </div>
+    </div>
+    <div class="form-row">
       <div class="form-group">
         <label for="categories">Categories:</label>
-        <ng-container *ngFor="let category of categoriesToAdd; let i = index; trackBy: trackByIndex">
-          <div class="category-input">
-            <input type="text" [id]="'category' + i" [name]="'category' + i" [(ngModel)]="categoriesToAdd[i]">
-            <button type="button" class="remove-category" (click)="removeCategory(i)">-</button>
-          </div>
+        <ng-container *ngFor="let category of categories">
+          <input type="checkbox" [(ngModel)]="category.selected" /> {{ category.category_name }}
         </ng-container>
+        <ng-container *ngFor="let category of categoriesToAdd; let i = index; trackBy: trackByIndex">
+          <label for="categories">Add a new category:</label>
+        <div class="category-input">
+          <input type="text" [id]="'category' + i" [name]="'category' + i" [(ngModel)]="categoriesToAdd[i]">
+          <button type="button" class="remove-category" (click)="removeCategory(i)">-</button>
+        </div>
         <button type="button" class="add-category" (click)="addCategory()">+</button>
-      </div>
+        </ng-container>
+        </div>
     </div>
     <div class="buttons">
       <button type="button" class="save-button" (click)="save()">Save</button>

@@ -16,14 +16,21 @@ export class StockItemDetailsComponent implements OnInit {
   categoriesToAdd: string[] = [];
   file: File;
 
+  categories: { category_name: string; selected: boolean }[] = [];
+
   ngOnInit() {
     if (this.isEditing) {
       this.editedProduct = { ...this.product };
-      this.categoriesToAdd = [...this.editedProduct.categories];
+      this.categories = this.editedProduct.categories.map(category => ({
+        category_name: category,
+        selected: true
+      }));
     } else {
-      //this.editedProduct = { id: 0, name: '', price: null, category_id: null, quantity: null, employee_id: null, bestBeforeDate: '', picture: '', categories: [] };
+      this.editedProduct =  { item_ID: null, item_name:  '', item_description: null, item_price: null, stock: null, employee_id: null, best_before: '', item_imgpath: '', categories: []};
     }
   }
+
+  
 
   constructor(private fileUploadService: FileUploadService) {}
 

@@ -19,6 +19,10 @@ export class MitarbeiterDashboardComponent {
   constructor(private itemService: ItemService) { }
 
   ngOnInit() {
+    this.getItemsFromDataBase();
+  }
+
+  getItemsFromDataBase(){
     this.itemService.getAllItems().subscribe({
       next: items => {
         this.products = items;
@@ -57,10 +61,8 @@ export class MitarbeiterDashboardComponent {
   }
 
   deleteItem(product: Item) {
-    const index = this.products.indexOf(product);
-    if (index !== -1) {
-      this.products.splice(index, 1);
-    }
+    this.itemService.deleteItem(product.item_ID);
+    this.getItemsFromDataBase();
   }
 
   decreaseQuantity(product: Item) {
@@ -84,15 +86,7 @@ export class MitarbeiterDashboardComponent {
   }
 
   saveProduct(product: Item) {
-    if (product.item_ID) {
-      const index = this.products.findIndex(p => p.item_ID === product.item_ID);
-      if (index !== -1) {
-        this.products[index] = { ...product }; 
-      }
-    } else {
-      this.products.push({ ...product }); 
-    }
-  
+    this.itemService.addItem(product);
     this.hideProductForm();
   }
 
