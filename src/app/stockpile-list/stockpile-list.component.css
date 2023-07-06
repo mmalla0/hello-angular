@@ -1,0 +1,10 @@
+.filters {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: #97DB4F;
+    padding: 20px;
+  }
+.filters deleteItem {
+    background-color: #97DB4F;
+  }

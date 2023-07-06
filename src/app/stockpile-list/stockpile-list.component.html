@@ -1,11 +1,24 @@
-<div *ngFor="let entry of stockpileItemEntries">
-  <h2>{{ entry.product.name }}</h2>
-  <ul>
-    <li *ngFor="let bestBeforeDate of entry.bestBeforeDates">
-      {{ bestBeforeDate.date | date }} ({{ bestBeforeDate.count }} Produkte)
-    </li>
-  </ul>
+<div class="filters">
+  <input type="text" placeholder="Filter by name" [(ngModel)]="filterName" (input)="loadStockpileItems()">
+  <input type="text" placeholder="Filter by category" [(ngModel)]="filterCategory" (input)="loadStockpileItems()">
+  <label for="filterDate">Filter by best before date:</label>
+  <input id="filterDate" type="date" [(ngModel)]="filterDate" (input)="loadStockpileItems()">
+  <button (click)="clearFilters()">Clear Filters</button>
 </div>
+<div class="stockpile-list">
+  <div *ngFor="let entry of stockpileItemEntries">
+    <h2>{{ entry.product.name }}</h2>
+    <ul>
+      <li *ngFor="let bestBeforeDate of entry.bestBeforeDates">
+        <p>Date: {{ bestBeforeDate.date | date }}</p>
+        <p>Count: {{ bestBeforeDate.count }} Produkte</p>
+      </li>
+    </ul>
+    <button (click)="deleteStockpileItem(entry.product)" class="deleteItem">Delete Consumed Item</button>
+  </div>
+</div>
+  
+
 
 
 

@@ -37,33 +37,33 @@ export class PdfService {
         { text: ' ' }, // Leere Zeile für Abstand
 
         // Rechnungspositionen
-        { text: 'Positionen:', style: 'subheader' },
+        { text: 'Purchased Items:', style: 'subheader' },
         {
           table: {
             headerRows: 1,
             widths: ['*', 'auto', 'auto', 'auto'],
             body: [
               ['Items', 'Price', 'Quantity', 'Total'],
-              ...invoice.items.map(item => [item.name, item.price, item.quantity, (item.price * item.quantity).toFixed(2)])
+              ...invoice.items.map(item => [item.item_name, item.item_price, item.quantity, (item.item_price * item.quantity).toFixed(2)])
             ]
           }
         },
-        { text: ' ' }, // Leere Zeile für Abstand
+        { text: ' ' }, 
 
         // Gesamtsummen
-        { text: 'Gesamt:', style: 'subheader' },
+        { text: 'Total:', style: 'subheader' },
         {
           table: {
             widths: ['*', 'auto'],
             body: [
-              ['Summe (ohne MwSt)', invoice.totalWithoutVat.toFixed(2)],
-              ['MwSt (20%)', (invoice.totalWithVat - invoice.totalWithoutVat).toFixed(2)],
-              ['Gesamt (mit MwSt)', invoice.totalWithVat.toFixed(2)]
+              ['Total (excl. VAT)', invoice.totalWithoutVat.toFixed(2)],
+              ['VAT (20%)', (invoice.totalWithVat - invoice.totalWithoutVat).toFixed(2)],
+              ['Total (incl. VAT)', invoice.totalWithVat.toFixed(2)]
             ]
           }
         },
 
-        { text: ' ' }, // Leere Zeile für Abstand
+        { text: ' ' }, 
         { text: 'Shopname: ' + invoice.shopName, style: 'subheader' }
       ],
       styles: {
