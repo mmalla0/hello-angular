@@ -9,6 +9,7 @@ import { CartComponent } from './cart/cart.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
 import { OrderFormComponent } from './order/order-form/order-form.component';
 import { TesterComponent } from "./testing";
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -27,5 +28,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthService],
 })
 export class AppRoutingModule {}

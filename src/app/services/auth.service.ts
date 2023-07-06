@@ -82,7 +82,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router){}
   
-  
   updateUsersInLocalStorage(){
     const usersToSave = this.users.map((user: User)=>{
       return JSON.stringify(user)
