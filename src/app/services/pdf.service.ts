@@ -44,11 +44,16 @@ export class PdfService {
             widths: ['*', 'auto', 'auto', 'auto'],
             body: [
               ['Items', 'Price', 'Quantity', 'Total'],
-              ...invoice.items.map(item => [item.name, item.price, item.quantity, (item.price * item.quantity).toFixed(2)])
+              ...invoice.orderItems.map(item => [
+                item.itemId, 
+                item.price, 
+                item.quantity, 
+                (item.price * item.quantity).toFixed(2)
+              ])
             ]
           }
         },
-        { text: ' ' }, // Leere Zeile für Abstand
+        { text: ' ' }, 
 
         // Gesamtsummen
         { text: 'Total:', style: 'subheader' },
@@ -56,14 +61,14 @@ export class PdfService {
           table: {
             widths: ['*', 'auto'],
             body: [
-              ['Total (without VAT)', invoice.totalWithoutVat.toFixed(2)],
+              ['Total (excl. VAT)', invoice.totalWithoutVat.toFixed(2)],
               ['VAT (20%)', (invoice.totalWithVat - invoice.totalWithoutVat).toFixed(2)],
               ['Total (incl. VAT)', invoice.totalWithVat.toFixed(2)]
             ]
           }
         },
 
-        { text: ' ' }, // Leere Zeile für Abstand
+        { text: ' ' }, 
         { text: 'Shopname: ' + invoice.shopName, style: 'subheader' }
       ],
       styles: {
@@ -94,4 +99,5 @@ export class PdfService {
   constructor() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs; // Importieren der benötigten Schriftarten für pdfmake
   }
+
 }

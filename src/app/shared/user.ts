@@ -19,6 +19,7 @@ export interface StockpileItem {
     quantity: number;
     bestBeforeDate: Date;
     product: string;
+    category: string;
 }
 export interface StockpileItemEntry {
     product: StockpileItem;

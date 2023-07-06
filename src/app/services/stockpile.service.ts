@@ -18,4 +18,10 @@ export class StockpileService {
     const url = `${this.apiUrl}/stockpile/${stockpileId}/items`;
     return this.http.get<StockpileItem[]>(url);
   }
+
+  deleteStockpileItem(stockpileItemId: string): Observable<void> {
+    const url = `${this.apiUrl}/items/${stockpileItemId}`;
+    return this.http.delete<void>(url);
+  }
+
 }
