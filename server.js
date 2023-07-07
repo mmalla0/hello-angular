@@ -472,9 +472,9 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
 
 });
 
-
-// DELETE endpoint to delete a category
-app.delete('/deleteCategory/:categoryId', (req, res) => {
+// ENDPOINT for retrieving the stockpile items by customer id
+app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
+    const customerID = req.params.customerID;
 
     const connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
@@ -493,18 +493,53 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
 
         console.log('Connected to the database');
 
-        const categoryId = req.params.categoryId;
+        const query = 'SELECT * FROM stockpile WHERE customer_ID = ?';
+        const values = [customerID];
 
-        const query = 'DELETE FROM category WHERE category_id = ?';
-
-        connection.query(query, categoryId, (err, result) => {
+        connection.query(query, values, (err, results) => {
             if (err) {
-                console.error('Error deleting category:', err);
-                res.status(500).json({ error: 'Failed to delete category' });
-            } else if (result.affectedRows === 0) {
-                res.status(404).json({ error: 'Category not found' });
+                console.error('Error retrieving stockpile:', err);
+                res.status(500).json({ error: 'Failed to retrieve stockpile' });
             } else {
-                console.log('Category deleted successfully');
+                res.json(results);
+            }
+        });
+    });
+});
+
+
+// DELETE endpoint to delete a stockpile item
+app.delete('/deleteCategory/:stockpileId', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const stockpileId = req.params.stockpileId;
+
+        const query = 'DELETE FROM stockpile WHERE stockpile_ID = ?';
+
+        connection.query(query, stockpileId, (err, result) => {
+            if (err) {
+                console.error('Error deleting stockpile item:', err);
+                res.status(500).json({ error: 'Failed to delete stockpile item' });
+            } else if (result.affectedRows === 0) {
+                res.status(404).json({ error: 'Stockpile item not found' });
+            } else {
+                console.log('Stockpile item deleted successfully');
                 res.sendStatus(200);
             }
         });
