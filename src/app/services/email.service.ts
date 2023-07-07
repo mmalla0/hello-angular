@@ -12,9 +12,6 @@ export class EmailService {
     console.log(`Recipient: ${recipient}`);
     console.log(`Body: ${body}`);
   }
-  
-
-  apiUrl = 'http://localhost:8080'; // Set the URL of your server.js API
 
   constructor(private http: HttpClient) {}
 
@@ -25,7 +22,7 @@ export class EmailService {
       body,
       attachment: pdfData
     };
-    const url = `${this.apiUrl}/sendEmail`;
+    const url = `/sendEmail`;
     return this.http.post<void>(url, emailData);
   }
 }

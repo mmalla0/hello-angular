@@ -7,6 +7,7 @@ import { Item } from '../../shared/item';
   providedIn: 'root'
 })
 export class ItemService {
+
   private itemsURL = 'http://localhost:8080/landing'; 
 
   constructor(private http: HttpClient) { }
@@ -15,7 +16,11 @@ export class ItemService {
     return this.http.get<Item[]>(this.itemsURL);
   }
 
-
+  getItemsById(id: number): Observable<Item> {
+    const url = `$/items/${id}`; 
+    return this.http.get<Item>(url);
+  }
+  
   private additemURL = 'additem';
   addItem(item: any): void {
     this.http.post(this.additemURL, item).subscribe(
@@ -29,7 +34,6 @@ export class ItemService {
       }
     );
   }
-
 
   private deleteItemURL = 'deleteitem';
 
@@ -46,6 +50,11 @@ export class ItemService {
         console.error('Error deleting item:', error);
       }
     );
+  }
+
+  reduceStock(items: Item[]): Observable<void> {
+    const url = `$/reduceStock`;
+    return this.http.post<void>(url, items); 
   }
 
 }
