@@ -20,7 +20,6 @@ export class StockItemDetailsComponent implements OnInit {
 
   categories: { category_name: string; selected: boolean }[] = [];
 
-
   ngOnInit() {
     this.categoryService.getAllCategoryNames().subscribe({
       next: categoryNames => {
@@ -28,9 +27,14 @@ export class StockItemDetailsComponent implements OnInit {
           category_name: category,
           selected: false
         }));
+        this.setUpProducts();
       }
     });
+  }
   
+  constructor(private fileUploadService: FileUploadService, private categoryService: CategoryService) {}
+
+  setUpProducts() : void{
     if (this.isEditing) {
       this.editedProduct = { ...this.product };
       this.editedProduct.categories.forEach(category => {
@@ -40,33 +44,59 @@ export class StockItemDetailsComponent implements OnInit {
         }
       });
     } else {
-      this.editedProduct = { item_ID: null, item_name: '', item_description: null, item_price: null, stock: null, employee_id: null, best_before: '', item_imgpath: '', categories: [] };
+      this.editedProduct = {
+        item_ID: 0,
+        item_name: '',
+        item_description: '',
+        item_price: 0,
+        stock: 0,
+        employee_id: 0,
+        best_before: null,
+        item_imgpath: '',
+        categories: []
+    };
     }
   }
-  
-  constructor(private fileUploadService: FileUploadService, private categoryService: CategoryService) {}
 
   save(): void {
     const editedProduct: Item = {
       ...this.editedProduct,
-      categories: this.categoriesToAdd.filter((category) => category.trim() !== '')
-    };
+      categories: this.categories
+        .filter(category => category.selected)
+        .map(category => category.category_name)
+    };  
 
     if (this.file) {
-      this.fileUploadService.uploadFile(this.file)
-        .then(response => {
-          console.log('File uploaded successfully.');
-          const fileName = response.fileName;
-          editedProduct.item_imgpath = fileName;
-          this.editedProduct.item_imgpath = fileName;
-          this.saveClick.emit(editedProduct);
-        })
-        .catch(error => {
-          console.error('Error uploading file:', error);
-        });
+      this.saveFile(editedProduct); 
     } else {
       this.saveClick.emit(editedProduct);
     }
+  }
+
+  saveFile(editedProduct : Item) : void{
+    this.fileUploadService.uploadFile(this.file)
+    .then(response => {
+      console.log('File uploaded successfully.');
+      const fileName = response.fileName;
+      editedProduct.item_imgpath = fileName;
+      this.editedProduct.item_imgpath = fileName;
+      this.saveClick.emit(editedProduct);
+    })
+    .catch(error => {
+      console.error('Error uploading file:', error);
+    });
+  }
+
+  convertToDate(dateString: string): Date { 
+    return new Date(dateString);
+  }
+
+  handleDateChange(event: any): void {
+    const date = new Date(event.target.value);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    this.editedProduct.best_before =  `${year}-${month}-${day}`;
   }
 
   handleFileUpload(event: any) {
@@ -75,10 +105,6 @@ export class StockItemDetailsComponent implements OnInit {
 
   cancel() {
     this.cancelClick.emit();
-  }
-
-  trackByIndex(index: number): number {
-    return index;
   }
 
   updateCategorySelection(categoryName: string, newValue: boolean) {

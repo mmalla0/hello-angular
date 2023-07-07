@@ -40,7 +40,7 @@
               <button class="increment" (click)="increaseQuantity(product)">+</button>
             </div>
           </td>
-          <td>{{ product.best_before }}</td>
+          <td>{{ formatDate(product.best_before) }}</td>
           <td>
             <div *ngFor="let category of product.categories" class="category">{{ category }}</div>
           </td>

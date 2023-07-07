@@ -53,6 +53,17 @@ export class MitarbeiterDashboardComponent {
     this.products = [...this.products];
   }
 
+  formatDate(dateString: string): string {
+    if (!dateString || dateString.trim() === '') {
+      return null; // Return empty string if the date is empty or blank
+    }
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return`${year}-${month}-${day}`;
+  }
+  
   getSortIcon(column: string): string {
     if (column === this.sortColumn) {
       return this.sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
@@ -86,8 +97,12 @@ export class MitarbeiterDashboardComponent {
   }
 
   saveProduct(product: Item) {
+    product.employee_id = 1;
     this.itemService.addItem(product);
     this.hideProductForm();
+    setTimeout(() => {
+      this.getItemsFromDataBase();
+    }, 1000);
   }
 
   editItem(product: Item) {
