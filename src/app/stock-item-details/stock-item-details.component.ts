@@ -91,16 +91,22 @@ export class StockItemDetailsComponent implements OnInit {
     return new Date(dateString);
   }
 
-  handleDateChange(event: any): void {
-    const date = new Date(event.target.value);
+  handleDateChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const dateValue = target.value; 
+    const date = new Date(dateValue); 
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
-    this.editedProduct.best_before =  `${year}-${month}-${day}`;
+    this.editedProduct.best_before = `${year}-${month}-${day}`;
   }
+  
 
-  handleFileUpload(event: any) {
-    this.file = event.target.files[0];
+  handleFileUpload(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      this.file = target.files[0] as File;
+    }
   }
 
   cancel() {

@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-warenuebersicht',
   templateUrl: './warenuebersicht.component.html',
-  styleUrls: ['./warenuebersicht.component.css'],
+  styleUrls: ['./warenuebersicht.component.css', './warenuebersicht-filter.component.css'],
 })
 export class WarenuebersichtComponent implements OnInit {
   products: Item[] = [];
@@ -19,7 +19,7 @@ export class WarenuebersichtComponent implements OnInit {
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
-  categories: String[] = [];
+  categories: string[] = [];
 
   pageSize: number;
   currentPage: number;

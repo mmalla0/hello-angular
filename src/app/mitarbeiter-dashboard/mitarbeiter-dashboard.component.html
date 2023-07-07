@@ -1,4 +1,4 @@
-<div *ngIf="showForm">
+<div *ngIf="showItemForm">
   <app-stock-item-details
     [product]="selectedProduct"
     [isEditing]="selectedProduct !== null"
@@ -6,20 +6,31 @@
     (saveClick)="saveProduct($event)"
   ></app-stock-item-details>
 </div>
+<div *ngIf="showCategoryForm">
+  <app-category-detail (cancelClick)="hideCategory()"></app-category-detail>
+</div>
 <div class="table">
   <div class="table_header">
+    <div class="search-item">
+      <input type="text" class="search-input" placeholder="Search product" [(ngModel)]="searchQuery">
+      <button class="search-button green-button" (click)="onSearchProducts()">Search</button>
+    </div>
     <p>Stock</p>
-    <button class="add_button" (click)="showProductForm()">+ Add new item</button>
+    <div class="header-buttons">
+      <button class="manage-categories-button green-button" (click)="showCategory()">Manage Categories</button>
+      <button class="add_button green-button" (click)="showProductForm()">+ Add new item</button>
+    </div>
   </div>
   <div class="table_section">
     <table>
       <thead>
         <tr>
-          <th (click)="sortItems()">Item <i class="fas fa-sort" [ngClass]="getSortIcon('name')"></i></th>
+          <th (click)="sortItems('item_name')">Item <i class="fas fa-sort" [ngClass]="getSortIcon('item_name')"></i></th>
           <th>Image</th>
-          <th>Price</th>
+          <th>Description</th>
+          <th (click)="sortItems('price')">Price <i class="fas fa-sort" [ngClass]="getSortIcon('price')"></i></th>
           <th>In Store</th>
-          <th>Best before date</th>
+          <th (click)="sortItems('best_before')">Best before date <i class="fas fa-sort" [ngClass]="getSortIcon('best_before')"></i></th>
           <th>Categories</th>
           <th>Action</th>
         </tr>
@@ -32,6 +43,7 @@
               <img [src]="'assets/images/' + product.item_imgpath" alt="Product Image" class="product-image" />
             </div>
           </td>
+          <td>{{ product.item_description}}</td>
           <td>${{ product.item_price }}</td>
           <td>
             <div class="quantity">

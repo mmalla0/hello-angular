@@ -1,0 +1,23 @@
+<div class="manage-categories-container">
+    <h2 class="manage-categories-title">Manage Categories</h2>
+  
+    <div class="category-list">
+      <div class="category-item" *ngFor="let category of categories">
+        <div class="category-details">
+          <button class="remove-category-button" (click)="removeCategory(category)">-</button>
+          <div class="category-info">
+            <div class="category-name">{{ category.category_name }}</div>
+            <div class="category-description">{{ category.category_description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="add-category-container">
+      <input type="text" class="category-input" [(ngModel)]="newCategoryName" placeholder="Enter category name">
+      <input type="text" class="category-input" [(ngModel)]="newCategoryDescription" placeholder="Enter category description">
+      <button class="add-category-button green-button" (click)="addCategory()">Add Category</button>
+    </div>
+  
+    <button class="cancel-button green-button" (click)="cancel()">Cancel</button>
+  </div>
