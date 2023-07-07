@@ -5,7 +5,7 @@ import { Category } from '../shared/category';
 @Component({
   selector: 'app-category-detail',
   templateUrl: './category-detail.component.html',
-  styleUrls: ['./category-detail.component.css']
+  styleUrls: ['./category-detail.component.css', '../../global-styles.css']
 })
 export class CategoryDetailComponent implements OnInit{
   @Output() cancelClick: EventEmitter<void> = new EventEmitter<void>();

@@ -5,11 +5,10 @@ import { ItemService } from '../services/item-service/item.service';
 @Component({
   selector: 'app-mitarbeiter-dashboard',
   templateUrl: './mitarbeiter-dashboard.component.html',
-  styleUrls: ['./mitarbeiter-dashboard.component.css', './mitarbeiter-dashboard-table.css']
+  styleUrls: ['./mitarbeiter-dashboard.component.css', './mitarbeiter-dashboard-table.css', '../../global-styles.css']
 })
 
 export class MitarbeiterDashboardComponent implements OnInit{
-
   sortColumn = 'name';
   showItemForm = false;
   showCategoryForm = false; 
@@ -27,6 +26,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
   getItemsFromDataBase(){
     this.itemService.getAllItems().subscribe({
       next: items => {
+        items.sort((a, b) => a.item_name.localeCompare(b.item_name));
         this.products = items;
       },
       error: error => {
@@ -69,7 +69,6 @@ export class MitarbeiterDashboardComponent implements OnInit{
     this.products = [...this.products];
   }
   
-
   formatDate(dateString: string): string {
     if (!dateString || dateString.trim() === '') {
       return "-"; 
@@ -92,17 +91,18 @@ export class MitarbeiterDashboardComponent implements OnInit{
       'fa-sort-desc-best-before': fieldName === 'best_before' && this.sortDirection === -1
     };
   }
-
   onSearchProducts() {
     if (this.searchQuery && this.searchQuery.trim() !== '') {
+      const keywords = this.searchQuery.toLowerCase().split(' ');
       this.products = this.products.filter(product => {
-        return product.item_name.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const itemName = product.item_name.toLowerCase();
+        return keywords.every(keyword => itemName.includes(keyword));
       });
     } else {
       this.getItemsFromDataBase();
     }
   }
-
+  
   deleteItem(product: Item) {
     this.itemService.deleteItem(product.item_ID);
     setTimeout(() => {
@@ -121,6 +121,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
   }
 
   showProductForm() {
+    this.showCategoryForm = false; 
     this.showItemForm = true;
     this.selectedProduct = null;
   }
@@ -131,6 +132,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
   }
 
   showCategory(){
+    this.showItemForm = false; 
     this.showCategoryForm = true; 
   }
 

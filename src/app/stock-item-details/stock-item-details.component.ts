@@ -3,7 +3,6 @@ import { Item } from '../shared/item';
 import { FileUploadService } from '../services/file-upload-service/file-upload.service';
 import { CategoryService } from '../services/category-service/category.service';
 
-
 @Component({
   selector: 'app-stock-item-details',
   templateUrl: './stock-item-details.component.html',
