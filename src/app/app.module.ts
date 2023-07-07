@@ -30,6 +30,7 @@ import { OrderFormComponent } from './order/order-form/order-form.component';
 
 import { TesterComponent } from "./testing";
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 
 
@@ -53,7 +54,8 @@ import { CategoryDetailComponent } from './category-detail/category-detail.compo
     StockItemDetailsComponent,
     OrderFormComponent,
     TesterComponent,
-    CategoryDetailComponent
+    CategoryDetailComponent,
+    ItemDetailsComponent
   ],
   imports: [
     RouterModule,
