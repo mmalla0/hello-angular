@@ -1,0 +1,15 @@
+.green-button {
+    padding: 10px 20px;
+    background-color: #97DB4F;
+    font-size: 16px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: auto;
+    transition: background-color 0.3s ease;
+}
+  
+.green-button:hover {
+    background-color: #5B9C2F;
+}

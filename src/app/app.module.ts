@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { OrderFormComponent } from './order/order-form/order-form.component';
 
 import { TesterComponent } from "./testing";
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
 
 
 
@@ -51,7 +52,8 @@ import { TesterComponent } from "./testing";
     LandingPageComponent,
     StockItemDetailsComponent,
     OrderFormComponent,
-    TesterComponent
+    TesterComponent,
+    CategoryDetailComponent
   ],
   imports: [
     RouterModule,
