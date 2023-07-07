@@ -19,6 +19,10 @@ export class MitarbeiterDashboardComponent {
   constructor(private itemService: ItemService) { }
 
   ngOnInit() {
+    this.getItemsFromDataBase();
+  }
+
+  getItemsFromDataBase(){
     this.itemService.getAllItems().subscribe({
       next: items => {
         this.products = items;
@@ -49,6 +53,17 @@ export class MitarbeiterDashboardComponent {
     this.products = [...this.products];
   }
 
+  formatDate(dateString: string): string {
+    if (!dateString || dateString.trim() === '') {
+      return null; // Return empty string if the date is empty or blank
+    }
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return`${year}-${month}-${day}`;
+  }
+  
   getSortIcon(column: string): string {
     if (column === this.sortColumn) {
       return this.sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
@@ -57,10 +72,8 @@ export class MitarbeiterDashboardComponent {
   }
 
   deleteItem(product: Item) {
-    const index = this.products.indexOf(product);
-    if (index !== -1) {
-      this.products.splice(index, 1);
-    }
+    this.itemService.deleteItem(product.item_ID);
+    this.getItemsFromDataBase();
   }
 
   decreaseQuantity(product: Item) {
@@ -84,16 +97,12 @@ export class MitarbeiterDashboardComponent {
   }
 
   saveProduct(product: Item) {
-    if (product.item_ID) {
-      const index = this.products.findIndex(p => p.item_ID === product.item_ID);
-      if (index !== -1) {
-        this.products[index] = { ...product }; 
-      }
-    } else {
-      this.products.push({ ...product }); 
-    }
-  
+    product.employee_id = 1;
+    this.itemService.addItem(product);
     this.hideProductForm();
+    setTimeout(() => {
+      this.getItemsFromDataBase();
+    }, 1000);
   }
 
   editItem(product: Item) {

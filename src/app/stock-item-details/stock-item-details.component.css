@@ -6,104 +6,138 @@
     margin: 0 auto;
     text-align: center;
     margin-bottom: 20px; 
-  }
+}
   
-  .form-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-  }
-  
-  .form-group {
-    width: 400px;
-    margin-right: 30px; 
-  }
-  
-  .product-form h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .product-form form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .product-form label {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .product-form input[type="number"],
-  .product-form input[type="text"],
-  .product-form input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    box-sizing: border-box;
-  }
-  
-  .product-form .buttons {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .product-form .save-button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
-    background-color:#73877B;;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
 
-  .product-form .cancel-button{
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-radius: 5px;
-    background-color: #839788;
-    color: #fff;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }
+.form-group {
+  width: 400px;
+  margin-right: 30px; 
+}
 
-  .product-form .save-button:hover, 
-  .product-form .cancel-button:hover{
-    background-color: #9BB1B9;
-  }
+.product-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 
-  .category-input {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
+.product-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product-form label {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.product-form input[type="number"],
+.product-form input[type="text"],
+.product-form input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.product-form .buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.product-form .save-button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 5px;
+  background-color:#73877B;;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.product-form .cancel-button{
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 5px;
+  background-color: #839788;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.product-form .save-button:hover, 
+.product-form .cancel-button:hover{
+  background-color: #9BB1B9;
+}
+
+.categories-container {
+  background-color: #f1f1f1;
+  padding: 2rem;
+  width: 490px; 
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2.0rem; 
+  border-radius: 7px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center; 
+  margin-bottom: 0.7rem;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 1.55rem; 
+  height: 1.55rem;
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid black; 
+  cursor: pointer;
+}
+
+.checkbox-label:hover .checkbox-custom {
+  background-color: #839788;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background-color: #97DB4F;
+}
+
+.checkbox-custom::after {
+  content: '\2713'; /* Checked symbol character code (✓) */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 1.9rem;
+  color: black;
+  visibility: hidden;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  visibility: visible;
+}
+
+
+.checkbox-label,
+.checkbox-custom {
+  vertical-align: middle; 
+}
   
-  .category-input input {
-    flex: 1;
-  }
-
-  .form-group button.add-category{
-    margin-left: 5px;
-    margin-bottom: 15px;
-    background-color: #F6AE2D;
-    color: white;
-    border: none;
-    height: 35px;
-  }
-
-  .category-input button.remove-category {
-    margin-left: 5px;
-    margin-bottom: 15px;
-    background-color: #F6AE2D;
-    color: white;
-    border: none;
-    height: 35px; 
-  }
