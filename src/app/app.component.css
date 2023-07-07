@@ -6,3 +6,41 @@
     background-color: #fff;
     height: 100%;
 }
+
+/* Menu */
+.menu {
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu li a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.menu li a:hover {
+    background-color: #ddd;
+}
+
+.menu li button {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    border: none
+}
+
+.menu li button:hover {
+    background-color: #ddd;
+}

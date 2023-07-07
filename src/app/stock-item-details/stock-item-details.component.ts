@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../shared/item';
 import { FileUploadService } from '../services/file-upload-service/file-upload.service';
+import { CategoryService } from '../services/category-service/category.service';
+
 
 @Component({
   selector: 'app-stock-item-details',
@@ -16,57 +18,99 @@ export class StockItemDetailsComponent implements OnInit {
   categoriesToAdd: string[] = [];
   file: File;
 
+  categories: { category_name: string; selected: boolean }[] = [];
+
   ngOnInit() {
+    this.categoryService.getAllCategoryNames().subscribe({
+      next: categoryNames => {
+        this.categories = categoryNames.map(category => ({
+          category_name: category,
+          selected: false
+        }));
+        this.setUpProducts();
+      }
+    });
+  }
+  
+  constructor(private fileUploadService: FileUploadService, private categoryService: CategoryService) {}
+
+  setUpProducts() : void{
     if (this.isEditing) {
       this.editedProduct = { ...this.product };
-      this.categoriesToAdd = [...this.editedProduct.categories];
+      this.editedProduct.categories.forEach(category => {
+        const foundCategory = this.categories.find(c => c.category_name === category);
+        if (foundCategory) {
+          foundCategory.selected = true;
+        }
+      });
     } else {
-      //this.editedProduct = { id: 0, name: '', price: null, category_id: null, quantity: null, employee_id: null, bestBeforeDate: '', picture: '', categories: [] };
+      this.editedProduct = {
+        item_ID: 0,
+        item_name: '',
+        item_description: '',
+        item_price: 0,
+        stock: 0,
+        employee_id: 0,
+        best_before: null,
+        item_imgpath: '',
+        categories: []
+    };
     }
   }
-
-  constructor(private fileUploadService: FileUploadService) {}
 
   save(): void {
     const editedProduct: Item = {
       ...this.editedProduct,
-      categories: this.categoriesToAdd.filter((category) => category.trim() !== '')
-    };
+      categories: this.categories
+        .filter(category => category.selected)
+        .map(category => category.category_name)
+    };  
 
     if (this.file) {
-      this.fileUploadService.uploadFile(this.file)
-        .then(response => {
-          console.log('File uploaded successfully.');
-          const fileName = response.fileName;
-          editedProduct.item_imgpath = fileName;
-          this.editedProduct.item_imgpath = fileName;
-          this.saveClick.emit(editedProduct);
-        })
-        .catch(error => {
-          console.error('Error uploading file:', error);
-        });
+      this.saveFile(editedProduct); 
     } else {
       this.saveClick.emit(editedProduct);
     }
   }
 
-  handleFileUpload(event: any) {
-    this.file = event.target.files[0];
-  }
-  
-  addCategory(): void {
-    this.categoriesToAdd.push('');
+  saveFile(editedProduct : Item) : void{
+    this.fileUploadService.uploadFile(this.file)
+    .then(response => {
+      console.log('File uploaded successfully.');
+      const fileName = response.fileName;
+      editedProduct.item_imgpath = fileName;
+      this.editedProduct.item_imgpath = fileName;
+      this.saveClick.emit(editedProduct);
+    })
+    .catch(error => {
+      console.error('Error uploading file:', error);
+    });
   }
 
-  removeCategory(index: number): void {
-    this.categoriesToAdd.splice(index, 1);
+  convertToDate(dateString: string): Date { 
+    return new Date(dateString);
+  }
+
+  handleDateChange(event: any): void {
+    const date = new Date(event.target.value);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    this.editedProduct.best_before =  `${year}-${month}-${day}`;
+  }
+
+  handleFileUpload(event: any) {
+    this.file = event.target.files[0];
   }
 
   cancel() {
     this.cancelClick.emit();
   }
 
-  trackByIndex(index: number, item: any): number {
-    return index;
+  updateCategorySelection(categoryName: string, newValue: boolean) {
+    const categoryObject = this.categories.find(c => c.category_name === categoryName);
+    if (categoryObject) {
+      categoryObject.selected = newValue;
+    }
   }
 }
