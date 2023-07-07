@@ -23,11 +23,7 @@ import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeit
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
 import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
-
 import { ToastrModule } from 'ngx-toastr';
-
-import { OrderFormComponent } from './order/order-form/order-form.component';
-
 import { TesterComponent } from "./testing";
 
 
@@ -50,7 +46,6 @@ import { TesterComponent } from "./testing";
     WarenuebersichtComponent,
     LandingPageComponent,
     StockItemDetailsComponent,
-    OrderFormComponent,
     TesterComponent
   ],
   imports: [

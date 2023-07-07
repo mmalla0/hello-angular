@@ -7,7 +7,7 @@ import { Item } from '../shared/item';
   providedIn: 'root'
 })
 export class DatabaseService {
-  apiUrl = 'http://localhost:8080'; // Set the URL of server.js API
+  apiUrl = 'http://localhost:8080'; 
 
   constructor(private http: HttpClient) {}
 
@@ -23,12 +23,12 @@ export class DatabaseService {
 
 
   getItems(): Observable<Item[]> {
-    const url = `${this.apiUrl}/items`; // Update the URL to your server.js API endpoint
+    const url = `${this.apiUrl}/items`; 
     return this.http.get<Item[]>(url);
   }
 
   getItemsById(id: number): Observable<Item> {
-    const url = `${this.apiUrl}/items/${id}`; // Update the URL to your server.js API endpoint
+    const url = `${this.apiUrl}/items/${id}`; 
     return this.http.get<Item>(url);
   }
 }

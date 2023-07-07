@@ -20,6 +20,7 @@ export interface CustomerAddress {
     postalCode: string;
     city: string;
 }
+
 export interface OrderItem {
     itemId: number;
     quantity: number;
