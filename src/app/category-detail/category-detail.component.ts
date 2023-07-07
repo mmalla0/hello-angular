@@ -19,16 +19,11 @@ export class CategoryDetailComponent implements OnInit{
 
   constructor(private categoryService: CategoryService) {}
 
-  getCategoriesFromDatabase() : void{
+  getCategoriesFromDatabase(): void {
     this.categoryService.getAllCategories().subscribe({
       next: allCategories => {
+        allCategories.sort((a, b) => a.category_name.localeCompare(b.category_name));
         this.categories = allCategories;
-        this.categories.forEach(category => {
-          console.log("Category ID:", category.category_id);
-          console.log("Category Name:", category.category_name);
-          console.log("Category Description:", category.category_description);
-          console.log("--------------------");
-        });
       }
     });
   }
