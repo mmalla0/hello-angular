@@ -18,14 +18,14 @@
     <div class="image-wrapper" *ngFor="let item of randomItems; let i = index" (click)="setActiveImage(i)">
       <img [src]="'../assets/images/'+ item.item_imgpath" [@imageState]="getImageState(i)" alt="Product Image">
       <div class="image-info" *ngIf="i === activeImageIndex" [@imageState]="getImageState(i)">
-        <h3>{{ getProductInfo().item_name }}</h3>
-        <p>Price: {{ getProductInfo().item_price }}</p>
-        <a class="item-link" [routerLink]="'items/' + getProductInfo().item_ID">View Item</a>
+        <h3>{{ item.item_name }}</h3>
+        <p>Price: {{ item.item_price }}</p>
+        <a class="item-link" [routerLink]="'items/' + item.item_ID">View Item</a>
       </div>
     </div>
   </div>
   <div class="thumbnails">
-    <div *ngFor="let item of items; let i = index" (click)="setActiveImage(i)">
+    <div *ngFor="let item of randomItems; let i = index" (click)="setActiveImage(i)">
       <img [src]="'../assets/images/'+ item.item_imgpath" [class.active]="i === activeImageIndex">
     </div>
   </div>
@@ -49,13 +49,13 @@
   <div class="image-card" *ngFor="let item of selectedCategoryItems">
     <a [routerLink]="'items/' + item.item_ID">
     <!-- <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" (click)="handleCategoryImageClick()">--->
-    <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name">
+      <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name">
     </a>
-    </div>
+  </div>
 
 
     <div class="image-card">
-        <img [src]="'../assets/images/forwardButton.jpg'" [alt]="'Click here for more products!'" (click)="handleCategoryImageClick" >
+        <img [src]="'../assets/images/forwardButton.jpg'" [alt]="'Click here for more products!'" (click)="handleCategoryImageClick()" >
     </div>
   
 </div>
