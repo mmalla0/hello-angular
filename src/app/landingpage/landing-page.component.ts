@@ -67,6 +67,8 @@ export class LandingPageComponent implements OnInit {
   activeImageIndex = 0;
 
   items: Item[] = [];
+  randomItems: Item[] = [];
+
   randomImages: Image[] = [];
 
   autoChangeInterval: any;
@@ -96,10 +98,10 @@ export class LandingPageComponent implements OnInit {
       console.log(this.items);
 
       // Get random items from the list
-      const randomItems = this.getRandomItems(3);
+      this.randomItems = this.getRandomItems(3);
 
       // Assign random items to the component property
-      this.items = randomItems;
+      // this.items = randomItems;
     });
   }
 
