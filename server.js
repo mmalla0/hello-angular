@@ -471,3 +471,43 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
 });
 
 });
+
+
+// DELETE endpoint to delete a category
+app.delete('/deleteCategory/:categoryId', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const categoryId = req.params.categoryId;
+
+        const query = 'DELETE FROM category WHERE category_id = ?';
+
+        connection.query(query, categoryId, (err, result) => {
+            if (err) {
+                console.error('Error deleting category:', err);
+                res.status(500).json({ error: 'Failed to delete category' });
+            } else if (result.affectedRows === 0) {
+                res.status(404).json({ error: 'Category not found' });
+            } else {
+                console.log('Category deleted successfully');
+                res.sendStatus(200);
+            }
+        });
+    });
+
+});
