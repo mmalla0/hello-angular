@@ -10,7 +10,14 @@
 
       </ul>
     </nav>
-    Header comes here
+  <nav class="menu">
+    <ul>
+      <li *ngIf="!isLoggedIn"><button (click)="handleLoginClicked()">Login</button></li>
+      <li *ngIf="!isLoggedIn"><button (click)="handleRegisterClicked()">Register</button></li>
+      <li *ngIf="isLoggedIn"><button (click)="handleLogoutClicked()">Logout</button></li>
+      <!--<li><a href="#">About Us</a></li>-->
+    </ul>
+  </nav>
 </header>
 
 <main>

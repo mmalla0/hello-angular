@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 //import { first } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
-import {Item} from '../shared/item'
+import {Item} from '../shared/item';
 
 
 /*interface Item {
@@ -67,6 +67,8 @@ export class LandingPageComponent implements OnInit {
   activeImageIndex = 0;
 
   items: Item[] = [];
+  randomItems: Item[] = [];
+
   randomImages: Image[] = [];
 
   autoChangeInterval: any;
@@ -81,11 +83,12 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.getItems();
     this.autoChangeImages();
-    this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
-      this.isLoggedIn = loggedIn;
-    })
+    //this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
+      //this.isLoggedIn = loggedIn;
+    //})
     this.selectedCategory = "No filter";
     //this.selectedCategoryItems = this.getRandomItems(3);
+    
   }
 
 
@@ -96,10 +99,10 @@ export class LandingPageComponent implements OnInit {
       console.log(this.items);
 
       // Get random items from the list
-      const randomItems = this.getRandomItems(3);
+      this.randomItems = this.getRandomItems(3);
 
       // Assign random items to the component property
-      this.items = randomItems;
+      // this.items = randomItems;
     });
   }
 
@@ -118,7 +121,7 @@ export class LandingPageComponent implements OnInit {
     return randomItems;
   }
 
-  handleLoginClicked() {
+ /* handleLoginClicked() {
     this.router.navigate(['/login'])
   }
 
@@ -128,7 +131,7 @@ export class LandingPageComponent implements OnInit {
 
   handleLogoutClicked() {
     this.authService.logout()
-  }
+  } */
 
   autoChangeImages() {
     this.autoChangeInterval = setInterval(() => {

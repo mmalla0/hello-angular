@@ -62,12 +62,12 @@ export class WarenuebersichtComponent implements OnInit {
     });
   }
 
-  setUpItems() : void{
+  setUpItems(): void {
     this.itemService.getAllItems().subscribe({
       next: items => {
-        this.products = items;
-        this.filteredProducts = items;
-        this.paginatedProducts = items;
+        this.products = items.filter(item => item.stock !== 0);
+        this.filteredProducts = this.products;
+        this.paginatedProducts = this.products;
         this.filterProducts();
       },
       error: error => {
@@ -75,7 +75,7 @@ export class WarenuebersichtComponent implements OnInit {
       }
     });
   }
-
+  
   onMouseEnter(product: Item): void {
     this.hoveredProduct = product;
   }
@@ -122,10 +122,8 @@ export class WarenuebersichtComponent implements OnInit {
     if (this.currentPage > this.totalPageCount) {
       this.currentPage = 1;
     }
-
     this.updatePaginatedProducts();
   }
-  
 
   updatePaginatedProducts(): void {
     const startIndex = (this.currentPage - 1) * this.pageSize;

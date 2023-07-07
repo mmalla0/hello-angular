@@ -121,7 +121,6 @@ td:first-child {
 .quantity .decrement:hover,
 .quantity .increment:hover {
   background-color: #627274;
-
 }
 
 .decrement:hover, .increment:hover {
@@ -129,10 +128,15 @@ td:first-child {
 }
 
 input[type="number"] {
-  width: 40px;
+  width: 80px;
   padding: 5px;
   border: none;
   text-align: center;
+  min-width: 40px;
+}
+
+td:nth-child(3) {
+  min-width: 90px; 
 }
   
 .category {
