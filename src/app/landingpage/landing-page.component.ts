@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 //import { first } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
-import {Item} from '../shared/item'
+import {Item} from '../shared/item';
 
 
 /*interface Item {
@@ -88,6 +88,7 @@ export class LandingPageComponent implements OnInit {
     })
     this.selectedCategory = "No filter";
     //this.selectedCategoryItems = this.getRandomItems(3);
+    
   }
 
 
