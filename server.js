@@ -548,6 +548,24 @@ app.delete('/deleteCategory/:stockpileId', (req, res) => {
 });
 
 app.get('/getitem/:itemId', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
     const itemId = req.params.itemId;
 
     // Assuming you have a database connection established
@@ -571,3 +589,4 @@ app.get('/getitem/:itemId', (req, res) => {
     });
 });
 
+});
