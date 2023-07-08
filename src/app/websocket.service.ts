@@ -1,30 +1,51 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as Stomp from 'webstomp-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
   private webSocket: WebSocket;
-  private stompClient: Stomp.Client;
 
-  constructor() { }
+  public connect(): Observable<any> {
+    this.webSocket = new WebSocket('ws://localhost:8080/'); // Update the WebSocket URL with the correct port
+    
+    return new Observable<any>(observer => {
+      this.webSocket.onopen = (event: Event) => {
+        observer.next(event);
+      };
 
-  public connect(): Observable<Stomp.Frame> {
-    this.webSocket = new WebSocket('ws://localhost:8080/ws'); // Die Url ersetzen entsprechend unserer WebSocket-Endpunkt-URL
+      this.webSocket.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
+        observer.next(data);
+      };
 
-    this.stompClient = Stomp.over(this.webSocket);
-    return new Observable<Stomp.Frame>(observer => {
-      this.stompClient.connect({}, (frame: Stomp.Frame) => {
-        observer.next(frame);
-      });
+      this.webSocket.onerror = (event: Event) => {
+        observer.error(event);
+      };
+
+      this.webSocket.onclose = (event: CloseEvent) => {
+        observer.complete();
+      };
     });
   }
-
+  
   public disconnect() {
-    if (this.stompClient) {
-      this.stompClient.disconnect();
+    if (this.webSocket) {
+      this.webSocket.close();
     }
   }
+
+  public subscribeToItemChanges(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.webSocket.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
+        if (data.event === 'itemListChange') {
+          console.log('Item list change, websocket service:', data);
+          observer.next(data);
+        }
+      };
+    });
+  }
 }
+

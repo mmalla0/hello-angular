@@ -102,13 +102,15 @@ export class MitarbeiterDashboardComponent implements OnInit{
       this.getItemsFromDataBase();
     }
   }
-  
+
   deleteItem(product: Item) {
     this.itemService.deleteItem(product.item_ID);
+    this.itemService.sendItemListChanges();
     setTimeout(() => {
       this.getItemsFromDataBase();
     }, 1000);
   }
+  
 
   decreaseQuantity(product: Item) {
     if (product.stock > 0) {
@@ -147,6 +149,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
     setTimeout(() => {
       this.getItemsFromDataBase();
     }, 1000);
+    this.itemService.sendItemListChanges();
   }
 
   editItem(product: Item) {
