@@ -15,8 +15,8 @@ export class StockpileService {
 
   constructor(private userService: UserService) { }
 
-  getStockpileItems(stockpileId: number): Observable<StockpileItem[]> {
-    const url = `/stockpile/${stockpileId}/items`;
+  getStockpileItems(customerId: number): Observable<StockpileItem[]> {
+    const url = `/getStockpileByCustomerID/${customerId}`;
     return this.http.get<StockpileItem[]>(url);
   }
 
