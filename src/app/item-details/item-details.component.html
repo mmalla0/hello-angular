@@ -1,1 +1,7 @@
 <p>item-details works!</p>
+
+<div *ngIf="item">
+    <h3>{{ item.item_name }}</h3>
+    <p>Price: {{ item.item_price }}</p>
+    <!-- Add other details of the item as per your requirement -->
+</div>
