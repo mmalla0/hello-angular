@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Invoice } from 'src/app/shared/invoice';
 import { User } from 'src/app/shared/user';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order-form',
@@ -13,7 +14,7 @@ export class OrderFormComponent {
     id: 0,
     user: undefined,
     methodOfPayment: '',
-    orderItems: [],
+    items: [],
     address: undefined,
     totalWithVat: 0,
     totalWithoutVat: 0,

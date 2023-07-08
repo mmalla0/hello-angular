@@ -8,7 +8,7 @@
   </div>
   <div class="filter-container">
     <input type="text" placeholder="Search products" [(ngModel)]="searchQuery" class="search-input">
-    <button (click)="onSearchProducts()" class="search-button">Search</button>
+    <button (click)="onSearchProducts()" class="green-button">Search</button>
   </div>
 <div>
   <button style="display: flex;align-items: center;background-color: #7EB63D; color: white;" (click)="navigateToCart()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
@@ -44,7 +44,7 @@
       </div>
     </div>
   </div>
-  </div>
-  <div class="button-container">
-    <button class="square-button" *ngFor="let page of getPageNumbers()" [ngClass]="{ 'current-page': page.isCurrent }" (click)="onPageChange(page.number)"> {{ page.number }} </button>
-  </div>
+</div>
+<div class="button-container">
+  <button class="square-button" *ngFor="let page of getPageNumbers()" [ngClass]="{ 'current-page': page.isCurrent }" (click)="onPageChange(page.number)"> {{ page.number }} </button>
+</div>

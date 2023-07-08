@@ -12,23 +12,20 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 import { ItemListComponent } from './cart/item-list/item-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DatabaseService } from './services/database.service';
 import { StockpileListComponent } from './stockpile-list/stockpile-list.component';
 import { StockpileItemComponent } from './stockpile-item/stockpile-item.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeiter-dashboard.component';
 import { WarenuebersichtComponent } from './warenuebersicht/warenuebersicht.component';
 import { LandingPageComponent } from './landingpage/landing-page.component';
 import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
-
 import { ToastrModule } from 'ngx-toastr';
-
-import { OrderFormComponent } from './order/order-form/order-form.component';
-
 import { TesterComponent } from "./testing";
+import { OrderFormComponent } from './order/order-form/order-form.component';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
 
 
 
@@ -51,7 +48,9 @@ import { TesterComponent } from "./testing";
     LandingPageComponent,
     StockItemDetailsComponent,
     OrderFormComponent,
-    TesterComponent
+    TesterComponent,
+    CategoryDetailComponent,
+    ItemDetailsComponent
   ],
   imports: [
     RouterModule,
@@ -65,7 +64,6 @@ import { TesterComponent } from "./testing";
     ToastrModule.forRoot(),
     ReactiveFormsModule
   ],
-  providers: [DatabaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

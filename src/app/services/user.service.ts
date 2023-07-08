@@ -8,13 +8,11 @@ import { AuthService } from './auth.service';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080';  
-
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   getStockpileId(): Observable<number> {
     const userId = this.authService.getCurrentUser().id; // Hier wird die userID des aktuellen Benutzers geholt
-    const url = `${this.apiUrl}/users/${userId}/stockpile`;
+    const url = `/users/${userId}/stockpile`;
     return this.http.get<number>(url);
   }
 }

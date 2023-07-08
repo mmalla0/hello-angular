@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 
 @Component({
   selector: 'app-mitarbeiter-dashboard',
   templateUrl: './mitarbeiter-dashboard.component.html',
-  styleUrls: ['./mitarbeiter-dashboard.component.css']
+  styleUrls: ['./mitarbeiter-dashboard.component.css', './mitarbeiter-dashboard-table.css', '../../global-styles.css']
 })
 
-export class MitarbeiterDashboardComponent {
-
-  sortColumn: string = 'name';
-  sortDirection: 'asc' | 'desc' = 'asc';
-  showForm: boolean = false;
+export class MitarbeiterDashboardComponent implements OnInit{
+  sortColumn = 'name';
+  showItemForm = false;
+  showCategoryForm = false; 
   selectedProduct: Item;
   products: Item[];
+  sortDirection = 1;
+  searchQuery: string;
 
   constructor(private itemService: ItemService) { }
 
@@ -25,6 +26,7 @@ export class MitarbeiterDashboardComponent {
   getItemsFromDataBase(){
     this.itemService.getAllItems().subscribe({
       next: items => {
+        items.sort((a, b) => a.item_name.localeCompare(b.item_name));
         this.products = items;
       },
       error: error => {
@@ -33,29 +35,43 @@ export class MitarbeiterDashboardComponent {
     });
   }
 
-  
-  sortItems() {
-    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  toggleSortOrder() {
+    this.sortDirection = -this.sortDirection;
+  }
 
+  sortItemsByPrice() {
+    this.products.sort((a, b) => (a.item_price - b.item_price) * this.sortDirection);
+  }
+
+  sortItemsByBestBefore() {
     this.products.sort((a, b) => {
-      const nameA = a.item_name.toLowerCase();
-      const nameB = b.item_name.toLowerCase();
+      const dateA = new Date(a.best_before).getTime();
+      const dateB = new Date(b.best_before).getTime();
+      return (dateA - dateB) * this.sortDirection;
+    });
+  }
 
-      if (nameA < nameB) {
-        return this.sortDirection === 'asc' ? -1 : 1;
-      } else if (nameA > nameB) {
-        return this.sortDirection === 'asc' ? 1 : -1;
+  sortItems(column: string) {
+    this.sortDirection = this.sortDirection === 1 ? -1 : 1;
+  
+    this.products.sort((a, b) => {
+      const valueA = column === 'price' ? a.item_price : column === 'best_before' ? new Date(a.best_before).getTime() : a.item_name.toLowerCase();
+      const valueB = column === 'price' ? b.item_price : column === 'best_before' ? new Date(b.best_before).getTime() : b.item_name.toLowerCase();
+  
+      if (valueA < valueB) {
+        return this.sortDirection === 1 ? -1 : 1;
+      } else if (valueA > valueB) {
+        return this.sortDirection === 1 ? 1 : -1;
       } else {
         return 0;
       }
     });
-
     this.products = [...this.products];
   }
-
+  
   formatDate(dateString: string): string {
     if (!dateString || dateString.trim() === '') {
-      return null; // Return empty string if the date is empty or blank
+      return "-"; 
     }
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -64,16 +80,34 @@ export class MitarbeiterDashboardComponent {
     return`${year}-${month}-${day}`;
   }
   
-  getSortIcon(column: string): string {
-    if (column === this.sortColumn) {
-      return this.sortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
-    }
-    return 'fas fa-sort';
+  getSortIcon(fieldName: string) {
+    return {
+      'fa-sort': true,
+      'fa-sort-asc-item': fieldName === 'item_name' && this.sortDirection === 1,
+      'fa-sort-desc-item': fieldName === 'item_name' && this.sortDirection === -1,
+      'fa-sort-asc-price': fieldName === 'price' && this.sortDirection === 1,
+      'fa-sort-desc-price': fieldName === 'price' && this.sortDirection === -1,
+      'fa-sort-asc-best-before': fieldName === 'best_before' && this.sortDirection === 1,
+      'fa-sort-desc-best-before': fieldName === 'best_before' && this.sortDirection === -1
+    };
   }
-
+  onSearchProducts() {
+    if (this.searchQuery && this.searchQuery.trim() !== '') {
+      const keywords = this.searchQuery.toLowerCase().split(' ');
+      this.products = this.products.filter(product => {
+        const itemName = product.item_name.toLowerCase();
+        return keywords.every(keyword => itemName.includes(keyword));
+      });
+    } else {
+      this.getItemsFromDataBase();
+    }
+  }
+  
   deleteItem(product: Item) {
     this.itemService.deleteItem(product.item_ID);
-    this.getItemsFromDataBase();
+    setTimeout(() => {
+      this.getItemsFromDataBase();
+    }, 1000);
   }
 
   decreaseQuantity(product: Item) {
@@ -87,13 +121,23 @@ export class MitarbeiterDashboardComponent {
   }
 
   showProductForm() {
-    this.showForm = true;
+    this.showCategoryForm = false; 
+    this.showItemForm = true;
     this.selectedProduct = null;
   }
 
   hideProductForm() {
-    this.showForm = false;
+    this.showItemForm = false;
     this.selectedProduct = null;
+  }
+
+  showCategory(){
+    this.showItemForm = false; 
+    this.showCategoryForm = true; 
+  }
+
+  hideCategory(){
+    this.showCategoryForm = false; 
   }
 
   saveProduct(product: Item) {
@@ -107,6 +151,6 @@ export class MitarbeiterDashboardComponent {
 
   editItem(product: Item) {
     this.selectedProduct = { ...product };
-    this.showForm = true;
+    this.showItemForm = true;
   }
 }

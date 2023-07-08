@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-warenuebersicht',
   templateUrl: './warenuebersicht.component.html',
-  styleUrls: ['./warenuebersicht.component.css'],
+  styleUrls: ['./warenuebersicht.component.css', './warenuebersicht-filter.component.css', '../../global-styles.css'],
 })
 export class WarenuebersichtComponent implements OnInit {
   products: Item[] = [];
@@ -19,7 +19,7 @@ export class WarenuebersichtComponent implements OnInit {
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
-  categories: String[] = [];
+  categories: string[] = [];
 
   pageSize: number;
   currentPage: number;
@@ -99,10 +99,14 @@ export class WarenuebersichtComponent implements OnInit {
 
   onSearchProducts() {
     this.filteredProducts = this.products.filter(product => {
-      return this.searchQuery ? product.item_name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true;
+      const itemName = product.item_name.toLowerCase();
+      const searchQuery = this.searchQuery ? this.searchQuery.toLowerCase() : '';
+      const keywords = searchQuery.split(' ');
+      return keywords.every(keyword => itemName.includes(keyword));
     });
     this.updatePaginatedProducts();
   }
+  
 
   filterProducts(): void {
     this.filteredProducts = this.products.filter((product) => {

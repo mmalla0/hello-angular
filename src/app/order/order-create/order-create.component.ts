@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Invoice } from 'src/app/shared/invoice';
 import { PdfService } from 'src/app/services/pdf.service';
 import { EmailService } from 'src/app/services/email.service';
-import { DatabaseService } from 'src/app/services/database.service';
+import { ItemService } from 'src/app/services/item-service/item.service';
+import { StockpileService } from 'src/app/services/stockpile.service';
 import { User } from 'src/app/shared/user';
 
 @Component({
@@ -27,6 +28,8 @@ export class OrderCreateComponent {
     id: 0,
     firstName: '',
     lastName: '',
+    email: '',
+    password: '',
     addressId: 0,                
     methodOfPayment: '',
     cartId: 0,
@@ -37,7 +40,8 @@ export class OrderCreateComponent {
   constructor(
     private pdfService: PdfService,
     private emailService: EmailService,
-    private databaseService: DatabaseService    
+    private itemService: ItemService,
+    private stockpileService: StockpileService    
   ) {}
 
   handleFormSubmit(invoice: Invoice) {
@@ -57,20 +61,19 @@ export class OrderCreateComponent {
 
   updateStock() {
     
-    // Hier soll die Logik zum Aktualisieren des Warenbestands in der Datenbank implementiert werden
-    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // und aktualisieren Sie die entsprechenden Felder (z. B. reduceStock()).
-    // Beispiel:
-    this.databaseService.reduceStock( this.invoice.items).subscribe(() => {
+    //Logik zum Aktualisieren des Warenbestands in der Datenbank 
+  
+    this.itemService.reduceStock( this.invoice.items).subscribe(() => {
        this.submitOrder.emit(this.invoice);
      });
   }
-  updateUserStockpile() {
-    
-    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // Annahme: Die Methode updateUserStockpile(stockpileId, items) wird von der DatabaseService-Klasse bereitgestellt.
 
-    this.databaseService.updateUserStockpile(this.user.stockpileId, this.invoice.items).subscribe(() => {
+  updateUserStockpile() {
+  
+    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
+    // Annahme: Die Methode updateUserStockpile(stockpileId, items) wird von der stockpileService-Klasse bereitgestellt.
+
+    this.stockpileService.updateUserStockpile(this.user.stockpileId, this.invoice.items).subscribe(() => {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
 
@@ -80,7 +83,7 @@ export class OrderCreateComponent {
   }
   showOrderConfirmation() {
  
-    this.orderConfirmation = 'Vielen Dank für Ihre Bestellung!';
+    this.orderConfirmation = 'Thank you for your business! The invoice has been sent to your inbox.';
   }
 }
 

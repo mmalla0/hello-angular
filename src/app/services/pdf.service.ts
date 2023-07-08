@@ -11,7 +11,6 @@ import { User } from '../shared/user';
 })
 export class PdfService {
 
-
   createInvoicePDF(invoice: Invoice): Observable<Blob> {
     const documentDefinition = this.generateDocumentDefinition(invoice);
     const pdfDocGenerator = pdfMake.createPdf(documentDefinition);

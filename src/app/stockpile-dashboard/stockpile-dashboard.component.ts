@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from '../shared/user'; 
@@ -17,7 +16,6 @@ export class StockpileDashboardComponent implements OnInit {
   currentUser: User | null;
 
   constructor(
-    private userService: UserService,
     private authService: AuthService,
     private stockpileService: StockpileService,
     private emailService: EmailService
@@ -30,7 +28,7 @@ export class StockpileDashboardComponent implements OnInit {
   loadStockpileItems() {
     this.currentUser = this.authService.getCurrentUser();
     if (this.currentUser) {
-      this.stockpileService.getStockpileItems(this.currentUser.stockpileId).subscribe(items => {
+      this.stockpileService.getStockpileItems(this.currentUser.id).subscribe(items => {
         this.stockpileItemEntries = this.groupItemsByProduct(items);
         this.checkItemsForEmail(this.stockpileItemEntries);
       });

@@ -30,6 +30,33 @@
       "request": "launch",
       "preLaunchTask": "npm: test",
       "url": "http://localhost:9876/debug.html"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Node.js Server",
+      "program": "${workspaceFolder}/server.js",
+      "runtimeArgs": [
+        "--inspect"
+      ]
+    },
+
+    {
+      "name": "Debug Server + Client",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.js",
+      "runtimeArgs": [
+        "--inspect"
+      ],
+      "preLaunchTask": "npm: start",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
     }
+    
+    
   ]
 }

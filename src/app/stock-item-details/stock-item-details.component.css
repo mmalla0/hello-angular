@@ -1,11 +1,12 @@
 .product-form {
-    background-color: rgba(131, 151, 136, 0.2);
-    border-radius: 10px;
-    padding: 20px;
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
-    margin-bottom: 20px; 
+  background-color: rgba(131, 151, 136, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  width: 60%;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 40px; 
 }
   
 .form-row {
@@ -134,7 +135,6 @@
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
   visibility: visible;
 }
-
 
 .checkbox-label,
 .checkbox-custom {
