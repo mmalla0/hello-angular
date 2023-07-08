@@ -471,3 +471,122 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
 });
 
 });
+
+// ENDPOINT for retrieving the stockpile items by customer id
+app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
+    const customerID = req.params.customerID;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const query = 'SELECT * FROM stockpile WHERE customer_ID = ?';
+        const values = [customerID];
+
+        connection.query(query, values, (err, results) => {
+            if (err) {
+                console.error('Error retrieving stockpile:', err);
+                res.status(500).json({ error: 'Failed to retrieve stockpile' });
+            } else {
+                res.json(results);
+            }
+        });
+    });
+});
+
+
+// DELETE endpoint to delete a stockpile item
+app.delete('/deleteCategory/:stockpileId', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const stockpileId = req.params.stockpileId;
+
+        const query = 'DELETE FROM stockpile WHERE stockpile_ID = ?';
+
+        connection.query(query, stockpileId, (err, result) => {
+            if (err) {
+                console.error('Error deleting stockpile item:', err);
+                res.status(500).json({ error: 'Failed to delete stockpile item' });
+            } else if (result.affectedRows === 0) {
+                res.status(404).json({ error: 'Stockpile item not found' });
+            } else {
+                console.log('Stockpile item deleted successfully');
+                res.sendStatus(200);
+            }
+        });
+    });
+
+});
+
+app.get('/getitem/:itemId', (req, res) => {
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+    const itemId = req.params.itemId;
+
+        const sql = `
+    SELECT i.*, c.*
+    FROM item AS i
+    INNER JOIN category_items AS ci ON i.item_ID = ci.ci_item_id
+    INNER JOIN category AS c ON ci.ci_category_id = c.category_id
+    WHERE i.item_ID = ?`;
+
+        connection.query(sql, [itemId], (error, results) => {
+            if (error) {
+                console.error('Error retrieving item:', error);
+                res.status(500).json({ error: 'Error retrieving item' });
+            } else if (results.length === 0) {
+                res.status(404).json({ error: 'Item not found' });
+            } else {
+                const item = results[0];
+                const categories = results.map((row) => row.category_name); // Assuming you have a 'category_name' column in the 'category' table
+                item.categories = categories;
+                res.status(200).json(item);
+            }
+        });
+    });
+});

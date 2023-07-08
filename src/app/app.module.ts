@@ -24,6 +24,9 @@ import { StockItemDetailsComponent } from './stock-item-details/stock-item-detai
 import { ToastrModule } from 'ngx-toastr';
 import { TesterComponent } from "./testing";
 import { OrderFormComponent } from './order/order-form/order-form.component';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { ItemDetailsComponent } from './item-details/item-details.component';
+
 
 
 @NgModule({
@@ -44,8 +47,10 @@ import { OrderFormComponent } from './order/order-form/order-form.component';
     WarenuebersichtComponent,
     LandingPageComponent,
     StockItemDetailsComponent,
+    OrderFormComponent,
     TesterComponent,
-    OrderFormComponent
+    CategoryDetailComponent,
+    ItemDetailsComponent
   ],
   imports: [
     RouterModule,
