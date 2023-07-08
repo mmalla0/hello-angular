@@ -1,15 +1,15 @@
 <p>item-details works!</p>
 
-<div *ngIf="item">
-    <h3>{{ item.item_name }}</h3>
-    <p>Price: {{ item.item_price | currency }}</p>
-    <p>Description: {{ item.item_description }}</p>
-    <p>Stock: {{ item.stock }}</p>
-    <p>Employee ID: {{ item.employee_id }}</p>
-    <p>Best Before: {{ item.best_before }}</p>
+<div *ngIf="item" class="item-details">
+    <h3 class="item-name">{{ item.item_name }}</h3>
+    <p class="item-price">Price: {{ item.item_price | currency }}</p>
+    <p class="item-description">Description: {{ item.item_description }}</p>
+    <p class="item-stock">Stock: {{ item.stock }}</p>
+    <p class="item-employee">Employee ID: {{ item.employee_id }}</p>
+    <p class="item-best-before">Best Before: {{ item.best_before }}</p>
     <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" class="item-image">
-    <p>Categories:</p>
-    <ul>
-        <li *ngFor="let category of item.categories">{{ category }}</li>
+    <p class="item-categories">Categories:</p>
+    <ul class="categories-list">
+        <li *ngFor="let category of item.categories" class="category">{{ category }}</li>
     </ul>
 </div>
