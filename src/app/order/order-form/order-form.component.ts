@@ -13,7 +13,7 @@ export class OrderFormComponent {
     id: 0,
     user: undefined,
     methodOfPayment: '',
-    orderItems: [],
+    items: [],
     address: undefined,
     totalWithVat: 0,
     totalWithoutVat: 0,

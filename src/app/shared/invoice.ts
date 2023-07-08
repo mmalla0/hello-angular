@@ -1,4 +1,5 @@
 import { Address } from "./address";
+import { Item } from "./item";
 import { User } from "./user";
 
 
@@ -6,7 +7,7 @@ export interface Invoice {
     id: number;
     user: User;
     methodOfPayment: string;
-    orderItems: OrderItem[];
+    items: Item[];
     address: Address;
     totalWithVat: number;
     totalWithoutVat: number;
