@@ -146,7 +146,7 @@ export class TesterComponent {
     }
 
     testGetStockpileByCustomerID(customerID: string): void {
-        this.http.get<any[]>('/getStockpileByCustomerID/' + customerID).subscribe(
+        this.http.get<StockpileItem[]>('/getStockpileByCustomerID/' + customerID).subscribe(
             (stockpile) => {
                 this.stockpileItems = stockpile;
                 console.log('Stockpile by Customer ID:', stockpile);
@@ -156,6 +156,7 @@ export class TesterComponent {
             }
         );
     }
+
 
     testDeleteCategory(stockpileId: string): void {
         this.http.delete('/deleteCategory/' + stockpileId).subscribe(

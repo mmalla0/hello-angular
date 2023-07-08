@@ -493,7 +493,20 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
 
         console.log('Connected to the database');
 
-        const query = 'SELECT * FROM stockpile WHERE customer_ID = ?';
+        const query = `
+            SELECT 
+                s.stockpile_ID,
+                i.item_name,
+                s.quantity,
+                i.best_before,
+                i.item_description,
+                c.category_name
+            FROM stockpile s
+            JOIN item i ON s.item_ID = i.item_ID
+            JOIN category_items ci ON i.item_ID = ci.ci_item_id
+            JOIN category c ON ci.ci_category_id = c.category_id
+            WHERE s.customer_ID = ?`;
+
         const values = [customerID];
 
         connection.query(query, values, (err, results) => {
@@ -501,12 +514,25 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
                 console.error('Error retrieving stockpile:', err);
                 res.status(500).json({ error: 'Failed to retrieve stockpile' });
             } else {
-                console.log("Stockpile items successfully retrived!");
-                res.json(results);
+                console.log("Stockpile items successfully retrieved!");
+
+                const stockpileItems = results.map((result) => {
+                    return {
+                        id: result.stockpile_ID,
+                        name: result.item_name,
+                        quantity: result.quantity,
+                        bestBeforeDate: result.best_before,
+                        product: result.item_description,
+                        category: result.category_name.split(',')[0].trim() // Select first category from the list
+                    };
+                });
+
+                res.json(stockpileItems);
             }
         });
     });
 });
+
 
 
 // DELETE endpoint to delete a stockpile item
