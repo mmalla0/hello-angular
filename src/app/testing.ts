@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ItemService } from './services/item-service/item.service';
 import { Item } from './shared/item';
+import { StockpileService } from 'src/app/services/stockpile.service';
+import { StockpileItem, StockpileItemEntry } from './shared/user';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-tester',
@@ -38,6 +41,20 @@ import { Item } from './shared/item';
       <button (click)="testGetAllItems()">Get All Items</button>
       <p *ngIf="getAllItemsResult">{{ getAllItemsResult | json }}</p>
     </div>
+
+    <div>
+        <h3>Get Stockpile by Customer ID</h3>
+        <input type="text" [(ngModel)]="customerID" placeholder="Customer ID" />
+        <button (click)="testGetStockpileByCustomerID(customerID)">Get Stockpile</button>
+        <pre *ngIf="stockpileItems">{{ stockpileItems | json }}</pre>
+    </div>
+
+    <div>
+        <h3>Delete Stockpile Item</h3>
+        <input type="text" [(ngModel)]="stockpileId" placeholder="Stockpile Item ID" />
+        <button (click)="testDeleteCategory(stockpileId)">Delete Stockpile Item</button>
+        <p *ngIf="deleteMessage">{{ deleteMessage }}</p>
+    </div>
   `
 })
 export class TesterComponent {
@@ -65,7 +82,13 @@ export class TesterComponent {
         { category_name: 'Health', selected: false }
     ];
 
-    constructor(private itemService: ItemService) { }
+
+    customerID: string = '';
+    stockpileId: string = '';
+    stockpileItems: any[] | undefined;
+    deleteMessage: string | undefined;
+
+    constructor(private itemService: ItemService, private stockpileService: StockpileService, private http: HttpClient) { }
 
     testGetAllItems(): void {
         this.itemService.getAllItems().subscribe(
@@ -120,5 +143,29 @@ export class TesterComponent {
 
         // Clear the input field
         this.deleteItemId = 0;
+    }
+
+    testGetStockpileByCustomerID(customerID: string): void {
+        this.http.get<any[]>('/getStockpileByCustomerID/' + customerID).subscribe(
+            (stockpile) => {
+                this.stockpileItems = stockpile;
+                console.log('Stockpile by Customer ID:', stockpile);
+            },
+            (error) => {
+                console.error('Error retrieving stockpile by Customer ID:', error);
+            }
+        );
+    }
+
+    testDeleteCategory(stockpileId: string): void {
+        this.http.delete('/deleteCategory/' + stockpileId).subscribe(
+            () => {
+                console.log('Stockpile item deleted successfully');
+                this.deleteMessage = 'Stockpile item deleted successfully';
+            },
+            (error) => {
+                console.error('Error deleting stockpile item:', error);
+            }
+        );
     }
 }

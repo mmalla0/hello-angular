@@ -26,7 +26,10 @@ export class StockpileListComponent implements OnInit {
 
   
   loadStockpileItems() {
+
+    console.log("I am in loadStockpileItems");
     const currentUser: User | null = this.authService.getCurrentUser();
+    console.log(currentUser);
     if (currentUser) {
       console.log(currentUser);
       console.log(this.stockpileService.getStockpileItems(currentUser.id));

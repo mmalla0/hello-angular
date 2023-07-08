@@ -501,6 +501,7 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
                 console.error('Error retrieving stockpile:', err);
                 res.status(500).json({ error: 'Failed to retrieve stockpile' });
             } else {
+                console.log("Stockpile items successfully retrived!");
                 res.json(results);
             }
         });
