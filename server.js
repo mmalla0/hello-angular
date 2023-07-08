@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // configuration =================
-app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO rename to your app-name
+app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO: rename to your app-name
 app.use(express.static(path.join(__dirname, 'src')));
 
 app.use(express.json());
@@ -29,7 +29,7 @@ app.listen(8080, function () {
 // application -------------------------------------------------------------
 app.get('/', function (req, res) {
     //res.send("Hello World123");
-    res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO rename to your app-name
+    res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO: rename to your app-name
 });
 
 
