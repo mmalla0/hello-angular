@@ -54,6 +54,7 @@ export class ItemService {
 
   reduceStock(items: Item[]): Observable<void> {
     const url = `$/reduceStock`;
+    return this.http.post<void>(url, items); 
   }
 
   private getItemURL = 'getitem';

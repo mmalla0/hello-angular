@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Invoice } from '../shared/invoice';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-order',
