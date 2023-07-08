@@ -3,7 +3,6 @@
 }
 
 
-
 .item-details {
     display: flex;
     font-family: 'Arial', sans-serif;
@@ -20,7 +19,18 @@
     border-radius: 50%;
     margin-right: 20px;
     position: relative;
-    animation: wobble 2s ease-in-out infinite;
+    overflow: hidden;
+    animation: wobble 10s ease-in-out infinite;
+
+}
+
+
+.circle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ffdd57;
 }
 
 @keyframes wobble {
