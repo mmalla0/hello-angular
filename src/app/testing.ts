@@ -52,7 +52,7 @@ import { HttpClient } from '@angular/common/http';
     <div>
         <h3>Delete Stockpile Item</h3>
         <input type="text" [(ngModel)]="stockpileId" placeholder="Stockpile Item ID" />
-        <button (click)="testDeleteCategory(stockpileId)">Delete Stockpile Item</button>
+        <button (click)="testDeleteStockpileItem(stockpileId)">Delete Stockpile Item</button>
         <p *ngIf="deleteMessage">{{ deleteMessage }}</p>
     </div>
   `
@@ -158,8 +158,8 @@ export class TesterComponent {
     }
 
 
-    testDeleteCategory(stockpileId: string): void {
-        this.http.delete('/deleteCategory/' + stockpileId).subscribe(
+    testDeleteStockpileItem(stockpileId: string): void {
+        this.http.delete('/deleteStockpileItem/' + stockpileId).subscribe(
             () => {
                 console.log('Stockpile item deleted successfully');
                 this.deleteMessage = 'Stockpile item deleted successfully';

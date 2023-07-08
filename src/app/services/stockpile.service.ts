@@ -21,7 +21,7 @@ export class StockpileService {
   }
 
   deleteStockpileItem(stockpileItemId: string): Observable<void> {
-    const url = `/items/${stockpileItemId}`;
+    const url = `/deleteStockpileItem/${stockpileItemId}`;
     return this.http.delete<void>(url);
   }
 

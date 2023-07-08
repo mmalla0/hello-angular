@@ -536,8 +536,7 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
 
 
 // DELETE endpoint to delete a stockpile item
-app.delete('/deleteCategory/:stockpileId', (req, res) => {
-
+app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
     const connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
         host: "195.37.176.178",
@@ -557,22 +556,39 @@ app.delete('/deleteCategory/:stockpileId', (req, res) => {
 
         const stockpileId = req.params.stockpileId;
 
-        const query = 'DELETE FROM stockpile WHERE stockpile_ID = ?';
+        const queryDisableFKCheck = 'SET FOREIGN_KEY_CHECKS = 0';
+        const queryEnableFKCheck = 'SET FOREIGN_KEY_CHECKS = 1';
+        const queryDeleteStockpileItem = 'DELETE FROM stockpile WHERE stockpile_ID = ?';
 
-        connection.query(query, stockpileId, (err, result) => {
-            if (err) {
-                console.error('Error deleting stockpile item:', err);
-                res.status(500).json({ error: 'Failed to delete stockpile item' });
-            } else if (result.affectedRows === 0) {
-                res.status(404).json({ error: 'Stockpile item not found' });
-            } else {
-                console.log('Stockpile item deleted successfully');
-                res.sendStatus(200);
+        connection.query(queryDisableFKCheck, (disableFKErr) => {
+            if (disableFKErr) {
+                console.error('Error disabling foreign key check:', disableFKErr);
+                res.status(500).json({ error: 'Failed to disable foreign key check' });
+                return;
             }
+
+            connection.query(queryDeleteStockpileItem, stockpileId, (deleteErr, result) => {
+                if (deleteErr) {
+                    console.error('Error deleting stockpile item:', deleteErr);
+                    res.status(500).json({ error: 'Failed to delete stockpile item' });
+                } else if (result.affectedRows === 0) {
+                    res.status(404).json({ error: 'Stockpile item not found' });
+                } else {
+                    console.log('Stockpile item deleted successfully');
+                    connection.query(queryEnableFKCheck, (enableFKErr) => {
+                        if (enableFKErr) {
+                            console.error('Error enabling foreign key check:', enableFKErr);
+                            res.status(500).json({ error: 'Failed to enable foreign key check' });
+                        } else {
+                            res.sendStatus(200);
+                        }
+                    });
+                }
+            });
         });
     });
-
 });
+
 
 app.get('/getitem/:itemId', (req, res) => {
 
