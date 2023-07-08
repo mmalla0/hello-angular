@@ -4,6 +4,8 @@ import { ItemService } from '../services/item-service/item.service';
 import { CartServiceService } from '../services/cart-service/cart-service.service'
 import { CategoryService } from '../services/category-service/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { WebsocketService } from '../../app/websocket.service';
+
 
 @Component({
   selector: 'app-warenuebersicht',
@@ -28,14 +30,24 @@ export class WarenuebersichtComponent implements OnInit {
   ngOnInit() {
     this.setUpFilterValues();
     this.setUpItems();
+    this.listenToWebSocket();
   }
-
+  
+  private listenToWebSocket(): void {
+    this.websocketService.connect().subscribe(() => {
+      this.websocketService.subscribeToItemChanges().subscribe(() => {
+        this.setUpItems();
+      });
+    });
+  }
+  
   constructor(
     public cartService: CartServiceService,
     private router: Router,
     private route: ActivatedRoute,
     private itemService: ItemService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private websocketService: WebsocketService
   ) {}
 
   setUpFilterValues() : void{

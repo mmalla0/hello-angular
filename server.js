@@ -6,7 +6,44 @@ var mysql = require('mysql');
 const multer = require('multer');
 bodyParser = require('body-parser');
 const cors = require('cors');
+const http = require('http');
+const WebSocket = require('ws'); 
 
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+// Keep track of connected clients
+const clients = new Set();
+
+// Handle new websocket connections
+wss.on('connection', (ws) => {
+  console.log('WebSocket client connected');
+  
+  // Add the client to the set of connected clients
+  clients.add(ws);
+  
+  // Handle client disconnection
+  ws.on('close', () => {
+    console.log('WebSocket client disconnected');
+    
+    // Remove the client from the set of connected clients
+    clients.delete(ws);
+  });
+});
+
+
+function handleItemChange() {
+    console.log('Handle item change');
+    // Broadcast a notification to all connected clients about the change
+    const message = JSON.stringify({ event: 'itemListChange' });
+  
+    clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
+  
+  
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 
@@ -22,17 +59,15 @@ app.use(express.static(path.join(__dirname, 'src')));
 app.use(express.json());
 
 // listen (start app with node server.js) ======================================
-app.listen(8080, function () {
+server.listen(8080, function () {
     console.log("App listening on port 8080");
-});
+  });
 
 // application -------------------------------------------------------------
 app.get('/', function (req, res) {
     //res.send("Hello World123");
     res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO: rename to your app-name
 });
-
-
 
 /**
  * Logic for file uploads
@@ -348,6 +383,8 @@ app.post('/additem', (req, res) => {
             newItem.item_imgpath
         ];
 
+        handleItemChange();
+
         connection.query(query, itemValues, (error, itemResult) => {
             if (error) {
                 console.error('Error adding item:', error);
@@ -427,6 +464,7 @@ app.delete('/deleteitem/:itemId', (req, res) => {
                 res.status(500).json({ error: 'Failed to delete item' });
             } else {
                 console.log('Item deleted successfully');
+                handleItemChange();
                 res.status(200).json({ message: 'Item deleted successfully' });
             }
         });
