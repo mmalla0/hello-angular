@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   isLoggedIn: boolean = false;
 
-  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
+  constructor(private http: HttpClient, public authService: AuthService, private router: Router) {}
 
   ngOnInit(){
     this.authService.updateUsersInLocalStorage();    
