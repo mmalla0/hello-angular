@@ -4,22 +4,13 @@ import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
+
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.css'],
   animations: [
-    trigger('circleAnimation', [
-      state('start', style({
-        transform: 'translateX(0) translateY(0)'
-      })),
-      state('end', style({
-        transform: 'translateX(100%) translateY(-100%)'
-      })),
-      transition('start <=> end', [
-        animate('6s linear')
-      ])
-    ])
+  
   ]
 })
 
