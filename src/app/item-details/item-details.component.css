@@ -55,7 +55,7 @@
     border-radius: 50%;
     box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.3);
     z-index: -1;
-    animation: orbit 5s linear infinite;
+    animation: orbit 10s linear infinite;
 }
 
 @keyframes orbit {
@@ -67,6 +67,8 @@
         transform: rotate(360deg);
     }
 }
+
+
 .item-details-content {
     display: flex;
     flex-direction: column;
