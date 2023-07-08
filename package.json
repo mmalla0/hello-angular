@@ -33,6 +33,7 @@
     "pdfmake": "^0.2.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "webstomp-client": "^1.2.6",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
