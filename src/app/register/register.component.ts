@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../shared/user';
+//import { User } from '../shared/user';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,6 +13,16 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
   formHatFehler = false;
+
+  address = {
+    customer_id: null,
+    street_name: '',
+    street_number: null,
+    city: '',
+    zip_code: null,
+    country: '',
+    planet: '',
+  };
 
   constructor(
     private authService: AuthService,
@@ -29,6 +39,12 @@ export class RegisterComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
       methodofpayment: [null, Validators.required],
+      streetName: [null, Validators.required],
+      streetNumber: [null, Validators.required],
+      city: [null, Validators.required],
+      zipCode: [null, Validators.required],
+      country: [null, Validators.required],
+      planet: [null, Validators.required],
     });
   }
 
@@ -52,6 +68,10 @@ export class RegisterComponent implements OnInit {
 
   handleZahlungsmethodeValueChange(event: any) {
     this.form.get('methodofpayment')?.setValue(event.target.value);
+  }
+
+  handleValueChange(property: string, event: any) {
+    this.form.get(property)?.setValue(event.target.value);
   }
 
   handleLoginClicked() {
@@ -89,6 +109,8 @@ export class RegisterComponent implements OnInit {
       this.authService.register2(userToRegister).subscribe(
         (res) => {
           this.toastr.success('You have been succefully registed!', 'Success');
+          this.address.customer_id = res.id;
+          this.addAddressToCustomer();
           this.router.navigate(['/login']);
 
           this.router.navigate(['/']);
@@ -99,5 +121,27 @@ export class RegisterComponent implements OnInit {
         }
       );
     }
+  }
+
+  addAddressToCustomer() {
+    this.address.city = this.form.get('city')?.value;
+    this.address.country = this.form.get('country')?.value;
+    this.address.planet = this.form.get('planet')?.value;
+    this.address.street_name = this.form.get('streetName')?.value;
+    this.address.street_number = +this.form.get('streetNumber')?.value;
+    this.address.zip_code = +this.form.get('zipCode')?.value;
+
+    this.authService.addAddressToCustomer(this.address).subscribe((res) => {
+      this.updateCustomerAddress(this.address.customer_id, res.id);
+      console.log(res);
+    });
+  }
+
+  updateCustomerAddress(customerId: number, newAddressId: number) {
+    this.authService
+      .updateCustomerAdress(customerId, newAddressId)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }

@@ -1,23 +1,41 @@
+<h5 class="login-header">Welcome to Spacesavers' Shop</h5>
+
 <div class="login-container">
-    <h4>Anmelden</h4>
-
-    <form [formGroup]="form">
-
-        <div class="email-input">
+    
+    <h4>Sign in</h4>
+    <select  (input)="handleUserTypeValueChange($event)">
+        <option value="true">Employee</option>
+        <option value="false">Customer</option> 
+    </select>
+    <br> 
+    <form [formGroup]="form" *ngIf="!isEmployee">  
+        <div class="email-input" >
             <label for="username">Username</label>
             <input type="username" id="username" name="username" formControlName="username"
                 (input)="handleUsernameValueChange($event)">
         </div>
         <div class="password-input">
-            <label for="password">Passwort</label>
+            <label for="password">Password</label>
             <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
-        </div>
-
+        </div> 
     </form>
+
+    <form [formGroup]="formEmployee" *ngIf="isEmployee">  
+        <div class="email-input" >
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" formControlName="email"
+                (input)="handleEmailValueChange($event)">
+        </div>
+        <div class="password-input">
+            <label for="password">Password</label>
+            <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
+        </div> 
+    </form>
+ 
     <div class="buttons">
-        <button class="login-btn" (click)="handleLogin()">Anmelden</button>
-        <p>Neuer Kunde?</p>
-        <button class="register-btn" (click)="handleRegisterClicked()">Konto anlegen</button>
+        <button class="login-btn" (click)="handleLogin()">Sign in</button>
+        <p>new Customer?</p>
+        <button class="register-btn" (click)="handleRegisterClicked()">Sign up</button>
 
     </div>
    

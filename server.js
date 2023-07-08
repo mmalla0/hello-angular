@@ -6,7 +6,44 @@ var mysql = require('mysql');
 const multer = require('multer');
 bodyParser = require('body-parser');
 const cors = require('cors');
+const http = require('http');
+const WebSocket = require('ws'); 
 
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
+// Keep track of connected clients
+const clients = new Set();
+
+// Handle new websocket connections
+wss.on('connection', (ws) => {
+  console.log('WebSocket client connected');
+  
+  // Add the client to the set of connected clients
+  clients.add(ws);
+  
+  // Handle client disconnection
+  ws.on('close', () => {
+    console.log('WebSocket client disconnected');
+    
+    // Remove the client from the set of connected clients
+    clients.delete(ws);
+  });
+});
+
+
+function handleItemChange() {
+    console.log('Handle item change');
+    // Broadcast a notification to all connected clients about the change
+    const message = JSON.stringify({ event: 'itemListChange' });
+  
+    clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  }
+  
+  
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 
@@ -22,17 +59,15 @@ app.use(express.static(path.join(__dirname, 'src')));
 app.use(express.json());
 
 // listen (start app with node server.js) ======================================
-app.listen(8080, function () {
+server.listen(8080, function () {
     console.log("App listening on port 8080");
-});
+  });
 
 // application -------------------------------------------------------------
 app.get('/', function (req, res) {
     //res.send("Hello World123");
     res.sendFile('index.html', { root: __dirname + '/dist/angular' });    //TODO: rename to your app-name
 });
-
-
 
 /**
  * Logic for file uploads
@@ -162,6 +197,43 @@ app.post('/login', (req, res) => {
     });
 })
 
+app.post('/login-employee', (req, res) => {
+    const { email, password } = req.body;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+        console.log('Connected to the database');
+
+        const query = 'SELECT * FROM employee WHERE email = ? AND password = ?';
+        connection.query(query, [email, password], (error, results) => {
+            if (error) {
+                console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
+                res.status(500).json({ message: 'Interner Serverfehler' });
+            } else {
+                if (results.length > 0) {
+                    // Erfolgreiche Authentifizierung
+                    res.status(200).json({ message: 'Login erfolgreich' });
+                } else {
+                    // Fehlgeschlagene Authentifizierung
+                    res.status(401).json({ message: 'Falsche E-Mail oder Passwort' });
+                }
+            }
+        });
+    });
+})
+
 app.post('/register', (req, res) => {
     const {  first_name, last_name, password, username, email, paymentMethod } = req.body;
 
@@ -188,7 +260,15 @@ app.post('/register', (req, res) => {
                 console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
                 res.status(500).json({ message: 'Interner Serverfehler' });
             } else {
-                res.status(200).json({ message: 'Registrierung erfolgreich' });
+                const createdUser = {
+                    id:  results.insertId,
+                    firstName: first_name,
+                    lastName: last_name,
+                    username: username,
+                    email: email,
+                    paymentMethod: paymentMethod
+                  };
+                res.status(200).json(createdUser);
             }
         });
 
@@ -197,7 +277,77 @@ app.post('/register', (req, res) => {
 
 });
 
+app.post('/add-address', (req, res) => {
+    const { customer_id, street_name, street_number, city, zip_code, country, planet  } = req.body;
+ 
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
 
+    connection.connect(function (err) {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+        console.log('Connected to the database');
+        // Führe die MySQL-Abfrage aus, um den Customer in die Datenbank einzufügen
+        const query = 'INSERT INTO address (customer_id, street_name, street_number, city, zip_code, country, planet ) VALUES (?, ?, ?, ?,?,?,?)';
+        connection.query(query, [ customer_id, street_name, street_number, city, zip_code, country, planet ], (error, results) => {
+            if (error) {
+                console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
+                res.status(500).json({ message: 'Interner Serverfehler' });
+            } else {
+                const createdObject = {
+                    id:  results.insertId, 
+                  };
+                res.status(200).json(createdObject);
+            }
+        });
+
+    }); 
+});
+
+app.put('/customer/:id/address', (req, res) => {
+    const customer_id = req.params.id; // ID des Kunden
+    const { address_id } = req.body; // Neue Adresse-ID für den Kunden
+  
+    const connection = mysql.createConnection({
+      database: "23_IT_Gruppe5",
+      host: "195.37.176.178",
+      port: "20133",
+      user: "23_IT_Grp_5",
+      password: "JJQGNC8h79VkiSNmK}8I"
+    });
+  
+    connection.connect((err) => {
+      if (err) {
+        console.error('Fehler bei der Verbindung zur Datenbank:', err.stack);
+        res.status(500).json({ error: 'Verbindung zur Datenbank fehlgeschlagen' });
+        return;
+      }
+  
+      console.log('Verbindung zur Datenbank hergestellt');
+  
+      const query = `UPDATE customer SET address_id = ? WHERE customer_id = ?`;
+      const values = [address_id, customer_id];
+  
+      connection.query(query, values, (error, results) => {
+        if (error) {
+          console.error('Fehler beim Aktualisieren der Adresse-ID:', error);
+          res.status(500).json({ error: 'Fehler beim Aktualisieren der Adresse-ID' });
+        } else {
+          console.log('Adresse-ID des Kunden erfolgreich aktualisiert');
+          res.status(200).json({ message: 'Adresse-ID des Kunden erfolgreich aktualisiert' });
+        }
+      });
+    });
+  });
+ 
 // Define the API endpoint for adding an item
 app.post('/additem', (req, res) => {
     var connection = mysql.createConnection({
@@ -232,6 +382,8 @@ app.post('/additem', (req, res) => {
             newItem.best_before,
             newItem.item_imgpath
         ];
+
+        handleItemChange();
 
         connection.query(query, itemValues, (error, itemResult) => {
             if (error) {
@@ -281,10 +433,7 @@ app.post('/additem', (req, res) => {
         });
     });
 });
-
-
-
-
+  
 app.delete('/deleteitem/:itemId', (req, res) => {
     const itemId = req.params.itemId;
 
@@ -315,6 +464,7 @@ app.delete('/deleteitem/:itemId', (req, res) => {
                 res.status(500).json({ error: 'Failed to delete item' });
             } else {
                 console.log('Item deleted successfully');
+                handleItemChange();
                 res.status(200).json({ message: 'Item deleted successfully' });
             }
         });
@@ -322,8 +472,7 @@ app.delete('/deleteitem/:itemId', (req, res) => {
         connection.end(); // Close the database connection
     });
 });
-
-
+ 
 // GET endpoint to retrieve all categories
 app.get('/getAllCategories', (req, res) => {
 
@@ -392,9 +541,7 @@ app.get('/getAllCategoryNames', (req, res) => {
 });
 
 });
-
-
-
+ 
 // POST endpoint to add a category
 app.post('/addCategory', (req, res) => {
 
@@ -431,8 +578,7 @@ app.post('/addCategory', (req, res) => {
         });
     });
 });
-
-
+ 
 // DELETE endpoint to delete a category
 app.delete('/deleteCategory/:categoryId', (req, res) => {
 
@@ -533,8 +679,7 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
     });
 });
 
-
-
+ 
 // DELETE endpoint to delete a stockpile item
 app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
     const connection = mysql.createConnection({

@@ -1,59 +1,84 @@
 .login-container {
-    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+    max-width: 400px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-h4 {
-    margin-bottom: 1.5rem;
+.login-container h4 {
     text-align: center;
+    margin-bottom: 20px;
 }
 
-.email-input, .password-input {
+.login-container form {
+    margin-bottom: 20px;
+}
+
+.login-container label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.login-container input {
     width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.login-container .buttons {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 0.25rem;
+    align-items: center;
 }
 
-.error {
-    color: red;
-    font-size: 0.75rem;
-    margin-top: 1rem;
-}
-
-.buttons {
-    margin-top: 1.5rem;
-}
-
-.buttons p {
-    font-size: 0.75rem;
-}
-
-.login-btn {
-    background-color: lightgreen;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    padding: 0.75rem 1.5rem;
+.login-container .buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
     border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.login-btn:hover {
-    background-color: #8bc34a;
     cursor: pointer;
 }
 
-.register-btn {
-    background-color: lightgreen;
+.login-container .buttons .login-btn {
+    background-color: #7EB63D;
     color: white;
-    font-weight: bold;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    margin-bottom: 10px;
 }
 
-.register-btn:hover {
-    background-color: #ff4d4d;
-    cursor: pointer;
+.login-container .buttons .register-btn {
+    background-color: #7EB63D;
+    color: white;
+}
+
+.login-container .buttons p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+    color: #586069;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 40px;
+    color: #97DB4F;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

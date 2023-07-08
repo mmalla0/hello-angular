@@ -7,7 +7,7 @@ export enum Zahlungsmethode {
   PAYPAL = 'paypal',
   KREDITKARTE = 'kreditkarte',
   DEBITKARTE = 'debitkarte',
-  APPLEPAY = 'applepay'
+  APPLEPAY = 'applepay',
 }
 /*
 export interface UserModel {
@@ -21,83 +21,93 @@ export interface UserModel {
 import { User } from '../shared/user';
 import { LoginComponent } from '../login/login.component';
 import { LoginCredentials } from '../shared/loginCredentials';
-/*
-export interface UserModel {   
-  id: number;
-  name?: string;                           // TODO: name rausnehmen
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  addressId: number;
-  methodOfPayment: string;
-  cartId: number;
-  stockpileId: number;
-
-}
-*/
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AuthService {
-
   private users: User[] = [
     {
       id: 1,
       //name: 'Admin',                       // TODO: name rausnehmen
       email: 'admin@admin.com',
       password: 'adminPassword123!',
-     // zahlungsmethode: Zahlungsmethode.KREDITKARTE
+      // zahlungsmethode: Zahlungsmethode.KREDITKARTE
 
       firstName: 'Ad',
       lastName: 'min',
       addressId: 1,
       methodOfPayment: 'Cash',
       cartId: 1,
-      stockpileId: 1
-
+      stockpileId: 1,
     },
     {
       id: 2,
-     // name: 'Maya Malla',                 // TODO: name rausnehmen
+      // name: 'Maya Malla',                 // TODO: name rausnehmen
       email: 'maya@gmail.com',
       password: 'mayqapassword!',
-     // zahlungsmethode: Zahlungsmethode.APPLEPAY
+      // zahlungsmethode: Zahlungsmethode.APPLEPAY
       firstName: 'Maya',
       lastName: 'Malla',
       addressId: 2,
       methodOfPayment: 'Cash',
       cartId: 2,
-      stockpileId: 2
-
-    }
+      stockpileId: 2,
+    },
   ];
-  currentUser: User | null = null;  
-  
+  currentUser: User | null = null;
+
   usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
 
-  userLoggedIn: Subject<boolean>= new BehaviorSubject<boolean>(false);
+  userLoggedIn: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient, private router: Router){}
-  
-  updateUsersInLocalStorage(){
-    const usersToSave = this.users.map((user: User)=>{
-      return JSON.stringify(user)
+  userType: string; //*ngIf="this.authService.userType == 'customer' "
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  updateUsersInLocalStorage() {
+    const usersToSave = this.users.map((user: User) => {
+      return JSON.stringify(user);
     });
     localStorage.setItem('users', usersToSave.toString());
   }
 
-  register2 (data) {
+  register2(data) {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
     let options = { headers: headers };
-    return this.http.post<any>("http://localhost:8080/" + "register", data, options
-    )
+    return this.http.post<any>(
+      'http://localhost:8080/' + 'register',
+      data,
+      options
+    );
   }
-  register (user: User) {
+
+  addAddressToCustomer(data) {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    let options = { headers: headers };
+    return this.http.post<any>(
+      'http://localhost:8080/' + 'add-address',
+      data,
+      options
+    );
+  }
+
+  updateCustomerAdress(customerId: number, data) {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    let options = { headers: headers };
+    return this.http.put<any>(
+      'http://localhost:8080/customer/' + customerId + '/address',
+      { address_id: data },
+      options
+    );
+  }
+  /*   register (user: User) {
     const userEmail = user.email.toLowerCase();
 
     const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
@@ -133,69 +143,37 @@ export class AuthService {
     } else {
       console.warn('Benutzer schon vorhanden!')
     }    
-  }
-/*
-  login (user: User){
-    const userEmail = user.email.toLowerCase();
-
-    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
-     
-    if (userIndex !== -1){
-      const userInfoInDb = this.users[userIndex];
-      if (user.password === userInfoInDb.password){
-        console.info('Erfolgreich angemeldet!');
-        this.userLoggedIn.next(true);
-
-        this.router.navigate(['/landing']);
-
-        this.currentUser = userInfoInDb; //  Setze den aktuellen Benutzer auf den angemeldeten Benutzer
-
-      } else {
-        console.warn('Anmeldung fehlgeschlagen!')
-      }
-    } else {
-      console.warn('Anmeldung fehlgeschlagen!')
-    }
-  }
-  */
-/*   login (user: LoginCredentials){
-    const userEmail = user.email.toLowerCase();
-
-    const userIndex = this.users.findIndex((user: LoginCredentials) => user.email === userEmail);
-  
-    if (userIndex !== -1){
-      const userInfoInDb = this.users[userIndex];
-      if (user.password === userInfoInDb.password){
-        console.info('Erfolgreich angemeldet!');
-        this.userLoggedIn.next(true);
-
-        this.router.navigate(['/landing']);
-
-        this.currentUser = userInfoInDb; //  Setze den aktuellen Benutzer auf den angemeldeten Benutzer
-
-      } else {
-        console.warn('Anmeldung fehlgeschlagen!')
-      }
-    } else {
-      console.warn('Anmeldung fehlgeschlagen!')
-    }
   } */
 
-
-  login2(data) : Observable<any> { 
+  loginCustomer(data): Observable<any> {
     let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     });
     let options = { headers: headers };
-    return this.http.post<any>("http://localhost:8080/" + "login", data, options
-    )
+    return this.http.post<any>(
+      'http://localhost:8080/' + 'login',
+      data,
+      options
+    );
   }
 
-  logout (){
+  loginEmployee(data): Observable<any> {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    let options = { headers: headers };
+    return this.http.post<any>(
+      'http://localhost:8080/' + 'login-employee',
+      data,
+      options
+    );
+  }
+
+  logout() {
     this.userLoggedIn.next(false);
   }
 
   getCurrentUser(): User | null {
-    return this.currentUser; 
+    return this.currentUser;
   }
 }

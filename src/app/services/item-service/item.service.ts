@@ -2,15 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Item } from '../../shared/item';
+import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemService {
 
+  private webSocketSubject: WebSocketSubject<any>;
+
   private itemsURL = 'http://localhost:8080/landing'; 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.webSocketSubject = webSocket('ws://localhost:8080/');
+    this.webSocketSubject.subscribe(
+    (message) => {
+      console.log('Received WebSocket message:', message);
+      // Handle the received message if needed
+    },
+    (error) => {
+      console.error('WebSocket connection error:', error);
+    },
+    () => {
+      console.log('WebSocket connection closed');
+    }
+  );
+  }
+  
 
   getAllItems(): Observable<Item[]> {
     return this.http.get<Item[]>(this.itemsURL);
@@ -69,7 +87,13 @@ export class ItemService {
       })
     );
   }
-
+  
+  sendItemListChanges(): void {
+    console.log('Entered send item list changes'); // Add this log statement
+    const event = 'itemListChanges';
+    this.webSocketSubject.next({ event });
+    console.log('Sent message: itemListChanges'); // Add this log statement
+  }
 }
 
 
