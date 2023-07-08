@@ -1,15 +1,17 @@
 
 
 <div *ngIf="item" class="item-details">
-    <h3 class="item-name">{{ item.item_name }}</h3>
-    <p class="item-price">Price: {{ item.item_price | currency }}</p>
-    <p class="item-description">Description: {{ item.item_description }}</p>
-    <p class="item-stock">Stock: {{ item.stock }}</p>
-    <p class="item-employee">Employee ID: {{ item.employee_id }}</p>
-    <p class="item-best-before">Best Before: {{ item.best_before }}</p>
     <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" class="item-image">
-    <p class="item-categories">Categories:</p>
-    <ul class="categories-list">
-        <li *ngFor="let category of item.categories" class="category">{{ category }}</li>
-    </ul>
+    <div class="item-details-content">
+        <h3 class="item-name">{{ item.item_name }}</h3>
+        <p class="item-price">Price: {{ item.item_price | currency }}</p>
+        <p class="item-description">Description: {{ item.item_description }}</p>
+        <p class="item-stock">Stock: {{ item.stock }}</p>
+        <p class="item-employee">Employee ID: {{ item.employee_id }}</p>
+        <p class="item-best-before">Best Before: {{ item.best_before }}</p>
+        <p class="item-categories">Categories:</p>
+        <ul class="categories-list">
+            <li *ngFor="let category of item.categories" class="category">{{ category }}</li>
+        </ul>
+    </div>
 </div>
