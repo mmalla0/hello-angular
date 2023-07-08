@@ -568,25 +568,25 @@ app.get('/getitem/:itemId', (req, res) => {
 
     const itemId = req.params.itemId;
 
-    // Assuming you have a database connection established
-    const sql = `
+        const sql = `
     SELECT i.*, c.*
     FROM item AS i
     INNER JOIN category_items AS ci ON i.item_ID = ci.ci_item_id
     INNER JOIN category AS c ON ci.ci_category_id = c.category_id
     WHERE i.item_ID = ?`;
 
-    connection.query(sql, [itemId], (error, results) => {
-        if (error) {
-            console.error('Error retrieving item:', error);
-            res.status(500).json({ error: 'Error retrieving item' });
-        } else if (results.length === 0) {
-            res.status(404).json({ error: 'Item not found' });
-        } else {
-            const item = results[0];
-            res.status(200).json(item);
-        }
+        connection.query(sql, [itemId], (error, results) => {
+            if (error) {
+                console.error('Error retrieving item:', error);
+                res.status(500).json({ error: 'Error retrieving item' });
+            } else if (results.length === 0) {
+                res.status(404).json({ error: 'Item not found' });
+            } else {
+                const item = results[0];
+                const categories = results.map((row) => row.category_name); // Assuming you have a 'category_name' column in the 'category' table
+                item.categories = categories;
+                res.status(200).json(item);
+            }
+        });
     });
-});
-
 });
