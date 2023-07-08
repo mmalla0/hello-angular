@@ -2,6 +2,14 @@
 
 <div *ngIf="item">
     <h3>{{ item.item_name }}</h3>
-    <p>Price: {{ item.item_price }}</p>
-    <!-- Add other details of the item as per your requirement -->
+    <p>Price: {{ item.item_price | currency }}</p>
+    <p>Description: {{ item.item_description }}</p>
+    <p>Stock: {{ item.stock }}</p>
+    <p>Employee ID: {{ item.employee_id }}</p>
+    <p>Best Before: {{ item.best_before }}</p>
+    <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" class="item-image">
+    <p>Categories:</p>
+    <ul>
+        <li *ngFor="let category of item.categories">{{ category }}</li>
+    </ul>
 </div>

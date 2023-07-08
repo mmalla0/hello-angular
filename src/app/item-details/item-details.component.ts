@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from '../shared/item';
+import { ItemService } from '../services/item-service/item.service';
 
 @Component({
   selector: 'app-item-details',
@@ -10,13 +11,14 @@ import { Item } from '../shared/item';
 export class ItemDetailsComponent implements OnInit {
   item: Item;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private itemService: ItemService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const itemId = params['id']; // Assuming you have a route parameter named 'id' for item identification
-      // Fetch item details using the itemId, e.g., make an API call or retrieve from a service
-      // Assign the fetched item details to the 'item' property
+      const itemId = +params['id']; // Convert the string ID to a number
+      this.itemService.getItem(itemId).subscribe(item => {
+        this.item = item;
+      });
     });
   }
 }

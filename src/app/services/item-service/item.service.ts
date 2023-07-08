@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Item } from '../../shared/item';
 
 @Injectable({
@@ -45,6 +45,18 @@ export class ItemService {
         // Handle error
         console.error('Error deleting item:', error);
       }
+    );
+  }
+
+  private getItemURL = 'getitem';
+  getItem(itemId: number): Observable<Item> {
+    const url = `${this.getItemURL}/${itemId}`;
+
+    return this.http.get<Item>(url).pipe(
+      catchError((error: any) => {
+        console.error('Error retrieving item:', error);
+        return throwError(() => new Error('Error retrieving item'));
+      })
     );
   }
 
