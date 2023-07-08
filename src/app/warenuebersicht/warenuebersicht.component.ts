@@ -35,15 +35,11 @@ export class WarenuebersichtComponent implements OnInit {
   
   private listenToWebSocket(): void {
     this.websocketService.connect().subscribe(() => {
-      console.log('Connected warenuebersicht');
-      // Successfully connected to the WebSocket
       this.websocketService.subscribeToItemChanges().subscribe(() => {
         this.setUpItems();
-        console.log('Item list has changed');
       });
     });
   }
-  
   
   constructor(
     public cartService: CartServiceService,

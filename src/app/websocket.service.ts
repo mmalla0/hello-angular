@@ -41,7 +41,6 @@ export class WebsocketService {
       this.webSocket.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
         if (data.event === 'itemListChange') {
-          console.log('Item list change, websocket service:', data);
           observer.next(data);
         }
       };

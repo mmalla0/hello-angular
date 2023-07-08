@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
+import { WebsocketService } from '../../app/websocket.service';
 
 @Component({
   selector: 'app-mitarbeiter-dashboard',
@@ -17,10 +18,11 @@ export class MitarbeiterDashboardComponent implements OnInit{
   sortDirection = 1;
   searchQuery: string;
 
-  constructor(private itemService: ItemService) { }
+  constructor(private itemService: ItemService, private websocketService: WebsocketService) { }
 
   ngOnInit() {
     this.getItemsFromDataBase();
+    this.listenToWebSocket();
   }
 
   getItemsFromDataBase(){
@@ -32,6 +34,14 @@ export class MitarbeiterDashboardComponent implements OnInit{
       error: error => {
         console.error(error);
       }
+    });
+  }
+
+  private listenToWebSocket(): void {
+    this.websocketService.connect().subscribe(() => {
+      this.websocketService.subscribeToItemChanges().subscribe(() => {
+        this.getItemsFromDataBase();
+      });
     });
   }
 
@@ -110,7 +120,6 @@ export class MitarbeiterDashboardComponent implements OnInit{
       this.getItemsFromDataBase();
     }, 1000);
   }
-  
 
   decreaseQuantity(product: Item) {
     if (product.stock > 0) {
