@@ -28,6 +28,8 @@ export class StockpileListComponent implements OnInit {
   loadStockpileItems() {
     const currentUser: User | null = this.authService.getCurrentUser();
     if (currentUser) {
+      console.log(currentUser);
+      console.log(this.stockpileService.getStockpileItems(currentUser.id));
       this.stockpileService.getStockpileItems(currentUser.id).subscribe(items => {
         this.stockpileItems = items;
         this.applyFilters(); 
