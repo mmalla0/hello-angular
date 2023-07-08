@@ -25,14 +25,6 @@
 }
 
 
-.circle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #ffdd57;
-}
-
 @keyframes wobble {
     0% {
         transform: rotate(0deg);
