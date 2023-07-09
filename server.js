@@ -58,6 +58,14 @@ app.use(express.static(path.join(__dirname, 'src')));
 
 app.use(express.json());
 
+//CORS-Header setzen, um Anfragen von beliebigen Ursprüngen zu akzeptieren
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+
 // listen (start app with node server.js) ======================================
 server.listen(8080, function () {
     console.log("App listening on port 8080");
@@ -237,9 +245,7 @@ app.post('/login-employee', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
-    const {  first_name, last_name, password, username, email, paymentMethod } = req.body;
-
-
+    const { first_name, last_name, password, username, email, paymentMethod, address_id } = req.body;
     const connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
         host: "195.37.176.178",
@@ -247,7 +253,6 @@ app.post('/register', (req, res) => {
         user: "23_IT_Grp_5",
         password: "JJQGNC8h79VkiSNmK}8I"
     });
-
     connection.connect(function (err) {
         if (err) {
             console.error('Error connecting to the database:', err.stack);
@@ -256,27 +261,25 @@ app.post('/register', (req, res) => {
         }
         console.log('Connected to the database');
         // Führe die MySQL-Abfrage aus, um den Customer in die Datenbank einzufügen
-        const query = 'INSERT INTO customer (first_name, last_name, password , username , email, paymentMethod ) VALUES (?, ?, ?, ?,?,?)';
-        connection.query(query, [ first_name, last_name,password,username, email, paymentMethod], (error, results) => {
+        const query = 'INSERT INTO customer (first_name, last_name, password, username, email, paymentMethod, address_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        connection.query(query, [first_name, last_name, password, username, email, paymentMethod, address_id], (error, results) => {
             if (error) {
                 console.error('Fehler bei der Ausführung der MySQL-Abfrage:', error);
                 res.status(500).json({ message: 'Interner Serverfehler' });
             } else {
                 const createdUser = {
-                    id:  results.insertId,
+                    id: results.insertId,
                     firstName: first_name,
                     lastName: last_name,
                     username: username,
                     email: email,
-                    paymentMethod: paymentMethod
-                  };
+                    paymentMethod: paymentMethod,
+                    addressId: address_id
+                };
                 res.status(200).json(createdUser);
             }
         });
-
     });
-
-
 });
 
 app.post('/add-address', (req, res) => {
@@ -665,13 +668,15 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
                 console.log("Stockpile items successfully retrieved!");
 
                 const stockpileItems = results.map((result) => {
+                    const bestBeforeDate = new Date(result.best_before);
+                    
                     return {
                         id: result.stockpile_ID,
                         name: result.item_name,
                         quantity: result.quantity,
-                        bestBeforeDate: result.best_before,
+                        bestBeforeDate: bestBeforeDate,
                         product: result.item_description,
-                        category: result.category_name.split(',')[0].trim() // Select first category from the list
+                        category: result.category_name.split(',')[0].trim()
                     };
                 });
 

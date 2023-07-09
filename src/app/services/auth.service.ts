@@ -94,7 +94,9 @@ export class AuthService {
     );
   }
 
-  updateCustomerAdress(customerId: number, data) {
+  updateCustomerAdress(customerId: number, data) {              // data = Adresse
+    console.log("Diese CustomerId wird der Methode updateCustomer übergeben: ", customerId);
+    console.log("diese address_id soll der customer-Tabelle übergeben werden: ", data.address_id)
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });

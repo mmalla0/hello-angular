@@ -65,7 +65,7 @@ export class StockpileListComponent implements OnInit {
     items.forEach(item => {
       const existingEntry = itemEntries.find(entry => entry.product.id === item.id);
       if (existingEntry) {
-        const existingBestBeforeDate = existingEntry.bestBeforeDates.find(date => date.date.getTime() === item.bestBeforeDate.getTime());
+        const existingBestBeforeDate = existingEntry.bestBeforeDates.find(date => date.date.getTime() === new Date(item.bestBeforeDate).getTime());
         if (existingBestBeforeDate) {
           existingBestBeforeDate.count += 1;
         } else {
