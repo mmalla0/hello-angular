@@ -1,64 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { StockpileService } from 'src/app/services/stockpile.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component} from '@angular/core';
 import { User } from '../shared/user'; 
-import { StockpileItem, StockpileItemEntry  } from '../shared/user';
 import { EmailService } from 'src/app/services/email.service';
+import { StockpileItemEntry } from '../shared/stockpile-item-entry';
 
 @Component({
   selector: 'app-stockpile-dashboard',
   templateUrl: './stockpile-dashboard.component.html',
   styleUrls: ['./stockpile-dashboard.component.css']
 })
-export class StockpileDashboardComponent implements OnInit {
+export class StockpileDashboardComponent {
   stockpileItemEntries: StockpileItemEntry[];
-  stockpileItems: StockpileItem[];
   currentUser: User | null;
 
   constructor(
-    private authService: AuthService,
-    private stockpileService: StockpileService,
     private emailService: EmailService
   ) {}
-
-  ngOnInit() {
-    this.loadStockpileItems();
-  }
-
-  loadStockpileItems() {
-    this.currentUser = this.authService.getCurrentUser();
-    if (this.currentUser) {
-      this.stockpileService.getStockpileItems(this.currentUser.id).subscribe(items => {
-        this.stockpileItemEntries = this.groupItemsByProduct(items);
-        this.checkItemsForEmail(this.stockpileItemEntries);
-      });
-    }
-  }
-
-  groupItemsByProduct(items: StockpileItem[]): StockpileItemEntry[] {
-    const itemEntries: StockpileItemEntry[] = [];
-  
-    items.forEach(item => {
-      const existingEntry = itemEntries.find(entry => entry.product.id === item.id);
-      if (existingEntry) {
-        const existingBestBeforeDate = existingEntry.bestBeforeDates.find(date => date.date.getTime() === item.bestBeforeDate.getTime());
-        if (existingBestBeforeDate) {
-          existingBestBeforeDate.count += 1;
-        } else {
-          existingEntry.bestBeforeDates.push({ date: new Date(item.bestBeforeDate), count: 1 });
-        }
-      } else {
-        const newEntry: StockpileItemEntry = {
-          product: item,
-          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }]
-        };
-        itemEntries.push(newEntry);
-      }
-    });
-  
-    return itemEntries;
-  }
-  
 
 
   checkItemsForEmail(itemEntries: StockpileItemEntry[]) {

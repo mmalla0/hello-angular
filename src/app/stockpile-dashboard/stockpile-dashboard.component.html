@@ -1,7 +1,9 @@
 <h1>My Stockpile Dashboard</h1>
 
 <app-stockpile-list></app-stockpile-list>
+<pre *ngIf="stockpileItemEntries">{{ stockpileItemEntries | json }}</pre>
 
+<!--
 <h2>Stockpile Item Summary</h2>
 
 <div>
@@ -14,7 +16,7 @@
     {{ entry.product.name }} - {{ entry.bestBeforeDates[0]?.date | date }} - {{ entry.bestBeforeDates.length }} Products
   </li>
 </ul>
-
+-->
 
   
 
