@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ItemService } from './services/item-service/item.service';
 import { Item } from './shared/item';
 import { StockpileService } from 'src/app/services/stockpile.service';
-import { StockpileItem, StockpileItemEntry } from './shared/user';
+import { StockpileItem} from './shared/user';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
