@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { StockpileItem, StockpileItemEntry } from '../shared/user';
+import { StockpileItem } from '../shared/user';
 import { User } from '../shared/user';
+import { StockpileItemEntry } from '../shared/stockpile-item-entry';
 
 @Component({
   selector: 'app-stockpile-list',
@@ -27,13 +28,14 @@ export class StockpileListComponent implements OnInit {
 
   loadStockpileItems() {
 
-    //console.log("I am in loadStockpileItems");
+    console.log("I am in loadStockpileItems");
     const currentUser: User | null = this.authService.getCurrentUser();
-    //console.log(currentUser);
+    console.log("The current user is: ", currentUser);
     if (currentUser) {
-      //console.log(currentUser);
-     //console.log(this.stockpileService.getStockpileItems(currentUser.id));
+      console.log("Die Id des aktuellen users: ", currentUser.id)
       this.stockpileService.getStockpileItems(currentUser.id).subscribe(items => {
+        console.log("The stockpile retrieved by customer id: ", this.stockpileService.getStockpileItems(currentUser.id));
+        this.stockpileItems = items;
         this.stockpileItemEntries = this.groupItemsByProduct(items);
         this.applyFilters(); 
         //this.groupStockpileItems();
@@ -72,7 +74,8 @@ export class StockpileListComponent implements OnInit {
       } else {
         const newEntry: StockpileItemEntry = {
           product: item,
-          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }]
+          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+          name: item.name
         };
         itemEntries.push(newEntry);
       }

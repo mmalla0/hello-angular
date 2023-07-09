@@ -1,4 +1,3 @@
-
 export interface User {
     id: number;
     firstName: string;
@@ -11,8 +10,6 @@ export interface User {
     stockpileId: number;
 }
 
-
-
 export interface StockpileItem {
     id: string;
     name: string;
@@ -21,11 +18,4 @@ export interface StockpileItem {
     product: string;
     category: string;
 }
-export interface StockpileItemEntry {
-    product: StockpileItem;
-    bestBeforeDates: {
-      date: Date;
-      count: number;
-    }[];
-  }
 

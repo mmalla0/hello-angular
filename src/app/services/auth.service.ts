@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -19,8 +19,6 @@ export interface UserModel {
 }
 */
 import { User } from '../shared/user';
-import { LoginComponent } from '../login/login.component';
-import { LoginCredentials } from '../shared/loginCredentials';
 
 @Injectable({
   providedIn: 'root',
@@ -153,7 +151,13 @@ export class AuthService {
     return this.http.post<any>(
       'http://localhost:8080/' + 'login',
       data,
-      options
+      options)
+      .pipe(
+        tap(response => {
+          const user = response.user;
+          this.currentUser = user;
+          this.userLoggedIn.next(true);
+        })
     );
   }
 
@@ -165,12 +169,19 @@ export class AuthService {
     return this.http.post<any>(
       'http://localhost:8080/' + 'login-employee',
       data,
-      options
+      options)
+      .pipe(
+        tap(response => {
+          const user = response.user;
+          this.currentUser = user;
+          this.userLoggedIn.next(true);
+        })
     );
   }
 
   logout() {
     this.userLoggedIn.next(false);
+    this.currentUser = null;
   }
 
   getCurrentUser(): User | null {

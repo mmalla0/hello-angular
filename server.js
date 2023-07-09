@@ -187,7 +187,8 @@ app.post('/login', (req, res) => {
             } else {
                 if (results.length > 0) {
                     // Erfolgreiche Authentifizierung
-                    res.status(200).json({ message: 'Login erfolgreich' });
+                    const user = results[0]; // Nehme das erste Benutzerobjekt aus den Ergebnissen
+                    res.status(200).json(user); // Sende das Benutzerobjekt als JSON-Antwort
                 } else {
                     // Fehlgeschlagene Authentifizierung
                     res.status(401).json({ message: 'Falsche E-Mail oder Passwort' });
@@ -224,8 +225,9 @@ app.post('/login-employee', (req, res) => {
             } else {
                 if (results.length > 0) {
                     // Erfolgreiche Authentifizierung
-                    res.status(200).json({ message: 'Login erfolgreich' });
-                } else {
+                    const user = results[0]; // Nehme das erste Benutzerobjekt aus den Ergebnissen
+                    res.status(200).json(user); // Sende das Benutzerobjekt als JSON-Antwort
+                  } else {
                     // Fehlgeschlagene Authentifizierung
                     res.status(401).json({ message: 'Falsche E-Mail oder Passwort' });
                 }
@@ -333,7 +335,7 @@ app.put('/customer/:id/address', (req, res) => {
   
       console.log('Verbindung zur Datenbank hergestellt');
   
-      const query = `UPDATE customer SET address_id = ? WHERE customer_id = ?`;
+      const query = `UPDATE customer SET address_id = ? WHERE id = ?`;
       const values = [address_id, customer_id];
   
       connection.query(query, values, (error, results) => {
