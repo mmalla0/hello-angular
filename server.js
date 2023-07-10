@@ -785,3 +785,61 @@ app.get('/getitem/:itemId', (req, res) => {
         });
     });
 });
+
+
+app.put('/editItem', (req, res) => {
+    const item = req.body;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const query = `
+      UPDATE item
+      SET item_name = ?,
+          item_description = ?,
+          item_price = ?,
+          stock = ?,
+          employee_id = ?,
+          best_before = ?,
+          item_imgpath = ?
+      WHERE item_ID = ?
+    `;
+
+        const values = [
+            item.item_name,
+            item.item_description,
+            item.item_price,
+            item.stock,
+            item.employee_id,
+            item.best_before,
+            item.item_imgpath,
+            item.item_ID
+        ];
+
+        connection.query(query, values, (err, result) => {
+            if (err) {
+                console.error('Error editing item:', err);
+                res.status(500).json({ error: 'Failed to edit item' });
+            } else if (result.affectedRows === 0) {
+                res.status(404).json({ error: 'Item not found' });
+            } else {
+                console.log('Item edited successfully');
+                res.sendStatus(200);
+            }
+        });
+    });
+});

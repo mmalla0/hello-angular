@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { Item } from '../../shared/item';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,9 @@ export class ItemService {
   private webSocketSubject: WebSocketSubject<any>;
 
   private itemsURL = 'http://localhost:8080/landing'; 
+  private itemUpdated: Subject<Item> = new Subject<Item>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toastr: ToastrService) {
     this.webSocketSubject = webSocket('ws://localhost:8080/');
     this.webSocketSubject.subscribe(
     (message) => {
@@ -94,7 +96,42 @@ export class ItemService {
     this.webSocketSubject.next({ event });
     console.log('Sent message: itemListChanges'); // Add this log statement
   }
+
+
+  private editItemURL = "editItem";
+  editItem(item: Item): Observable<void> {
+    return this.http.put<void>(this.editItemURL, item);
+  }
+
+  private showSuccessNotification(): void {
+    this.toastr.success('Item edited successfully', 'Success');
+  }
+
+  private showErrorNotification(error: any): void {
+    this.toastr.error('Failed to edit item', 'Error');
+  }
+
+  updateItem(item: Item): void {
+    this.editItem(item).subscribe(
+      () => {
+        this.showSuccessNotification();
+        this.getItem(item.item_ID).subscribe(
+          (updatedItem: Item) => {
+            this.itemUpdated.next(updatedItem); // Emit the updated item
+          },
+      },
+      (error) => {
+        this.showErrorNotification(error);
+      }
+    );
+  }
+
+  getItemUpdated(): Observable<Item> {
+    return this.itemUpdated.asObservable();
+  }
 }
+
+
 
 
 

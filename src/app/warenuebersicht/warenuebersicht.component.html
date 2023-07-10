@@ -32,7 +32,9 @@
       (mouseenter)="onMouseEnter(product)"
       (mouseleave)="onMouseLeave()">
         <div class="product-image-container">
-          <img [src]="'assets/images/' + product.item_imgpath" alt="Product Image" class="product-image" />
+          <a [routerLink]="'../items/' + product.item_ID">
+            <img [src]="'assets/images/' + product.item_imgpath" alt="Product Image" class="product-image" />
+          </a>
         </div>
         <h3 class="product-name">{{ product.item_name }}</h3>
         <p class="product-description" *ngIf="product === hoveredProduct">{{ product.item_description }}</p>
