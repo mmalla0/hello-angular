@@ -11,6 +11,7 @@ import { OrderFormComponent } from './order/order-form/order-form.component';
 import { TesterComponent } from "./testing";
 import { AuthService } from './services/auth.service';
 import { ItemDetailsComponent } from './item-details/item-details.component';
+import { StockpileService } from './services/stockpile.service';
 
 
 const routes: Routes = [
@@ -30,7 +31,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [AuthService],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

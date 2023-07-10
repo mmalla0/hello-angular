@@ -11,23 +11,21 @@ import { Item } from '../shared/item';
 
 export class StockpileService {
 
-  http: HttpClient;
-
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private http: HttpClient) { }
 
   getStockpileItems(customerId: number): Observable<StockpileItem[]> {
-    const url = `/getStockpileByCustomerID/${customerId}`;
-    return this.http.get<StockpileItem[]>(url);
+    const url = '/getStockpileByCustomerID/';
+    return this.http.get<StockpileItem[]>(url + customerId);
   }
 
   deleteStockpileItem(stockpileItemId: string): Observable<void> {
-    const url = `/deleteStockpileItem/${stockpileItemId}`;
-    return this.http.delete<void>(url);
+    const url = '/deleteStockpileItem/';
+    return this.http.delete<void>(url + stockpileItemId);
   }
 
   updateUserStockpile(stockpileId: number, items: Item[]): Observable<void> {
-    const url = `/updateUserStockpile/${stockpileId}`;
-    return this.http.post<void>(url, items); 
+    const url = '/updateUserStockpile/';
+    return this.http.post<void>(url + stockpileId, items); 
   }
 
 }

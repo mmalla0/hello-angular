@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
           (error) => {
             //Fehlermeldung
             this.toastr.error(
-              'Die E-Mail-Adresse oder das Passwort ist falsh!',
+              'Die E-Mail-Adresse oder das Passwort ist falsch!',
               'Fehler'
             );
           }
@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
           (error) => {
             //Fehlermeldung
             this.toastr.error(
-              'Die E-Mail-Adresse oder das Passwort ist falsh!',
+              'Die E-Mail-Adresse oder das Passwort ist falsch!',
               'Fehler'
             );
           }

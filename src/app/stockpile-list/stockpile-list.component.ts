@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { StockpileItem, StockpileItemEntry } from '../shared/user';
-import { EmailService } from '../services/email.service';
+import { StockpileItem } from '../shared/user';
 import { User } from '../shared/user';
+import { StockpileItemEntry } from '../shared/stockpile-item-entry';
 
 @Component({
   selector: 'app-stockpile-list',
@@ -12,35 +11,39 @@ import { User } from '../shared/user';
   styleUrls: ['./stockpile-list.component.css']
 })
 export class StockpileListComponent implements OnInit {
-  stockpileItems: StockpileItem[];
   stockpileItemEntries: StockpileItemEntry[] = [];
+  stockpileItems: StockpileItem[];
   filterCategory: string;
   filterName: string;
   filterDate: Date;
 
-  constructor(private userService: UserService, private authService: AuthService, private stockpileService: StockpileService, private emailService: EmailService) { }
+  constructor(
+    private authService: AuthService, 
+    private stockpileService: StockpileService, 
+  ) { }
 
   ngOnInit() {
     this.loadStockpileItems();
   }
 
-  
   loadStockpileItems() {
 
     console.log("I am in loadStockpileItems");
     const currentUser: User | null = this.authService.getCurrentUser();
-    console.log(currentUser);
+    console.log("The current user is: ", currentUser);
     if (currentUser) {
-      console.log(currentUser);
-      console.log(this.stockpileService.getStockpileItems(currentUser.id));
+      console.log("Die Id des aktuellen users: ", currentUser.id)
       this.stockpileService.getStockpileItems(currentUser.id).subscribe(items => {
+        console.log("The stockpile retrieved by customer id: ", this.stockpileService.getStockpileItems(currentUser.id));
         this.stockpileItems = items;
+        this.stockpileItemEntries = this.groupItemsByProduct(items);
         this.applyFilters(); 
-        this.groupStockpileItems();
+        //this.groupStockpileItems();
       });
     }
   }
 
+  /*
   groupStockpileItems() {
     this.stockpileItemEntries = [];
     this.stockpileItems.forEach(item => {
@@ -54,6 +57,31 @@ export class StockpileListComponent implements OnInit {
         });
       }
     });
+  }*/
+
+  groupItemsByProduct(items: StockpileItem[]): StockpileItemEntry[] {
+    const itemEntries: StockpileItemEntry[] = [];
+  
+    items.forEach(item => {
+      const existingEntry = itemEntries.find(entry => entry.product.id === item.id);
+      if (existingEntry) {
+        const existingBestBeforeDate = existingEntry.bestBeforeDates.find(date => date.date.getTime() === new Date(item.bestBeforeDate).getTime());
+        if (existingBestBeforeDate) {
+          existingBestBeforeDate.count += 1;
+        } else {
+          existingEntry.bestBeforeDates.push({ date: new Date(item.bestBeforeDate), count: 1 });
+        }
+      } else {
+        const newEntry: StockpileItemEntry = {
+          product: item,
+          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+          name: item.name
+        };
+        itemEntries.push(newEntry);
+      }
+    });
+  
+    return itemEntries;
   }
 
   applyFilters() {
