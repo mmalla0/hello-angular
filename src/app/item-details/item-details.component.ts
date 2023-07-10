@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -19,7 +19,7 @@ export class ItemDetailsComponent implements OnInit {
   showItemForm = false;
   showCategoryForm = false; 
 
-  constructor(private route: ActivatedRoute, private itemService: ItemService) { }
+  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -35,12 +35,14 @@ export class ItemDetailsComponent implements OnInit {
     this.showItemForm = true;
   }
 
-  saveNewItem() {
-    this.itemService.editItem(this.item);
+  saveNewItem(itemToBeEdited: Item) {
+    this.itemService.editItem(itemToBeEdited);
 
     this.itemService.getItemUpdated().subscribe((updatedItem: Item) => {
       // Handle the updated item
       // Update the view or perform other operations
+      const routeUrl = `items/${updatedItem.item_ID}`;
+      this.router.navigateByUrl(routeUrl);
     });
 
   }
