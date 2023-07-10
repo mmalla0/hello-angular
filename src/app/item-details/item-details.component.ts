@@ -27,4 +27,14 @@ export class ItemDetailsComponent implements OnInit {
       });
     });
   }
+
+  editItem() {
+    this.itemService.editItem(this.item);
+
+  }
+
+  deleteItem() {
+    this.itemService.deleteItem(this.item.item_ID);
+    
+  }
 }
