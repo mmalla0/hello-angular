@@ -7,11 +7,11 @@ import { MitarbeiterDashboardComponent } from './mitarbeiter-dashboard/mitarbeit
 import { LandingPageComponent } from './landingpage/landing-page.component';
 import { CartComponent } from './cart/cart.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
-import { OrderFormComponent } from './order/order-form/order-form.component';
+import { OrderComponent } from './order/order.component';
 import { TesterComponent } from "./testing";
-import { AuthService } from './services/auth.service';
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { StockpileService } from './services/stockpile.service';
+import { OrderCreateComponent } from './order/order-create/order-create.component';
+import { OrderFormComponent } from './order/order-form/order-form.component';
 
 
 const routes: Routes = [
@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'cart', component: CartComponent },
   { path: 'stockpile', component: StockpileDashboardComponent },
-  { path: 'order', component: OrderFormComponent },
+  { path: 'order', component: OrderComponent },
   { path: 'testing', component: TesterComponent},
   { path: 'items/:id', component: ItemDetailsComponent },
   // Nutzer zur Hauptseite weiterleiten

@@ -28,6 +28,8 @@ import { CategoryDetailComponent } from './category-detail/category-detail.compo
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AuthService } from './services/auth.service';
 import { StockpileService } from './services/stockpile.service';
+import { OrderCreateComponent } from './order/order-create/order-create.component';
+import { OrderComponent } from './order/order.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { StockpileService } from './services/stockpile.service';
     LandingPageComponent,
     StockItemDetailsComponent,
     OrderFormComponent,
+    OrderCreateComponent,
+    OrderComponent,
     TesterComponent,
     CategoryDetailComponent,
     ItemDetailsComponent,
@@ -69,4 +73,3 @@ import { StockpileService } from './services/stockpile.service';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-export class OrderModule { }
