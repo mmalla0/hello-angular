@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { StockpileItem } from '../shared/user';
 import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
-import { Item } from '../shared/item';
+import { OrderItem } from '../shared/invoice';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +23,9 @@ export class StockpileService {
     return this.http.delete<void>(url + stockpileItemId);
   }
 
-  updateUserStockpile(stockpileId: number, items: Item[]): Observable<void> {
+  updateUserStockpile(stockpileId: number, orderItems: OrderItem[]): Observable<void> {
     const url = '/updateUserStockpile/';
-    return this.http.post<void>(url + stockpileId, items); 
+    return this.http.post<void>(url + stockpileId, orderItems); 
   }
 
 }

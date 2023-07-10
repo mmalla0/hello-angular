@@ -18,7 +18,7 @@ export class OrderCreateComponent {
     id: 0,
     user: undefined,
     methodOfPayment: '',
-    items: [],
+    orderItems: [],
     address: undefined,
     totalWithVat: 0,
     totalWithoutVat: 0,
@@ -63,7 +63,7 @@ export class OrderCreateComponent {
     
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
   
-    this.itemService.reduceStock( this.invoice.items).subscribe(() => {
+    this.itemService.reduceStock( this.invoice.orderItems).subscribe(() => {
        this.submitOrder.emit(this.invoice);
      });
   }
@@ -71,9 +71,9 @@ export class OrderCreateComponent {
   updateUserStockpile() {
   
     // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // Annahme: Die Methode updateUserStockpile(stockpileId, items) wird von der stockpileService-Klasse bereitgestellt.
+    // Annahme: Die Methode updateUserStockpile(stockpileId, orderItems) wird von der stockpileService-Klasse bereitgestellt.
 
-    this.stockpileService.updateUserStockpile(this.user.stockpileId, this.invoice.items).subscribe(() => {
+    this.stockpileService.updateUserStockpile(this.user.stockpileId, this.invoice.orderItems).subscribe(() => {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
 

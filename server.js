@@ -686,6 +686,81 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
     });
 });
 
+app.post('/updateUserStockpile/:stockpileId', (req, res) => {
+    const stockpileId = req.params.stockpileId;
+    const orderItems = req.body;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        // update userStockpile in Database
+        for (const orderItem of orderItems) {
+            const query = 'UPDATE Stockpile SET quantity = quantity - ? WHERE stockpile_ID = ? AND item_ID = ?';
+            const values = [orderItem.quantity, stockpileId, orderItem.itemId];
+
+            connection.query(query, values, (error, result) => {
+                if (error) {
+                    console.error('Error updating userStockpile:', error);
+                    res.status(500).json({ error: 'Failed to update userStockpile' });
+                }
+            });
+        }
+
+        connection.end(); 
+        res.sendStatus(200);
+    });
+});
+
+app.post('/reduceStock', (req, res) => {
+    const itemId = req.params.itemId;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+    
+        console.log('Connected to the database');
+    
+        // update items in Database with orderItems Array
+        for (const orderItem of orderItems) {
+            const query = 'UPDATE item SET stock = stock - ? WHERE item_ID = ?';
+            const values = [orderItem.quantity, orderItem.itemId];
+    
+            connection.query(query, values, (error, result) => {
+                if (error) {
+                    console.error('Error updating stock:', error);
+                    res.status(500).json({ error: 'Failed to update stock' });
+                }
+            });
+        }
+    
+        connection.end(); 
+    });
+});
  
 // DELETE endpoint to delete a stockpile item
 app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
