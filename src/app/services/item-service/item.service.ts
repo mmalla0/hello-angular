@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Item } from '../../shared/item';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
+import { OrderItem } from 'src/app/shared/invoice';
 
 @Injectable({
   providedIn: 'root'
@@ -70,9 +71,9 @@ export class ItemService {
     );
   }
 
-  reduceStock(items: Item[]): Observable<void> {
+  reduceStock(orderItems: OrderItem[]): Observable<void> {
     const url = `$/reduceStock`;
-    return this.http.post<void>(url, items); 
+    return this.http.post<void>(url, orderItems); 
   }
 
   private getItemURL = 'getitem';

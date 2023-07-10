@@ -7,7 +7,7 @@ export interface Invoice {
     id: number;
     user: User;
     methodOfPayment: string;
-    items: Item[];
+    orderItems: OrderItem[];
     address: Address;
     totalWithVat: number;
     totalWithoutVat: number;
