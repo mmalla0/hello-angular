@@ -119,6 +119,10 @@ export class ItemService {
           (updatedItem: Item) => {
             this.itemUpdated.next(updatedItem); // Emit the updated item
           },
+          (error) => {
+            this.showErrorNotification(error);
+          }
+        );
       },
       (error) => {
         this.showErrorNotification(error);

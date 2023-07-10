@@ -1,6 +1,6 @@
 <div *ngIf="showItemForm">
-    <app-stock-item-details [product]="item" [isEditing]="selectedProduct !== null"
-        (cancelClick)="hideProductForm()" (saveClick)="saveProduct($event)"></app-stock-item-details>
+    <app-stock-item-details [product]="item" [isEditing]="item !== null"
+        (cancelClick)="hideProductForm()" (saveClick)="saveNewItem()"></app-stock-item-details>
 </div>
 
 <div *ngIf="item" class="item-details">
@@ -20,7 +20,7 @@
     </div>
 
     <div class="action-icons">
-        <button class="edit-btn" (click)="editItem()"><i class="fas fa-edit"></i></button>
+        <button class="edit-btn" (click)="editCurrentItem()"><i class="fas fa-edit"></i></button>
         <button class="delete-btn" (click)="deleteItem()"><i class="fas fa-trash"></i></button>
     </div>
 </div>

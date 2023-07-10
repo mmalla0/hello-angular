@@ -16,6 +16,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 
 export class ItemDetailsComponent implements OnInit {
   item: Item;
+  showItemForm = false;
+  showCategoryForm = false; 
 
   constructor(private route: ActivatedRoute, private itemService: ItemService) { }
 
@@ -28,8 +30,18 @@ export class ItemDetailsComponent implements OnInit {
     });
   }
 
-  editItem() {
+
+  editCurrentItem() {
+    this.showItemForm = true;
+  }
+
+  saveNewItem() {
     this.itemService.editItem(this.item);
+
+    this.itemService.getItemUpdated().subscribe((updatedItem: Item) => {
+      // Handle the updated item
+      // Update the view or perform other operations
+    });
 
   }
 
@@ -37,4 +49,9 @@ export class ItemDetailsComponent implements OnInit {
     this.itemService.deleteItem(this.item.item_ID);
     
   }
+
+  hideProductForm() {
+    this.showItemForm = false;
+  }
+
 }
