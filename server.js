@@ -771,7 +771,7 @@ app.get('/getitem/:itemId', (req, res) => {
                 res.status(404).json({ error: 'Item not found' });
             } else {
                 const item = results[0];
-                const categories = results.map((row) => row.category_name); // Assuming you have a 'category_name' column in the 'category' table
+                const categories = results.map((row) => row.category_name);
                 item.categories = categories;
                 res.status(200).json(item);
             }
