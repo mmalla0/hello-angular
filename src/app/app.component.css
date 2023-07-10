@@ -44,3 +44,7 @@
 .menu li button:hover {
     background-color: #ddd;
 }
+
+.menu li a img {
+    width: 100px;
+}
