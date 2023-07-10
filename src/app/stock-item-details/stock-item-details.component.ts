@@ -58,6 +58,7 @@ export class StockItemDetailsComponent implements OnInit {
   }
 
   save(): void {
+    console.log('Save button clicked');
     const editedProduct: Item = {
       ...this.editedProduct,
       categories: this.categories
@@ -66,8 +67,10 @@ export class StockItemDetailsComponent implements OnInit {
     };  
 
     if (this.file) {
+      console.log('Waiting for file upload');
       this.saveFile(editedProduct); 
     } else {
+      console.log('SaveClick emitted');
       this.saveClick.emit(editedProduct);
     }
   }

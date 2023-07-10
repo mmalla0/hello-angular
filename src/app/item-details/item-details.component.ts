@@ -36,6 +36,8 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   saveNewItem(itemToBeEdited: Item) {
+    console.log("Function saveNewItem reached!")
+
     this.itemService.editItem(itemToBeEdited);
 
     this.itemService.getItemUpdated().subscribe((updatedItem: Item) => {
