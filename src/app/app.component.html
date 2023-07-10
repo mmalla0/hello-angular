@@ -15,6 +15,7 @@
     </nav>
   <nav class="menu">
     <ul>
+      <li><a routerLink="warenübersicht" routerLinkActive="active" ariaCurrentWhenActive="page"><img src="../assets/images/logo.png"></a></li>
       <li *ngIf="!isLoggedIn"><button (click)="handleLoginClicked()">Login</button></li>
       <li *ngIf="!isLoggedIn"><button (click)="handleRegisterClicked()">Register</button></li>
       <li *ngIf="isLoggedIn"><button (click)="handleLogoutClicked()">Logout</button></li>
