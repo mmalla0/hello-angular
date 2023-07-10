@@ -23,13 +23,11 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
 import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TesterComponent } from "./testing";
-import { OrderFormComponent } from './order/order-form/order-form.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AuthService } from './services/auth.service';
 import { StockpileService } from './services/stockpile.service';
-import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { OrderComponent } from './order/order.component';
+import { OrderModule } from './order/order.module';
 
 
 @NgModule({
@@ -50,12 +48,9 @@ import { OrderComponent } from './order/order.component';
     WarenuebersichtComponent,
     LandingPageComponent,
     StockItemDetailsComponent,
-    OrderFormComponent,
-    OrderCreateComponent,
-    OrderComponent,
     TesterComponent,
     CategoryDetailComponent,
-    ItemDetailsComponent,
+    ItemDetailsComponent
   ],
   imports: [
     RouterModule,
@@ -67,7 +62,8 @@ import { OrderComponent } from './order/order.component';
     BrowserAnimationsModule,
     CommonModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OrderModule
   ],
   providers: [AuthService, StockpileService],
   bootstrap: [AppComponent]

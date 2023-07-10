@@ -1,28 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-
 @Injectable({
   providedIn: 'root'
 })
 export class EmailService {
+  constructor(private http: HttpClient) { }
 
-  sendEmail(subject: string, body: string, recipient: string) {
+  sendEmail(subject: string, text: string, recipient: string) {
     console.log(`Sending email with subject: ${subject}`);
     console.log(`Recipient: ${recipient}`);
-    console.log(`Body: ${body}`);
-  }
-
-  constructor(private http: HttpClient) {}
-
-  sendEmailWithAttachment(recipient: string, subject: string, body: string, pdfData: unknown): Observable<void> {
+    console.log(`Text: ${text}`);
     const emailData = {
-      recipient,
-      subject,
-      body,
-      attachment: pdfData
+      from: 'spacesaversshop@gmail.com',
+      to:recipient,
+      subject: subject,
+      text: text,
     };
     const url = `/sendEmail`;
     return this.http.post<void>(url, emailData);
   }
+
+  sendEmailWithAttachment(recipient: string, subject: string, text: string, pdfData: unknown): Observable<void> {
+    const emailData = {
+      from: 'spacesaversshop@gmail.com',
+      to:recipient,
+      subject: subject,
+      text: text,
+      attachment: [{
+        filename: 'invoice.pdf',
+        content: pdfData
+      }]
+    };
+    const url = `/sendEmail`;
+    return this.http.post<void>(url, emailData);
+  }
+  
 }

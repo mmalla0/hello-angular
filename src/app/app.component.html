@@ -5,7 +5,7 @@
         <li><a routerLink="order" routerLinkActive="active" ariaCurrentWhenActive="page">Checkout</a></li>
         <li><a routerLink="dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard</a></li>
         <li><a routerLink="warenübersicht" routerLinkActive="active" ariaCurrentWhenActive="page">Warenübersicht</a></li>
-        <li  *ngIf="isLoggedIn && authService.userType == 'customer'" ><a routerLink="stockpile" routerLinkActive="active" ariaCurrentWhenActive="page">Stockpile</a></li>
+        <li  *ngIf="isLoggedIn && authService.userType === 'customer'" ><a routerLink="stockpile" routerLinkActive="active" ariaCurrentWhenActive="page">Stockpile</a></li>
         <li><a routerLink="register" routerLinkActive="active" ariaCurrentWhenActive="page">Register</a></li>
         <li><a routerLink="login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></li>
         <li><a routerLink="testing" routerLinkActive="active" ariaCurrentWhenActive="page">Testing</a></li>

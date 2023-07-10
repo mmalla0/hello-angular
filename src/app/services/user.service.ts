@@ -15,4 +15,8 @@ export class UserService {
     const url = `/users/${userId}/stockpile`;
     return this.http.get<number>(url);
   }
+
+  getEmailAddress(){
+    return String(this.authService.getCurrentUser().email);
+  }
 }
