@@ -1,6 +1,6 @@
 <div *ngIf="showItemForm">
     <app-stock-item-details [product]="item" [isEditing]="item !== null"
-        (cancelClick)="hideProductForm()" (saveClick)="saveNewItem()"></app-stock-item-details>
+        (cancelClick)="hideProductForm()" (saveClick)="saveNewItem($event)"></app-stock-item-details>
 </div>
 
 <div *ngIf="item" class="item-details">
