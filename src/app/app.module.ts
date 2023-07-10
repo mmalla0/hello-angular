@@ -50,7 +50,7 @@ import { OrderModule } from './order/order.module';
     StockItemDetailsComponent,
     TesterComponent,
     CategoryDetailComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
   ],
   imports: [
     RouterModule,
