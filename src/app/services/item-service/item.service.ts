@@ -13,17 +13,16 @@ import { ToastrService } from 'ngx-toastr';
 export class ItemService {
 
   private webSocketSubject: WebSocketSubject<any>;
-
-  private itemsURL = 'http://localhost:8080/landing'; 
+ 
   private itemUpdated: Subject<Item> = new Subject<Item>();
 
   constructor(private http: HttpClient, private toastr: ToastrService) {
     this.webSocketSubject = webSocket('ws://localhost:8080/');
   }
   
-
+  private allItemsURL = 'landing'; 
   getAllItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(this.itemsURL);
+    return this.http.get<Item[]>(this.allItemsURL);
   }
 
   getItemsById(id: number): Observable<Item> {
@@ -71,7 +70,6 @@ export class ItemService {
   }
 
   private getItemURL = 'getitem';
-  
   getItem(itemId: number): Observable<Item> {
     const url = `${this.getItemURL}/${itemId}`;
 

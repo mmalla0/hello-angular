@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../../shared/category';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,  private toastr: ToastrService) { }
 
 
   categoryURL="getAllCategories"
@@ -30,6 +32,7 @@ export class CategoryService {
       (response) => {
         // Handle success response
         console.log('Category added successfully');
+        this.toastr.success('Category added successfully', 'Success');
       },
       (error) => {
         // Handle error
@@ -40,13 +43,13 @@ export class CategoryService {
 
 
   private deleteCategoryURL = 'deleteCategory';
-
   deleteItem(categoryId: number): void {
     const url = `${this.deleteCategoryURL}/${categoryId}`;
 
     this.http.delete(url).subscribe(
       (response) => {
         // Handle success response
+        this.toastr.success('Category has been deleted', 'Success');
         console.log('Category deleted successfully');
       },
       (error) => {

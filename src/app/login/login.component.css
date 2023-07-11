@@ -48,8 +48,8 @@
 
 .login-container .buttons .login-btn {
     background-color: #7EB63D;
-    color: white;
-    margin-bottom: 10px;
+    color: #fff;
+    border: none;
 }
 
 .login-container .buttons .register-btn {
@@ -81,4 +81,24 @@
         opacity: 1;
         transform: translateY(0);
     }
+
+}
+
+
+.user-type-select {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-type-select label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.user-type-select select {
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
 }
