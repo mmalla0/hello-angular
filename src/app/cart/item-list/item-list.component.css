@@ -29,6 +29,7 @@
   
   .cart-container button {
     padding: 8px 12px;
+    margin: 20px;
     border: none;
     border-radius: 4px;
     background-color: #7EB63D;

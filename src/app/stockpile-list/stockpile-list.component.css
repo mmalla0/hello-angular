@@ -8,3 +8,36 @@
 .filters deleteItem {
     background-color: #97DB4F;
   }
+
+  .stockpile-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .stockpile-table th,
+  .stockpile-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .stockpile-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .stockpile-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .stockpile-table tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .deleteItem {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+  

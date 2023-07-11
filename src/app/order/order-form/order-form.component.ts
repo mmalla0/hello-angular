@@ -24,6 +24,9 @@ export class OrderFormComponent {
 
   constructor(private authService: AuthService) {
     this.user = this.authService.getCurrentUser();
+    if (this.user) {
+      this.invoice.methodOfPayment = this.user.methodOfPayment;
+    }
   }
 
   @Output() submitOrder = new EventEmitter<Invoice>();

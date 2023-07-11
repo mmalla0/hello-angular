@@ -19,4 +19,8 @@ export class UserService {
   getEmailAddress(){
     return String(this.authService.getCurrentUser().email);
   }
+
+  /*getAddress(){
+
+  }*/
 }

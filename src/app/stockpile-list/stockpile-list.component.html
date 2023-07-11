@@ -6,15 +6,27 @@
   <button (click)="clearFilters()">Clear Filters</button>
 </div>
 <div class="stockpile-list">
-  <div *ngFor="let entry of stockpileItemEntries">
-    <h2>{{ entry.product.name }}</h2>
-    <ul>
-      <li *ngFor="let bestBeforeDate of entry.bestBeforeDates">
-        <p>Date: {{ bestBeforeDate.date | date }}</p>
-        <p>Count: {{ bestBeforeDate.count }} Produkte</p>
-      </li>
-    </ul>
-    <button (click)="deleteStockpileItem(entry.product)" class="deleteItem">Delete Consumed Item</button>
-  </div>
+  <table class="stockpile-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Count</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let entry of stockpileItemEntries">
+        <tr *ngFor="let bestBeforeDate of entry.bestBeforeDates">
+          <td>{{ entry.product.name }}</td>
+          <td>{{ bestBeforeDate.date | date }}</td>
+          <td>{{ bestBeforeDate.count }} Products</td>
+          <td>
+            <button (click)="deleteStockpileItem(entry.product)" class="deleteItem">Delete Consumed Item</button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
 </div>
 
