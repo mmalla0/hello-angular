@@ -17,7 +17,6 @@ export class WarenuebersichtComponent implements OnInit {
   filteredProducts: Item[] = [];
   paginatedProducts: Item[] = [];
   selectedItems: Item[] = [];
-  hoveredProduct: Item | null = null;
   searchQuery: string;
   priceRange: number;
   selectedCategory: string;
@@ -38,6 +37,10 @@ export class WarenuebersichtComponent implements OnInit {
       this.websocketService.subscribeToItemChanges().subscribe(() => {
         this.setUpItems();
       });
+      this.websocketService.subscribeToCategoryChanges().subscribe(() => {
+        this.setUpCategories();
+        this.setUpItems();
+      });
     });
   }
   
@@ -53,10 +56,13 @@ export class WarenuebersichtComponent implements OnInit {
   setUpFilterValues() : void{
     this.searchQuery = '';
     this.priceRange = 210000;
-    this.pageSize = 8;
+    this.pageSize = 10;
     this.currentPage = 1;
     this.totalPageCount = 0;
+    this.setUpCategories();
+  }
 
+  setUpCategories() : void{
     this.categoryService.getAllCategoryNames().subscribe({
       next: categoryNames => {
         this.categories = categoryNames;
@@ -86,14 +92,6 @@ export class WarenuebersichtComponent implements OnInit {
         console.error(error);
       }
     });
-  }
-  
-  onMouseEnter(product: Item): void {
-    this.hoveredProduct = product;
-  }
-
-  onMouseLeave(): void {
-    this.hoveredProduct = null;
   }
   
   onAddToCart(product: Item): void {

@@ -42,6 +42,9 @@ export class MitarbeiterDashboardComponent implements OnInit{
       this.websocketService.subscribeToItemChanges().subscribe(() => {
         this.getItemsFromDataBase();
       });
+      this.websocketService.subscribeToCategoryChanges().subscribe(() => {
+        this.getItemsFromDataBase();
+      });
     });
   }
 
@@ -87,7 +90,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
-    return`${year}-${month}-${day}`;
+    return`${day}.${month}.${year}`;
   }
   
   getSortIcon(fieldName: string) {
@@ -113,22 +116,16 @@ export class MitarbeiterDashboardComponent implements OnInit{
     }
   }
 
+  editItemClicked(product: Item) {
+    this.selectedProduct = { ...product };
+    this.showItemForm = true;
+  }
+
   deleteItem(product: Item) {
     this.itemService.deleteItem(product.item_ID);
-    this.itemService.sendItemListChanges();
     setTimeout(() => {
       this.getItemsFromDataBase();
     }, 1000);
-  }
-
-  decreaseQuantity(product: Item) {
-    if (product.stock > 0) {
-      product.stock--;
-    }
-  }
-
-  increaseQuantity(product: Item) {
-    product.stock++;
   }
 
   showProductForm() {
@@ -163,11 +160,5 @@ export class MitarbeiterDashboardComponent implements OnInit{
     setTimeout(() => {
       this.getItemsFromDataBase();
     }, 1000);
-    this.itemService.sendItemListChanges();
-  }
-
-  editItem(product: Item) {
-    this.selectedProduct = { ...product };
-    this.showItemForm = true;
   }
 }

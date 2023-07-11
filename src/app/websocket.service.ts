@@ -8,7 +8,7 @@ export class WebsocketService {
   private webSocket: WebSocket;
 
   public connect(): Observable<any> {
-    this.webSocket = new WebSocket('ws://localhost:8080/'); // Update the WebSocket URL with the correct port
+    this.webSocket = new WebSocket('ws://localhost:8080/'); 
     
     return new Observable<any>(observer => {
       this.webSocket.onopen = (event: Event) => {
@@ -41,6 +41,17 @@ export class WebsocketService {
       this.webSocket.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
         if (data.event === 'itemListChange') {
+          observer.next(data);
+        }
+      };
+    });
+  }
+
+  public subscribeToCategoryChanges(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.webSocket.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
+        if (data.event === 'categoryChange') {
           observer.next(data);
         }
       };
