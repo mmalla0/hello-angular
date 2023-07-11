@@ -10,8 +10,6 @@ import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-das
 import { OrderComponent } from './order/order.component';
 import { TesterComponent } from "./testing";
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { OrderFormComponent } from './order/order-form/order-form.component';
-import { OrderCreateComponent } from './order/order-create/order-create.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -22,8 +20,6 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'stockpile', component: StockpileDashboardComponent },
   { path: 'order', component: OrderComponent },
-  { path: 'order/form', component: OrderFormComponent },
-  { path: 'order/create', component: OrderCreateComponent},
   { path: 'testing', component: TesterComponent},
   { path: 'items/:id', component: ItemDetailsComponent },
   // Nutzer zur Hauptseite weiterleiten

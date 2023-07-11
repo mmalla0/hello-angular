@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-//import { FormBuilder } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
 
-  isLoggedIn: boolean = false;
+  isLoggedIn = false;
 
   constructor(private http: HttpClient, public authService: AuthService, private router: Router) {}
 

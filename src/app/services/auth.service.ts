@@ -27,11 +27,8 @@ export class AuthService {
   private users: User[] = [
     {
       id: 1,
-      //name: 'Admin',                       // TODO: name rausnehmen
       email: 'admin@admin.com',
       password: 'adminPassword123!',
-      // zahlungsmethode: Zahlungsmethode.KREDITKARTE
-
       firstName: 'Ad',
       lastName: 'min',
       addressId: 1,
@@ -41,10 +38,8 @@ export class AuthService {
     },
     {
       id: 2,
-      // name: 'Maya Malla',                 // TODO: name rausnehmen
       email: 'maya@gmail.com',
       password: 'mayqapassword!',
-      // zahlungsmethode: Zahlungsmethode.APPLEPAY
       firstName: 'Maya',
       lastName: 'Malla',
       addressId: 2,
@@ -59,7 +54,7 @@ export class AuthService {
 
   userLoggedIn: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
-  userType: string; //*ngIf="this.authService.userType == 'customer' "
+  userType: string; 
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -107,43 +102,7 @@ export class AuthService {
       options
     );
   }
-  /*   register (user: User) {
-    const userEmail = user.email.toLowerCase();
 
-    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
-
-    if (userIndex === -1) {
-            
-      const lastUserId: number = this.users[this.users.length - 1].id;
-      
-      this.users.push(
-        {
-
-          id: lastUserId + 1 ,
-         // name: user.name,
-          email: user.email.toLowerCase(),
-          password: user.password,
-          //zahlungsmethode: user.zahlungsmethode
-
-         // id: 100,
-         // name: user.name,                       // TODO: name rausnehmen
-          //email: user.email.toLowerCase(),
-         // password: user.password,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          addressId: user.addressId,
-          methodOfPayment: user.methodOfPayment,
-          cartId: user.cartId,
-          stockpileId: user.stockpileId
-
-        }
-      )
-      this.updateUsersInLocalStorage();
-      this.usersUpdate.next(this.users);
-    } else {
-      console.warn('Benutzer schon vorhanden!')
-    }    
-  } */
 
   loginCustomer(data): Observable<any> {
     let headers = new HttpHeaders({
