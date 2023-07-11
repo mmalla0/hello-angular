@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../shared/item';
 import { FileUploadService } from '../services/file-upload-service/file-upload.service';
 import { CategoryService } from '../services/category-service/category.service';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-stock-item-details',
@@ -16,7 +18,6 @@ export class StockItemDetailsComponent implements OnInit {
   editedProduct: Item;
   categoriesToAdd: string[] = [];
   file: File;
-
   categories: { category_name: string; selected: boolean }[] = [];
 
   ngOnInit() {
@@ -31,7 +32,7 @@ export class StockItemDetailsComponent implements OnInit {
     });
   }
   
-  constructor(private fileUploadService: FileUploadService, private categoryService: CategoryService) {}
+  constructor(private fileUploadService: FileUploadService, private categoryService: CategoryService, private authService: AuthService) {}
 
   setUpProducts() : void{
     if (this.isEditing) {
@@ -69,6 +70,8 @@ export class StockItemDetailsComponent implements OnInit {
     if(editedProduct.best_before != null){
       editedProduct.best_before = this.formatDate(editedProduct.best_before);
     }
+
+    this.editedProduct.employee_id = this.authService.currentUser.id;
 
     if (this.file) {
       console.log('Waiting for file upload');

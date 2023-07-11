@@ -63,7 +63,7 @@
   margin: 0 auto; 
 }
   
-.price-slider::-webkit-slider-thumb{
+.price-slider::-webkit-slider-thumb {
   appearance: none;
   width: 18px;
   height: 18px;
@@ -73,6 +73,18 @@
   box-shadow: -407px 0 0 400px #7EB63D;
   cursor: pointer;
 }
+
+.price-slider::-moz-range-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid #7EB63D;
+  box-shadow: -407px 0 0 400px #7EB63D;
+  cursor: pointer;
+}
+
   
 .price-range-value {
   position: relative;
