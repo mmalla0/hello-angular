@@ -388,8 +388,6 @@ app.post('/additem', (req, res) => {
             newItem.item_imgpath
         ];
 
-        handleItemChange();
-
         connection.query(query, itemValues, (error, itemResult) => {
             if (error) {
                 console.error('Error adding item:', error);
@@ -430,9 +428,11 @@ app.post('/additem', (req, res) => {
                             });
                         }
                     });
+                    handleItemChange();
                 } else {
                     console.log('No category names provided');
                     res.status(200).json({ message: 'Item added successfully' });
+                    handleItemChange();
                 }
             }
         });
@@ -850,6 +850,7 @@ app.put('/editItem', (req, res) => {
             } else {
                 console.log('Item edited successfully');
                 res.status(200).json({ message: 'Item edited successfully' });
+                handleItemChange();
             }
         });
     });

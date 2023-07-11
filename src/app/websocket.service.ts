@@ -8,7 +8,7 @@ export class WebsocketService {
   private webSocket: WebSocket;
 
   public connect(): Observable<any> {
-    this.webSocket = new WebSocket('ws://localhost:8080/'); // Update the WebSocket URL with the correct port
+    this.webSocket = new WebSocket('ws://localhost:8080/'); 
     
     return new Observable<any>(observer => {
       this.webSocket.onopen = (event: Event) => {
