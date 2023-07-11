@@ -71,7 +71,7 @@ export class StockItemDetailsComponent implements OnInit {
       editedProduct.best_before = this.formatDate(editedProduct.best_before);
     }
 
-    this.editedProduct.employee_id = this.authService.currentUser.id;
+    //this.editedProduct.employee_id = this.authService.currentUser.id;
 
     if (this.file) {
       console.log('Waiting for file upload');
