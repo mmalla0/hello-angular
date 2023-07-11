@@ -28,14 +28,13 @@
 <div class="product-list-container">
   <div class="product-container">
     <div class="product-list">
-      <div class="product-item" *ngFor="let product of paginatedProducts"
-      (mouseenter)="onMouseEnter(product)"
-      (mouseleave)="onMouseLeave()">
+      <div class="product-item" *ngFor="let product of paginatedProducts">
         <div class="product-image-container">
-          <img [src]="'assets/images/' + product.item_imgpath" alt="Product Image" class="product-image" />
+          <a [routerLink]="'../items/' + product.item_ID">
+            <img [src]="'assets/images/' + product.item_imgpath" alt="Product Image" class="product-image" />
+          </a>
         </div>
         <h3 class="product-name">{{ product.item_name }}</h3>
-        <p class="product-description" *ngIf="product === hoveredProduct">{{ product.item_description }}</p>
         <span class="stock">In store: {{ product.stock }}</span>
         <span class="price">$<strong>{{ product.item_price }}</strong></span>
         <div class="product-quantity">

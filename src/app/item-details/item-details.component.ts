@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -16,8 +16,10 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 
 export class ItemDetailsComponent implements OnInit {
   item: Item;
+  showItemForm = false;
+  showCategoryForm = false; 
 
-  constructor(private route: ActivatedRoute, private itemService: ItemService) { }
+  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -27,4 +29,40 @@ export class ItemDetailsComponent implements OnInit {
       });
     });
   }
+
+
+  editCurrentItem() {
+    this.showItemForm = true;
+  }
+
+  saveNewItem(itemToBeEdited: Item) {
+    console.log("Function saveNewItem reached!");
+    console.log(itemToBeEdited.item_description);
+
+    this.itemService.updateItem(itemToBeEdited);
+
+    this.itemService.getItemUpdated().subscribe(
+      (updatedItem: Item) => {
+        this.item = updatedItem;
+        this.hideProductForm();
+        this.router.navigate(['items', updatedItem.item_ID]);
+      },
+      (error) => {
+        console.error("Error updating item:", error);
+      }
+    );
+  }
+
+
+
+
+  deleteItem() {
+    this.itemService.deleteItem(this.item.item_ID);
+    
+  }
+
+  hideProductForm() {
+    this.showItemForm = false;
+  }
+
 }

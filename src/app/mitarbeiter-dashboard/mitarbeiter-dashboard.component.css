@@ -15,38 +15,6 @@
   margin-right: 8px;
 }
 
-.table_section {
-  height: 650px;
-  overflow: auto;
-  table-layout: fixed;
-}
-
-thead th {
-  position: sticky;
-  top: 0;
-  background-color: #7EB63D;
-  color: white;
-  font-size: 15px;
-}
-
-th,
-td {
-  border-bottom: 1px solid #dddddd;
-  padding: 10px 20px;
-  text-align: center;
-  word-break: break-all;
-}
-
-td:first-child {
-  font-weight: bold;
-  font-size: large;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
 .image-container {
   display: flex;
   flex-wrap: wrap;
@@ -72,26 +40,6 @@ td:first-child {
   -webkit-appearance: none;
   margin: 0;
   display: none;
-}
-
-.quantity .decrement,
-.quantity .increment {
-  padding: 5px 10px;
-  border: none;
-  background-color: #839788;
-  color: #ffffff;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.quantity .decrement:hover,
-.quantity .increment:hover {
-  background-color: #627274;
-}
-
-.decrement:hover,
-.increment:hover {
-  background-color: #f2f2f2;
 }
 
 input[type="number"] {

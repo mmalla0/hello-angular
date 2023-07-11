@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
 
   handleLogoutClicked() {
     this.authService.logout()
+    this.router.navigate(['/landing'])
   }
 }
 

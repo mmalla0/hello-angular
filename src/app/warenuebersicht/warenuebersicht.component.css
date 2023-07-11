@@ -78,7 +78,7 @@
   min-height: 400px;
 }
 
-.product-image-container {
+.product-image-container a {
   height: 200px;
   display: flex;
   align-items: center;

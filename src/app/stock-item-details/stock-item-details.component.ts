@@ -58,16 +58,23 @@ export class StockItemDetailsComponent implements OnInit {
   }
 
   save(): void {
+    console.log('Save button clicked');
     const editedProduct: Item = {
       ...this.editedProduct,
       categories: this.categories
         .filter(category => category.selected)
         .map(category => category.category_name)
-    };  
+    };
+    
+    if(editedProduct.best_before != null){
+      editedProduct.best_before = this.formatDate(editedProduct.best_before);
+    }
 
     if (this.file) {
+      console.log('Waiting for file upload');
       this.saveFile(editedProduct); 
     } else {
+      console.log('SaveClick emitted');
       this.saveClick.emit(editedProduct);
     }
   }
@@ -84,6 +91,18 @@ export class StockItemDetailsComponent implements OnInit {
     .catch(error => {
       console.error('Error uploading file:', error);
     });
+  }
+
+
+  formatDate(dateString: string): string {
+    if (!dateString || dateString.trim() === '') {
+      return null; 
+    }
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return`${year}-${month}-${day}`;
   }
 
   convertToDate(dateString: string): Date { 

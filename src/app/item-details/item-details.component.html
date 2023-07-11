@@ -1,7 +1,14 @@
-
+<div *ngIf="showItemForm">
+    <app-stock-item-details [product]="item" 
+                            [isEditing]="item !== null"
+                            (cancelClick)="hideProductForm()" 
+                            (saveClick)="saveNewItem($event)"></app-stock-item-details>
+</div>
 
 <div *ngIf="item" class="item-details">
     <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" class="item-image">
+
+
     <div class="item-details-content">
         <h3 class="item-name">{{ item.item_name }}</h3>
         <p class="item-price">Price: {{ item.item_price | currency }}</p>
@@ -12,5 +19,10 @@
         <ul class="categories-list">
             <li *ngFor="let category of item.categories" class="category">{{ category }}</li>
         </ul>
+    </div>
+
+    <div class="action-icons">
+        <button class="edit-btn" (click)="editCurrentItem()"><i class="fas fa-edit"></i></button>
+        <button class="delete-btn" (click)="deleteItem()"><i class="fas fa-trash"></i></button>
     </div>
 </div>

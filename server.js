@@ -80,7 +80,19 @@ function handleItemChange() {
         client.send(message);
       }
     });
-  }
+}
+
+function handleCategoryChange(){
+    console.log('Handle category chnange');
+    // Broadcast a notification to all connected clients about the change
+    const message = JSON.stringify({ event: 'categoryChange' });
+  
+    clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+}
   
   
 // support parsing of application/json type post data
@@ -427,8 +439,6 @@ app.post('/additem', (req, res) => {
             newItem.item_imgpath
         ];
 
-        handleItemChange();
-
         connection.query(query, itemValues, (error, itemResult) => {
             if (error) {
                 console.error('Error adding item:', error);
@@ -469,9 +479,11 @@ app.post('/additem', (req, res) => {
                             });
                         }
                     });
+                    handleItemChange();
                 } else {
                     console.log('No category names provided');
                     res.status(200).json({ message: 'Item added successfully' });
+                    handleItemChange();
                 }
             }
         });
@@ -617,6 +629,7 @@ app.post('/addCategory', (req, res) => {
                 res.status(500).json({ error: 'Failed to add category' });
             } else {
                 console.log('Category added successfully');
+                handleCategoryChange();
                 res.sendStatus(200);
             }
         });
@@ -655,6 +668,7 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
             res.status(404).json({ error: 'Category not found' });
         } else {
             console.log('Category deleted successfully');
+            handleCategoryChange();
             res.sendStatus(200);
         }
     });
@@ -892,10 +906,81 @@ app.get('/getitem/:itemId', (req, res) => {
                 res.status(404).json({ error: 'Item not found' });
             } else {
                 const item = results[0];
-                const categories = results.map((row) => row.category_name); // Assuming you have a 'category_name' column in the 'category' table
+                const categories = results.map((row) => row.category_name);
                 item.categories = categories;
                 res.status(200).json(item);
             }
         });
     });
 });
+
+
+// Endpoint for Editing Item
+app.put('/editItem', (req, res) => {
+    console.log(req.body);
+    const item = req.body;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I",
+        multipleStatements: true
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        const query = `
+      UPDATE item
+      SET item_name = ?,
+          item_description = ?,
+          item_price = ?,
+          stock = ?,
+          employee_id = ?,
+          best_before = ?,
+          item_imgpath = ?
+      WHERE item_ID = ?;
+
+      DELETE FROM category_items WHERE ci_item_id = ?;
+
+      INSERT INTO category_items (ci_category_id, ci_item_id)
+      SELECT category_id, ? FROM category WHERE category_name IN (${item.categories.map(() => '?').join(', ')});
+    `;
+
+        const values = [
+            item.item_name,
+            item.item_description,
+            item.item_price,
+            item.stock,
+            item.employee_id,
+            item.best_before,
+            item.item_imgpath,
+            item.item_ID,
+            item.item_ID,
+            item.item_ID,
+            ...item.categories
+        ];
+
+        connection.query(query, values, (err, result) => {
+            if (err) {
+                console.error('Error editing item:', err);
+                res.status(500).json({ error: 'Failed to edit item' });
+            } else if (result.affectedRows === 0) {
+                res.status(404).json({ error: 'Item not found' });
+            } else {
+                console.log('Item edited successfully');
+                res.status(200).json({ message: 'Item edited successfully' });
+                handleItemChange();
+            }
+        });
+    });
+});
+
