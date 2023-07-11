@@ -787,7 +787,10 @@ app.get('/getitem/:itemId', (req, res) => {
 });
 
 
+// Endpoint for Editing Item
 app.put('/editItem', (req, res) => {
+
+    console.log(req.body);
     const item = req.body;
 
     const connection = mysql.createConnection({
@@ -830,6 +833,8 @@ app.put('/editItem', (req, res) => {
             item.item_ID
         ];
 
+        console.log("Server side: " + item.categories);
+
         connection.query(query, values, (err, result) => {
             if (err) {
                 console.error('Error editing item:', err);
@@ -838,7 +843,7 @@ app.put('/editItem', (req, res) => {
                 res.status(404).json({ error: 'Item not found' });
             } else {
                 console.log('Item edited successfully');
-                res.sendStatus(200);
+                res.status(200).json({ message: 'Item edited successfully' });
             }
         });
     });
