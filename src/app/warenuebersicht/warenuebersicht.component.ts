@@ -58,7 +58,7 @@ export class WarenuebersichtComponent implements OnInit {
   setUpFilterValues() : void{
     this.searchQuery = '';
     this.priceRange = 210000;
-    this.pageSize = 10;
+    this.pageSize = 8;
     this.currentPage = 1;
     this.totalPageCount = 0;
     this.setUpCategories();
