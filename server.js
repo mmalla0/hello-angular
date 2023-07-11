@@ -789,7 +789,6 @@ app.get('/getitem/:itemId', (req, res) => {
 
 // Endpoint for Editing Item
 app.put('/editItem', (req, res) => {
-
     console.log(req.body);
     const item = req.body;
 
@@ -798,7 +797,8 @@ app.put('/editItem', (req, res) => {
         host: "195.37.176.178",
         port: "20133",
         user: "23_IT_Grp_5",
-        password: "JJQGNC8h79VkiSNmK}8I"
+        password: "JJQGNC8h79VkiSNmK}8I",
+        multipleStatements: true
     });
 
     connection.connect((err) => {
@@ -819,7 +819,12 @@ app.put('/editItem', (req, res) => {
           employee_id = ?,
           best_before = ?,
           item_imgpath = ?
-      WHERE item_ID = ?
+      WHERE item_ID = ?;
+
+      DELETE FROM category_items WHERE ci_item_id = ?;
+
+      INSERT INTO category_items (ci_category_id, ci_item_id)
+      SELECT category_id, ? FROM category WHERE category_name IN (${item.categories.map(() => '?').join(', ')});
     `;
 
         const values = [
@@ -830,10 +835,11 @@ app.put('/editItem', (req, res) => {
             item.employee_id,
             item.best_before,
             item.item_imgpath,
-            item.item_ID
+            item.item_ID,
+            item.item_ID,
+            item.item_ID,
+            ...item.categories
         ];
-
-        console.log("Server side: " + item.categories);
 
         connection.query(query, values, (err, result) => {
             if (err) {
@@ -848,3 +854,4 @@ app.put('/editItem', (req, res) => {
         });
     });
 });
+
