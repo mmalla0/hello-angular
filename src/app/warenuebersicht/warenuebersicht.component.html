@@ -1,5 +1,5 @@
 <div class="filter-background">
-  <h2 class="headline">Spacesavers</h2>
+  <h2 class="headline">SpaceSavers</h2>
   <div class="filter-container">
     <div class="price-slider-container">
       <input type="range" min="0" max="210000" [(ngModel)]="priceRange" class="price-slider" (change)="onPriceRangeChange()"> 
@@ -38,7 +38,7 @@
         <span class="stock">In store: {{ product.stock }}</span>
         <span class="price">$<strong>{{ product.item_price }}</strong></span>
         <div class="product-quantity">
-          <button class="add-to-cart-button" (click)="onAddToCart(product)">Add to basket</button>
+          <button class="add-to-cart-button green-button" (click)="onAddToCart(product)">Add to cart</button>
         </div>
       </div>
     </div>

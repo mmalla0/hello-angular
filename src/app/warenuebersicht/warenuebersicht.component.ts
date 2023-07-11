@@ -5,6 +5,7 @@ import { CartServiceService } from '../services/cart-service/cart-service.servic
 import { CategoryService } from '../services/category-service/category.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { WebsocketService } from '../../app/websocket.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -31,6 +32,16 @@ export class WarenuebersichtComponent implements OnInit {
     this.setUpItems();
     this.listenToWebSocket();
   }
+
+  constructor(
+    public cartService: CartServiceService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private itemService: ItemService,
+    private categoryService: CategoryService,
+    private websocketService: WebsocketService, 
+    private toastr: ToastrService
+  ) {}
   
   private listenToWebSocket(): void {
     this.websocketService.connect().subscribe(() => {
@@ -43,15 +54,6 @@ export class WarenuebersichtComponent implements OnInit {
       });
     });
   }
-  
-  constructor(
-    public cartService: CartServiceService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private itemService: ItemService,
-    private categoryService: CategoryService,
-    private websocketService: WebsocketService
-  ) {}
 
   setUpFilterValues() : void{
     this.searchQuery = '';
@@ -97,6 +99,7 @@ export class WarenuebersichtComponent implements OnInit {
   onAddToCart(product: Item): void {
     this.selectedItems.push(product);
     this.cartService.addItem(product);
+    this.toastr.success(product.item_name + ' has been added to cart.');
   }
   
   onPriceRangeChange(): void {

@@ -42,9 +42,6 @@ export class MitarbeiterDashboardComponent implements OnInit{
       this.websocketService.subscribeToItemChanges().subscribe(() => {
         this.getItemsFromDataBase();
       });
-      this.websocketService.subscribeToCategoryChanges().subscribe(() => {
-        this.getItemsFromDataBase();
-      });
     });
   }
 
