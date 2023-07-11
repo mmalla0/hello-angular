@@ -29,34 +29,6 @@
   border-radius: 15px;
 }
 
-.quantity {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.quantity input[type="number"]::-webkit-inner-spin-button,
-.quantity input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  display: none;
-}
-
-.quantity input[type="number"]::-moz-inner-spin-button,
-.quantity input[type="number"]::-moz-outer-spin-button {
-  -moz-appearance: none;
-  margin: 0;
-  display: none;
-}
-
-input[type="number"] {
-  width: 80px;
-  padding: 5px;
-  border: none;
-  text-align: center;
-  min-width: 40px;
-}
-
 .category {
   display: inline-block;
   margin-right: 5px;
