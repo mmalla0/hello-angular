@@ -37,6 +37,10 @@ export class WarenuebersichtComponent implements OnInit {
       this.websocketService.subscribeToItemChanges().subscribe(() => {
         this.setUpItems();
       });
+      this.websocketService.subscribeToCategoryChanges().subscribe(() => {
+        this.setUpCategories();
+        this.setUpItems();
+      });
     });
   }
   
@@ -55,7 +59,10 @@ export class WarenuebersichtComponent implements OnInit {
     this.pageSize = 10;
     this.currentPage = 1;
     this.totalPageCount = 0;
+    this.setUpCategories();
+  }
 
+  setUpCategories() : void{
     this.categoryService.getAllCategoryNames().subscribe({
       next: categoryNames => {
         this.categories = categoryNames;

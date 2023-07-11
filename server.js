@@ -41,7 +41,19 @@ function handleItemChange() {
         client.send(message);
       }
     });
-  }
+}
+
+function handleCategoryChange(){
+    console.log('Handle category chnange');
+    // Broadcast a notification to all connected clients about the change
+    const message = JSON.stringify({ event: 'categoryChange' });
+  
+    clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+}
   
   
 // support parsing of application/json type post data
@@ -578,6 +590,7 @@ app.post('/addCategory', (req, res) => {
                 res.status(500).json({ error: 'Failed to add category' });
             } else {
                 console.log('Category added successfully');
+                handleCategoryChange();
                 res.sendStatus(200);
             }
         });
@@ -616,6 +629,7 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
             res.status(404).json({ error: 'Category not found' });
         } else {
             console.log('Category deleted successfully');
+            handleCategoryChange();
             res.sendStatus(200);
         }
     });

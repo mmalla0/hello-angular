@@ -46,5 +46,16 @@ export class WebsocketService {
       };
     });
   }
+
+  public subscribeToCategoryChanges(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.webSocket.onmessage = (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
+        if (data.event === 'categoryChange') {
+          observer.next(data);
+        }
+      };
+    });
+  }
 }
 
