@@ -98,8 +98,10 @@ export class ItemService {
   }
 
 
-  private editItemURL = "editItem";
+  private editItemURL = '/editItem';
   editItem(item: Item): Observable<void> {
+    console.log("Edit item function reached");
+    console.log(item.item_name);
     return this.http.put<void>(this.editItemURL, item);
   }
 

@@ -36,18 +36,25 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   saveNewItem(itemToBeEdited: Item) {
-    console.log("Function saveNewItem reached!")
+    console.log("Function saveNewItem reached!");
+    console.log(itemToBeEdited.item_description);
 
-    this.itemService.editItem(itemToBeEdited);
+    this.itemService.updateItem(itemToBeEdited);
 
-    this.itemService.getItemUpdated().subscribe((updatedItem: Item) => {
-      // Handle the updated item
-      // Update the view or perform other operations
-      const routeUrl = `items/${updatedItem.item_ID}`;
-      this.router.navigateByUrl(routeUrl);
-    });
-
+    this.itemService.getItemUpdated().subscribe(
+      (updatedItem: Item) => {
+        this.item = updatedItem;
+        this.hideProductForm();
+        this.router.navigate(['items', updatedItem.item_ID]);
+      },
+      (error) => {
+        console.error("Error updating item:", error);
+      }
+    );
   }
+
+
+
 
   deleteItem() {
     this.itemService.deleteItem(this.item.item_ID);
