@@ -27,7 +27,8 @@ import { CategoryDetailComponent } from './category-detail/category-detail.compo
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AuthService } from './services/auth.service';
 import { StockpileService } from './services/stockpile.service';
-import { OrderModule } from './order/order.module';
+import { OrderCreateComponent } from './order/order-create/order-create.component';
+import { OrderFormComponent } from './order/order-form/order-form.component';
 
 
 @NgModule({
@@ -50,7 +51,9 @@ import { OrderModule } from './order/order.module';
     StockItemDetailsComponent,
     TesterComponent,
     CategoryDetailComponent,
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    OrderCreateComponent,
+    OrderFormComponent
   ],
   imports: [
     RouterModule,
@@ -63,7 +66,6 @@ import { OrderModule } from './order/order.module';
     CommonModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    OrderModule
   ],
   providers: [AuthService, StockpileService],
   bootstrap: [AppComponent]
