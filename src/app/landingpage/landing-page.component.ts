@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 //import { first } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import {Item} from '../shared/item';
+import * as d3 from 'd3';
 
 
 /*interface Item {
@@ -88,6 +89,7 @@ export class LandingPageComponent implements OnInit {
     //})
     this.selectedCategory = "No filter";
     //this.selectedCategoryItems = this.getRandomItems(3);
+    this.renderVisualNetwork();
     
   }
 
@@ -169,6 +171,64 @@ export class LandingPageComponent implements OnInit {
     };
     this.router.navigate(['/warenübersicht'], navigationExtras);
   }
+
+
+
+  renderVisualNetwork(): void {
+    const networkContainer = d3.select('body')
+      .append('svg')
+      .attr('width', 800)
+      .attr('height', 200);
+
+    // Example D3.js network code
+    const nodes = [
+      { id: 'node1', label: 'Node 1' },
+      { id: 'node2', label: 'Node 2' },
+      { id: 'node3', label: 'Node 3' },
+    ];
+
+    const edges = [
+      { source: 'node1', target: 'node2' },
+      { source: 'node2', target: 'node3' },
+      { source: 'node3', target: 'node1' },
+    ];
+
+    const nodeElements = networkContainer
+      .selectAll('.node')
+      .data(nodes)
+      .enter()
+      .append('circle')
+      .attr('class', 'node')
+      .attr('r', 10)
+      .attr('fill', 'blue')
+      .attr('cx', (d, i) => (i + 1) * 100)
+      .attr('cy', 100);
+
+    const edgeElements = networkContainer
+      .selectAll('.edge')
+      .data(edges)
+      .enter()
+      .append('line')
+      .attr('class', 'edge')
+      .attr('stroke', 'gray')
+      .attr('x1', (d) => {
+        const sourceNode = nodes.find((node) => node.id === d.source);
+        return networkContainer.select(`.node#${sourceNode.id}`).attr('cx');
+      })
+      .attr('y1', (d) => {
+        const sourceNode = nodes.find((node) => node.id === d.source);
+        return networkContainer.select(`.node#${sourceNode.id}`).attr('cy');
+      })
+      .attr('x2', (d) => {
+        const targetNode = nodes.find((node) => node.id === d.target);
+        return networkContainer.select(`.node#${targetNode.id}`).attr('cx');
+      })
+      .attr('y2', (d) => {
+        const targetNode = nodes.find((node) => node.id === d.target);
+        return networkContainer.select(`.node#${targetNode.id}`).attr('cy');
+      });
+  }
+
 }
 
 
