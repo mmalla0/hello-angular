@@ -8,6 +8,7 @@ bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
 const WebSocket = require('ws'); 
+const nodemailer = require('nodemailer');
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -30,6 +31,44 @@ wss.on('connection', (ws) => {
   });
 });
 
+// configure e-mail transporter
+const transporter = nodemailer.createTransport({
+    // configuration options for e-mail transporter (SMTP configurations for example)
+  });
+  
+  // Route for sending the e-mail
+  app.post('/send-email', (req, res) => {
+    const { from, to, subject, text } = req.body;
+  
+    // create e-mail
+    const mailOptions = {
+      from: from,
+      to: to,
+      subject: subject,
+      text: text,
+    };
+        // check if attachment exists
+    if (attachment) {
+        mailOptions.attachments = [
+        {
+            filename: attachment.filename,
+            content: attachment.content
+        }
+        ];
+    }
+  
+    // send e-mail
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error while trying to send the e-mail:', error);
+        res.status(500).send('Error while trying to send the e-mail');
+      } else {
+        console.log('Email has been sent!:', info.response);
+        res.status(200).send('Email has been sent!');
+      }
+    });
+  });
+  
 
 function handleItemChange() {
     console.log('Handle item change');

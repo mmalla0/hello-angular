@@ -5,12 +5,14 @@ import { EmailService } from 'src/app/services/email.service';
 import { ItemService } from 'src/app/services/item-service/item.service';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { User } from 'src/app/shared/user';
-
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-order-create',
   templateUrl: './order-create.component.html',
   styleUrls: ['./order-create.component.css'],
 })
+
+
 export class OrderCreateComponent {
   @Output() submitOrder = new EventEmitter<Invoice>();
   
@@ -41,15 +43,17 @@ export class OrderCreateComponent {
     private pdfService: PdfService,
     private emailService: EmailService,
     private itemService: ItemService,
-    private stockpileService: StockpileService    
+    private stockpileService: StockpileService,    
+    private userService: UserService
   ) {}
 
   handleFormSubmit(invoice: Invoice) {
     // Schritt 1: Erstellung der Rechnung als PDF
     this.pdfService.createInvoicePDF(invoice).subscribe((pdfData) => {
       // Schritt 2: Versenden der E-Mail mit der Rechnung als Anhang
+      const emailAddress: string = this.userService.getEmailAddress() ;
       this.emailService
-        .sendEmailWithAttachment('invoice@example.com', 'Rechnung', 'Siehe Anhang', pdfData)
+        .sendEmailWithAttachment(emailAddress, 'Rechnung', 'Siehe Anhang', pdfData)
         .subscribe(() => {
           // Schritt 3: Aktualisierung des Warenbestands in der Datenbank
           this.updateStock();
