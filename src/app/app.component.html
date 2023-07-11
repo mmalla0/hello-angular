@@ -6,7 +6,7 @@
       <li><a routerLink="warenübersicht" routerLinkActive="active" ariaCurrentWhenActive="page"><img src="./assets/images/logo.png"></a></li>
       <li *ngIf="!isLoggedIn"><button (click)="handleLoginClicked()">Sign in</button></li>
       <li *ngIf="!isLoggedIn"><button (click)="handleRegisterClicked()">Sign up</button></li>
-      <li><a routerLink="warenübersicht" routerLinkActive="active" ariaCurrentWhenActive="page">Warenübersicht</a></li>
+      <li><a routerLink="warenübersicht" routerLinkActive="active" ariaCurrentWhenActive="page">Shop</a></li>
       <li *ngIf="isLoggedIn && authService.userType == 'employee'"><a routerLink="dashboard" routerLinkActive="active" ariaCurrentWhenActive="page">Dashboard</a></li>
       <li *ngIf="isLoggedIn && authService.userType == 'customer'" ><a routerLink="stockpile" routerLinkActive="active" ariaCurrentWhenActive="page">Stockpile</a></li>
       <li *ngIf="isLoggedIn"><button (click)="handleLogoutClicked()">Logout</button></li>
