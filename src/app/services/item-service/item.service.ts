@@ -17,18 +17,6 @@ export class ItemService {
 
   constructor(private http: HttpClient, private toastr: ToastrService) {
     this.webSocketSubject = webSocket('ws://localhost:8080/');
-    this.webSocketSubject.subscribe(
-    (message) => {
-      console.log('Received WebSocket message:', message);
-      // Handle the received message if needed
-    },
-    (error) => {
-      console.error('WebSocket connection error:', error);
-    },
-    () => {
-      console.log('WebSocket connection closed');
-    }
-  );
   }
   
 
@@ -46,27 +34,30 @@ export class ItemService {
     this.http.post(this.additemURL, item).subscribe(
       (response) => {
         // Handle success response
+        this.toastr.success('Item successfully added.', 'Success');
         console.log('Item added successfully');
       },
       (error) => {
         // Handle error
+        this.toastr.error('Failed to add item', 'Error');
         console.error('Error adding item:', error);
       }
     );
   }
 
   private deleteItemURL = 'deleteitem';
-
   deleteItem(itemId: number): void {
     const url = `${this.deleteItemURL}/${itemId}`;
 
     this.http.delete(url).subscribe(
       (response) => {
         // Handle success response
+        this.toastr.success('Item has been deleted', 'Success');
         console.log('Item deleted successfully');
       },
       (error) => {
         // Handle error
+        this.toastr.error('Failed to delete item', 'Error');
         console.error('Error deleting item:', error);
       }
     );
@@ -90,14 +81,6 @@ export class ItemService {
     );
   }
   
-  sendItemListChanges(): void {
-    console.log('Entered send item list changes'); // Add this log statement
-    const event = 'itemListChanges';
-    this.webSocketSubject.next({ event });
-    console.log('Sent message: itemListChanges'); // Add this log statement
-  }
-
-
   private editItemURL = '/editItem';
   editItem(item: Item): Observable<void> {
     console.log("Edit item function reached");

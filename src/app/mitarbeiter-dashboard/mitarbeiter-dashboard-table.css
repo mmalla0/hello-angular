@@ -7,6 +7,38 @@ table{
   width: 100%;
   border-collapse: collapse;
 }
+
+.table_section {
+  height: 650px;
+  overflow: auto;
+  table-layout: fixed;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #7EB63D;
+  color: white;
+  font-size: 15px;
+}
+
+th,
+td {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  text-align: center;
+  word-break: break-all;
+}
+
+td:first-child {
+  font-weight: bold;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
+  padding-bottom: 0;
+}
   
 .table_header {
   display: flex;
