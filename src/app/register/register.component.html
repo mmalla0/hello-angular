@@ -1,84 +1,92 @@
+<h5 class="login-header">Welcome to Spacesavers' Shop</h5>
 <div class="login-container">
     <h4>Sign up</h4>
 
     <form [formGroup]="form">
-
-        <div class="name-input">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" formControlName="username"
-                (input)="handleUserNameValueChange($event)">
+        <div class="form-group-row">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" formControlName="username"
+                    (input)="handleUserNameValueChange($event)">
+            </div>
+            <div class="form-group">
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" formControlName="firstname"
+                    (input)="handleFirstNameValueChange($event)">
+            </div>
         </div>
-        <div class="name-input">
-            <label for="firstname">Firstname</label>
-            <input type="text" id="firstname" name="firstname" formControlName="firstname"
-                (input)="handleFirstNameValueChange($event)">
-        </div>
-        <div class="name-input">
-            <label for="lastname">Lastname</label>
-            <input type="text" id="lastname" name="lastname" formControlName="lastname"
-                (input)="handleLastNameValueChange($event)">
-        </div>
-        <div class="email-input">
-            <label for="email">E-Mail-Adress</label>
-            <input type="email" id="email" name="email" formControlName="email"
-                (input)="handleEmailValueChange($event)">
-        </div>
-        <div class="password-input">
-            <label for="password">Password</label>
-            <input type="password" id="passowrd" formControlName="password" (input)="handlePasswordValueChange($event)">
-        </div>
-
-        <div class="zahlungsmethode-optionlist">
-            <label for="methodofpayment">MethodofPayment</label>
-            <select id="methodofpayment" formControlName="methodofpayment"
-                (input)="handleZahlungsmethodeValueChange($event)">
-                <option value="kreditkarte">Kreditkarte</option>
-                <option value="debitkarte">Debitkarte</option>
-                <option value="paypal">Paypal</option>
-                <option value="applepay">Apple Pay</option>
-            </select>
+        <div class="form-group-row">
+            <div class="form-group">
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" formControlName="lastname"
+                    (input)="handleLastNameValueChange($event)">
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail Address</label>
+                <input type="email" id="email" name="email" formControlName="email"
+                    (input)="handleEmailValueChange($event)">
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="streetName" class="form-label">Street Name</label>
-            <input type="text" class="form-control" id="streetName"  formControlName="streetName" (input)="handleValueChange('streetName',$event)">
+        <div class="form-group-row">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" formControlName="password"
+                    (input)="handlePasswordValueChange($event)">
+            </div>
+            <div class="form-group">
+                <label for="methodofpayment">Method of Payment</label>
+                <select id="methodofpayment" formControlName="methodofpayment"
+                    (input)="handleZahlungsmethodeValueChange($event)">
+                    <option value="kreditkarte">Credit Card</option>
+                    <option value="debitkarte">Debit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="applepay">Apple Pay</option>
+                </select>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="streetNumber" class="form-label">Street Number</label>
-            <input type="text" class="form-control" id="streetNumber" formControlName="streetNumber" (input)="handleValueChange('streetNumber', $event)" >
+        <div class="form-group-row">
+            <div class="form-group">
+                <label for="streetName">Street Name</label>
+                <input type="text" id="streetName" formControlName="streetName"
+                    (input)="handleValueChange('streetName', $event)">
+            </div>
+            <div class="form-group">
+                <label for="streetNumber">Street Number</label>
+                <input type="text" id="streetNumber" formControlName="streetNumber"
+                    (input)="handleValueChange('streetNumber', $event)">
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city"  formControlName="city" (input)="handleValueChange('city', $event)">
+        <div class="form-group-row">
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" formControlName="city" (input)="handleValueChange('city', $event)">
+            </div>
+            <div class="form-group">
+                <label for="zipCode">ZIP Code</label>
+                <input type="text" id="zipCode" formControlName="zipCode"
+                    (input)="handleValueChange('zipCode', $event)">
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="zipCode" class="form-label">ZIP Code</label>
-            <input type="text" class="form-control" id="zipCode"  formControlName="zipCode" (input)="handleValueChange('zipCode', $event)">
+        <div class="form-group-row">
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" formControlName="country"
+                    (input)="handleValueChange('country', $event)">
+            </div>
+            <div class="form-group">
+                <label for="planet">Planet</label>
+                <input type="text" id="planet" formControlName="planet"
+                    (input)="handleValueChange('planet', $event)">
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" class="form-control" id="country"  formControlName="country" (input)="handleValueChange('country',$event)">
-        </div>
-
-        <div class="mb-3">
-            <label for="planet" class="form-label">Planet</label>
-            <input type="text" class="form-control" id="planet"  formControlName="planet" (input)="handleValueChange('planet',$event)">
-        </div>
-
     </form>
+
     <div class="buttons">
-
-
         <button class="register-btn" (click)="handleRegister()">Sign up</button>
-        <p>Have an account?</p>
-        <button class="login-btn" (click)="handleLoginClicked()">Sign in</button>
-
+    
+        <p>Have an account? <a href="/login?type=customer">Sign in</a></p>
     </div>
-
-
-    <p class="error" *ngIf="formHatFehler">Bitte prüfen Sie Ihre Angaben</p>
-</div>
