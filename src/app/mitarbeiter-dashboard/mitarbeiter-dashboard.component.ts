@@ -153,7 +153,12 @@ export class MitarbeiterDashboardComponent implements OnInit{
 
   saveProduct(product: Item) {
     product.employee_id = 1;
-    this.itemService.addItem(product);
+
+    if(product.item_ID == 0){
+      this.itemService.addItem(product);
+    } else {
+      this.itemService.updateItem(product);
+    }
     this.hideProductForm();
     setTimeout(() => {
       this.getItemsFromDataBase();
