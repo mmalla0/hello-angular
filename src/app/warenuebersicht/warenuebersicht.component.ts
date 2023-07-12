@@ -48,6 +48,9 @@ export class WarenuebersichtComponent implements OnInit {
       this.websocketService.subscribeToItemChanges().subscribe(() => {
         this.setUpItems();
       });
+    });
+
+    this.websocketService.connect().subscribe(() => {
       this.websocketService.subscribeToCategoryChanges().subscribe(() => {
         this.setUpCategories();
         this.setUpItems();
