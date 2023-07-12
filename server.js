@@ -213,7 +213,7 @@ app.get('/landing', function (req, res) {
 
                 res.json(items);
 
-                connection.end(); // Close the connection here after retrieving the items
+                connection.end(); 
                 console.log('Disconnected from the database');
             });
     });
@@ -404,6 +404,48 @@ app.put('/customer/:id/address', (req, res) => {
     });
   });
  
+  app.get('/address/:addressId', (req, res) => {
+    const addressId = req.params.addressId;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+      });
+    
+      connection.connect((err) => {
+        if (err) {
+          console.error('Fehler bei der Verbindung zur Datenbank:', err.stack);
+          res.status(500).json({ error: 'Verbindung zur Datenbank fehlgeschlagen' });
+          return;
+        }
+    
+        console.log('Verbindung zur Datenbank hergestellt');
+    
+    const query = `
+      SELECT a.street_name, a.street_number, a.city, a.zip_code, a.country, a.planet
+      FROM address a
+      WHERE a.address_id = ${addressId}
+    `;
+  
+      connection.query(query, (error, results) => {
+        if (error) {
+          console.error('Fehler beim Abrufen der Kundenadresse:', error);
+          res.status(500).send('Fehler beim Abrufen der Kundenadresse');
+        } else if (results.length === 0) {
+          res.status(404).send('Kundenadresse nicht gefunden');
+        } else {
+          const address = results[0].address;
+          res.send(address);
+        }
+  
+        connection.end(); // Verbindung zur Datenbank schließen
+      });
+    });
+  });
+
 // Define the API endpoint for adding an item
 app.post('/additem', (req, res) => {
     var connection = mysql.createConnection({

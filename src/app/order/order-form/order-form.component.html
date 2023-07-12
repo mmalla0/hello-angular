@@ -1,10 +1,6 @@
 <div class="flexBox">
     <h2>Your order will be spaceshipped to</h2>
-    <p>{{ user?.addressId }}</p>
-    <p>Maya Ma</p>
-    <p>MilkyWay 398022</p>
-    <p>28390 Kryptonite</p>
-    <p>Andromeda</p>
+    <p>{{ userAddress }}</p>
 
     <form (ngSubmit)="submitForm()" #form="ngForm" class="formFlex">
         

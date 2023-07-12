@@ -20,7 +20,8 @@ export class UserService {
     return String(this.authService.getCurrentUser().email);
   }
 
-  /*getAddress(){
-
-  }*/
+  getAddressById(addressId: number): Observable<string> {
+    const url = `/address/${addressId}`;
+    return this.http.get<string>(url);
+  }
 }

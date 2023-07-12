@@ -107,43 +107,6 @@ export class AuthService {
       options
     );
   }
-  /*   register (user: User) {
-    const userEmail = user.email.toLowerCase();
-
-    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
-
-    if (userIndex === -1) {
-            
-      const lastUserId: number = this.users[this.users.length - 1].id;
-      
-      this.users.push(
-        {
-
-          id: lastUserId + 1 ,
-         // name: user.name,
-          email: user.email.toLowerCase(),
-          password: user.password,
-          //zahlungsmethode: user.zahlungsmethode
-
-         // id: 100,
-         // name: user.name,                       // TODO: name rausnehmen
-          //email: user.email.toLowerCase(),
-         // password: user.password,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          addressId: user.addressId,
-          methodOfPayment: user.methodOfPayment,
-          cartId: user.cartId,
-          stockpileId: user.stockpileId
-
-        }
-      )
-      this.updateUsersInLocalStorage();
-      this.usersUpdate.next(this.users);
-    } else {
-      console.warn('Benutzer schon vorhanden!')
-    }    
-  } */
 
   loginCustomer(data): Observable<any> {
     let headers = new HttpHeaders({
@@ -187,6 +150,7 @@ export class AuthService {
   }
 
   getCurrentUser(): User | null {
+    console.log("The current user is: " + this.currentUser);
     return this.currentUser;
   }
 }
