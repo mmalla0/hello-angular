@@ -26,7 +26,6 @@ export class AddressService {
     );
   }
 
-  
   private getAddressURL = 'getAddress';
   getAddressById(id: number): Observable<Address> {
     const url = `${this.getAddressURL}/${id}`;
