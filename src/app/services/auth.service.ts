@@ -24,6 +24,10 @@ import { User } from '../shared/user';
   providedIn: 'root',
 })
 export class AuthService {
+
+  private users: User[] = []; 
+
+  /*
   private users: User[] = [
     {
       id: 1,
@@ -53,9 +57,11 @@ export class AuthService {
       stockpileId: 2,
     },
   ];
+  */
+
   currentUser: User | null = null;
 
-  usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
+  //usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
 
   userLoggedIn: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -94,19 +100,7 @@ export class AuthService {
     );
   }
 
-  updateCustomerAdress(customerId: number, data) {              // data = Adresse
-    console.log("Diese CustomerId wird der Methode updateCustomer übergeben: ", customerId);
-    console.log("diese address_id soll der customer-Tabelle übergeben werden: ", data.address_id)
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    let options = { headers: headers };
-    return this.http.put<any>(
-      'http://localhost:8080/customer/' + customerId + '/address',
-      { address_id: data },
-      options
-    );
-  }
+
   /*   register (user: User) {
     const userEmail = user.email.toLowerCase();
 
@@ -156,8 +150,7 @@ export class AuthService {
       options)
       .pipe(
         tap(response => {
-          const user = response.user;
-          this.currentUser = user;
+          this.currentUser = response;
           this.userLoggedIn.next(true);
         })
     );
@@ -174,9 +167,8 @@ export class AuthService {
       options)
       .pipe(
         tap(response => {
-          const user = response.user;
-          this.currentUser = user;
-          this.userLoggedIn.next(true);
+          this.currentUser = response;
+          this.userLoggedIn.next(true); 
         })
     );
   }

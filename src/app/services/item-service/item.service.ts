@@ -30,6 +30,7 @@ export class ItemService {
   
   private additemURL = 'additem';
   addItem(item: any): void {
+    console.log(item);
     this.http.post(this.additemURL, item).subscribe(
       (response) => {
         // Handle success response

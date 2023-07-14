@@ -1,8 +1,8 @@
 <div class="flexBox">
     <h2>Your order will be spaceshipped to</h2>
-    <p>{{ user?.addressId }}</p>
-    <p>-- Hier soll die Adresse des eingeloggten Users angezeigt werden --</p>
-
+    <p>{{ invoice.address?.street }}, {{ invoice.address?.houseNumber }}</p>
+    <p>{{ invoice.address?.postalCode }} {{ invoice.address?.city }}</p>
+    <p>{{ invoice.address?.country }}, {{ invoice.address?.planet }}</p>
 
     <form (ngSubmit)="submitForm()" #form="ngForm" class="formFlex">
         

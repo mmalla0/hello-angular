@@ -50,7 +50,7 @@ export class StockItemDetailsComponent implements OnInit {
         item_description: '',
         item_price: 0,
         stock: 0,
-        employee_id: 0,
+        employee_id: this.authService.currentUser.employee_id,
         best_before: null,
         item_imgpath: '',
         categories: []
@@ -70,9 +70,7 @@ export class StockItemDetailsComponent implements OnInit {
     if(editedProduct.best_before != null){
       editedProduct.best_before = this.formatDate(editedProduct.best_before);
     }
-
-    //this.editedProduct.employee_id = this.authService.currentUser.id;
-
+    
     if (this.file) {
       console.log('Waiting for file upload');
       this.saveFile(editedProduct); 
