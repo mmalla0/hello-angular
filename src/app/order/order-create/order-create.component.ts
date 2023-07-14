@@ -6,6 +6,8 @@ import { ItemService } from 'src/app/services/item-service/item.service';
 import { StockpileService } from 'src/app/services/stockpile.service';
 import { User } from 'src/app/shared/user';
 import { UserService } from 'src/app/services/user.service';
+import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
+
 @Component({
   selector: 'app-order-create',
   templateUrl: './order-create.component.html',
@@ -44,7 +46,8 @@ export class OrderCreateComponent {
     private emailService: EmailService,
     private itemService: ItemService,
     private stockpileService: StockpileService,    
-    private userService: UserService
+    private userService: UserService,
+    private cartService: CartServiceService
   ) {}
 
   handleFormSubmit(invoice: Invoice) {
@@ -64,16 +67,14 @@ export class OrderCreateComponent {
   }
 
   updateStock() {
-    
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
-  
-    this.itemService.reduceStock( this.invoice.orderItems).subscribe(() => {
+    console.log(this.cartService.cartItems);
+    this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
        this.submitOrder.emit(this.invoice);
      });
   }
 
   updateUserStockpile() {
-  
     // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
     // Annahme: Die Methode updateUserStockpile(stockpileId, orderItems) wird von der stockpileService-Klasse bereitgestellt.
 

@@ -80,20 +80,7 @@ function handleItemChange() {
         client.send(message);
       }
     });
-}
-
-function handleCategoryChange(){
-    console.log('Handle category chnange');
-    // Broadcast a notification to all connected clients about the change
-    const message = JSON.stringify({ event: 'categoryChange' });
-  
-    clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
-}
-  
+} 
   
 // support parsing of application/json type post data
 app.use(bodyParser.json());
@@ -104,7 +91,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // configuration =================
-app.use(express.static(path.join(__dirname, '/dist/angular')));  //TODO: rename to your app-name
+app.use(express.static(path.join(__dirname, '/dist/angular'))); 
 app.use(express.static(path.join(__dirname, 'src')));
 
 app.use(express.json());
@@ -156,11 +143,6 @@ app.post('/api/fileupload', upload.single('file'), function (req, res) {
     res.json({ fileName: uploadedFileName });
     console.log('File uploaded:', req.file);
 });
-
-
-//app.get('/landing', function (req, res) {
-//    res.sendFile('index.html', { root: __dirname + '/dist/angular' });
-//});
 
 app.get('/landing', function (req, res) {
     var connection = mysql.createConnection({
@@ -674,7 +656,6 @@ app.post('/addCategory', (req, res) => {
                 res.status(500).json({ error: 'Failed to add category' });
             } else {
                 console.log('Category added successfully');
-                handleCategoryChange();
                 res.sendStatus(200);
             }
         });
@@ -713,7 +694,6 @@ app.delete('/deleteCategory/:categoryId', (req, res) => {
             res.status(404).json({ error: 'Category not found' });
         } else {
             console.log('Category deleted successfully');
-            handleCategoryChange();
             res.sendStatus(200);
         }
     });
@@ -823,8 +803,9 @@ app.post('/updateUserStockpile/:stockpileId', (req, res) => {
     });
 });
 
+
 app.post('/reduceStock', (req, res) => {
-    const itemId = req.params.itemId;
+    const orderItems = req.body;
 
     const connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
@@ -852,10 +833,11 @@ app.post('/reduceStock', (req, res) => {
                 if (error) {
                     console.error('Error updating stock:', error);
                     res.status(500).json({ error: 'Failed to update stock' });
+                } else {
+                    handleItemChange();
                 }
             });
         }
-    
         connection.end(); 
     });
 });

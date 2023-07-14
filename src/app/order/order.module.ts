@@ -10,7 +10,7 @@ import { OrderFormComponent } from './order-form/order-form.component';
   declarations: [
     OrderComponent,
     OrderCreateComponent,
-    OrderCreateComponent
+    OrderFormComponent
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,8 @@ import { Invoice } from 'src/app/shared/invoice';
 import { Address } from 'src/app/shared/address';
 import { AddressService } from 'src/app/services/address-service/address.service';
 import { User } from 'src/app/shared/user';
+import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
+import { ItemService } from 'src/app/services/item-service/item.service';
 
 @Component({
   selector: 'app-order-form',
@@ -17,7 +19,6 @@ export class OrderFormComponent {
     user: null,
     methodOfPayment: '',
     orderItems: [],
-    //items: [], Felinas VErsion
     address: null,
     totalWithVat: 0,
     totalWithoutVat: 0,
@@ -53,7 +54,10 @@ export class OrderFormComponent {
       });
     }
 */
-  constructor(private authService: AuthService,  private addressService: AddressService) {
+  constructor(private authService: AuthService,  
+    private addressService: AddressService,  
+    private cartService: CartServiceService, 
+    private itemService: ItemService) {
     this.user = this.authService.currentUser;
   }
 
@@ -79,4 +83,14 @@ export class OrderFormComponent {
   }
 
 
+  //TODO entfernen, nur zum Testen hier!
+  /*
+  updateStock() {
+    //Logik zum Aktualisieren des Warenbestands in der Datenbank 
+    console.log(this.cartService.cartItems);
+    this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
+       this.submitOrder.emit(this.invoice);
+     });
+  }
+  */
 }

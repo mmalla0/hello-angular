@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { Item } from '../../shared/item';
 import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
-import { OrderItem } from 'src/app/shared/invoice';
+import { CartItem } from 'src/app/shared/cart-item';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -65,8 +65,9 @@ export class ItemService {
     );
   }
 
-  reduceStock(orderItems: OrderItem[]): Observable<void> {
-    const url = `$/reduceStock`;
+  reduceStock(orderItems: CartItem[]): Observable<void> {
+    const url = `/reduceStock`;
+    console.log(orderItems);
     return this.http.post<void>(url, orderItems); 
   }
 
