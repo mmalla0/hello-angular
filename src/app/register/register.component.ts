@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-//import { User } from '../shared/user';
+import { AddressService } from '../services/address-service/address.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -28,7 +28,8 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private addressService : AddressService
   ) {}
 
   ngOnInit(): void {
@@ -138,7 +139,7 @@ export class RegisterComponent implements OnInit {
   }
 
   updateCustomerAddress(customerId: number, newAddressId: number) {
-    this.authService
+    this.addressService
       .updateCustomerAdress(customerId, newAddressId)
       .subscribe((res) => {
         console.log(res);

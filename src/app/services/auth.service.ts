@@ -24,6 +24,10 @@ import { User } from '../shared/user';
   providedIn: 'root',
 })
 export class AuthService {
+
+  private users: User[] = []; 
+
+  /*
   private users: User[] = [
     {
       id: 1,
@@ -53,9 +57,11 @@ export class AuthService {
       stockpileId: 2,
     },
   ];
+  */
+
   currentUser: User | null = null;
 
-  usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
+  //usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
 
   userLoggedIn: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -119,8 +125,7 @@ export class AuthService {
       options)
       .pipe(
         tap(response => {
-          const user = response.user;
-          this.currentUser = user;
+          this.currentUser = response;
           this.userLoggedIn.next(true);
         })
     );
@@ -137,9 +142,8 @@ export class AuthService {
       options)
       .pipe(
         tap(response => {
-          const user = response.user;
-          this.currentUser = user;
-          this.userLoggedIn.next(true);
+          this.currentUser = response;
+          this.userLoggedIn.next(true); 
         })
     );
   }

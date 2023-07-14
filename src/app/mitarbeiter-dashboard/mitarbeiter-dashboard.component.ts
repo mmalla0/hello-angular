@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { WebsocketService } from '../../app/websocket.service';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-mitarbeiter-dashboard',
@@ -18,7 +20,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
   sortDirection = 1;
   searchQuery: string;
 
-  constructor(private itemService: ItemService, private websocketService: WebsocketService) { }
+  constructor(private itemService: ItemService, private websocketService: WebsocketService, private authService: AuthService) { }
 
   ngOnInit() {
     this.getItemsFromDataBase();
@@ -114,7 +116,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
   }
 
   editItemClicked(product: Item) {
-    this.selectedProduct = { ...product };
+    this.selectedProduct = { ...product, employee_id: this.authService.currentUser.employee_id };
     this.showItemForm = true;
   }
 
@@ -146,7 +148,7 @@ export class MitarbeiterDashboardComponent implements OnInit{
   }
 
   saveProduct(product: Item) {
-    product.employee_id = 1;
+    console.log('ID', product.employee_id);
 
     if(product.item_ID == 0){
       this.itemService.addItem(product);

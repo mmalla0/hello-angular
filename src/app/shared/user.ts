@@ -1,13 +1,14 @@
 export interface User {
-    id: number;
+    employee_id? : number;
+    id?: number;
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    addressId: number;
-    methodOfPayment: string;
-    cartId: number; 
-    stockpileId: number;
+    addressId?: number;
+    methodOfPayment?: string;
+    cartId?: number; 
+    stockpileId?: number;
 }
 
 export interface StockpileItem {
