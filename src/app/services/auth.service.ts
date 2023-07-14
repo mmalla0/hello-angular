@@ -100,44 +100,20 @@ export class AuthService {
     );
   }
 
+  updateCustomerAdress(customerId: number, data) {              // data = Adresse
+    console.log("Diese CustomerId wird der Methode updateCustomer übergeben: ", customerId);
+    console.log("diese address_id soll der customer-Tabelle übergeben werden: ", data.address_id)
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    let options = { headers: headers };
+    return this.http.put<any>(
+      'http://localhost:8080/customer/' + customerId + '/address',
+      { address_id: data },
+      options
+    );
+  }
 
-  /*   register (user: User) {
-    const userEmail = user.email.toLowerCase();
-
-    const userIndex = this.users.findIndex((user: User) => user.email === userEmail);
-
-    if (userIndex === -1) {
-            
-      const lastUserId: number = this.users[this.users.length - 1].id;
-      
-      this.users.push(
-        {
-
-          id: lastUserId + 1 ,
-         // name: user.name,
-          email: user.email.toLowerCase(),
-          password: user.password,
-          //zahlungsmethode: user.zahlungsmethode
-
-         // id: 100,
-         // name: user.name,                       // TODO: name rausnehmen
-          //email: user.email.toLowerCase(),
-         // password: user.password,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          addressId: user.addressId,
-          methodOfPayment: user.methodOfPayment,
-          cartId: user.cartId,
-          stockpileId: user.stockpileId
-
-        }
-      )
-      this.updateUsersInLocalStorage();
-      this.usersUpdate.next(this.users);
-    } else {
-      console.warn('Benutzer schon vorhanden!')
-    }    
-  } */
 
   loginCustomer(data): Observable<any> {
     let headers = new HttpHeaders({
@@ -179,6 +155,7 @@ export class AuthService {
   }
 
   getCurrentUser(): User | null {
+    console.log("The current user is: " + this.currentUser);
     return this.currentUser;
   }
 }

@@ -8,6 +8,7 @@ bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http');
 const WebSocket = require('ws'); 
+const nodemailer = require('nodemailer');
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -30,6 +31,44 @@ wss.on('connection', (ws) => {
   });
 });
 
+// configure e-mail transporter
+const transporter = nodemailer.createTransport({
+    // configuration options for e-mail transporter (SMTP configurations for example)
+  });
+  
+  // Route for sending the e-mail
+  app.post('/send-email', (req, res) => {
+    const { from, to, subject, text } = req.body;
+  
+    // create e-mail
+    const mailOptions = {
+      from: from,
+      to: to,
+      subject: subject,
+      text: text,
+    };
+        // check if attachment exists
+    if (attachment) {
+        mailOptions.attachments = [
+        {
+            filename: attachment.filename,
+            content: attachment.content
+        }
+        ];
+    }
+  
+    // send e-mail
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error while trying to send the e-mail:', error);
+        res.status(500).send('Error while trying to send the e-mail');
+      } else {
+        console.log('Email has been sent!:', info.response);
+        res.status(200).send('Email has been sent!');
+      }
+    });
+  });
+  
 
 function handleItemChange() {
     console.log('Handle item change');
@@ -124,7 +163,6 @@ app.post('/api/fileupload', upload.single('file'), function (req, res) {
 //});
 
 app.get('/landing', function (req, res) {
-
     var connection = mysql.createConnection({
         database: "23_IT_Gruppe5",
         host: "195.37.176.178",
@@ -174,7 +212,7 @@ app.get('/landing', function (req, res) {
 
                 res.json(items);
 
-                connection.end(); // Close the connection here after retrieving the items
+                connection.end(); 
                 console.log('Disconnected from the database');
             });
     });
@@ -365,8 +403,7 @@ app.put('/customer/:id/address', (req, res) => {
     });
   });
 
-
-  app.get('/getAddress/:id', (req, res) => {
+app.get('/getAddress/:id', (req, res) => {
     console.log('Entered get address');
     const addressId = req.params.id;
   
@@ -747,6 +784,81 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
     });
 });
 
+app.post('/updateUserStockpile/:stockpileId', (req, res) => {
+    const stockpileId = req.params.stockpileId;
+    const orderItems = req.body;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+
+        console.log('Connected to the database');
+
+        // update userStockpile in Database
+        for (const orderItem of orderItems) {
+            const query = 'UPDATE Stockpile SET quantity = quantity - ? WHERE stockpile_ID = ? AND item_ID = ?';
+            const values = [orderItem.quantity, stockpileId, orderItem.itemId];
+
+            connection.query(query, values, (error, result) => {
+                if (error) {
+                    console.error('Error updating userStockpile:', error);
+                    res.status(500).json({ error: 'Failed to update userStockpile' });
+                }
+            });
+        }
+
+        connection.end(); 
+        res.sendStatus(200);
+    });
+});
+
+app.post('/reduceStock', (req, res) => {
+    const itemId = req.params.itemId;
+
+    const connection = mysql.createConnection({
+        database: "23_IT_Gruppe5",
+        host: "195.37.176.178",
+        port: "20133",
+        user: "23_IT_Grp_5",
+        password: "JJQGNC8h79VkiSNmK}8I"
+    });
+
+    connection.connect((err) => {
+        if (err) {
+            console.error('Error connecting to the database:', err.stack);
+            res.status(500).json({ error: 'Failed to connect to the database' });
+            return;
+        }
+    
+        console.log('Connected to the database');
+    
+        // update items in Database with orderItems Array
+        for (const orderItem of orderItems) {
+            const query = 'UPDATE item SET stock = stock - ? WHERE item_ID = ?';
+            const values = [orderItem.quantity, orderItem.itemId];
+    
+            connection.query(query, values, (error, result) => {
+                if (error) {
+                    console.error('Error updating stock:', error);
+                    res.status(500).json({ error: 'Failed to update stock' });
+                }
+            });
+        }
+    
+        connection.end(); 
+    });
+});
  
 // DELETE endpoint to delete a stockpile item
 app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
