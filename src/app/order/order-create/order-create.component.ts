@@ -7,13 +7,13 @@ import { StockpileService } from 'src/app/services/stockpile.service';
 import { User } from 'src/app/shared/user';
 import { UserService } from 'src/app/services/user.service';
 import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-order-create',
   templateUrl: './order-create.component.html',
   styleUrls: ['./order-create.component.css'],
 })
-
 
 export class OrderCreateComponent {
   @Output() submitOrder = new EventEmitter<Invoice>();
@@ -37,7 +37,7 @@ export class OrderCreateComponent {
     addressId: 0,                
     methodOfPayment: '',
     cartId: 0,
-    stockpileId: 0
+    //stockpileId: 0
   }
   orderConfirmation: string;
 
@@ -47,7 +47,8 @@ export class OrderCreateComponent {
     private itemService: ItemService,
     private stockpileService: StockpileService,    
     private userService: UserService,
-    private cartService: CartServiceService
+    private cartService: CartServiceService, 
+    private authService: AuthService
   ) {}
 
   handleFormSubmit(invoice: Invoice) {
@@ -70,15 +71,16 @@ export class OrderCreateComponent {
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
     console.log(this.cartService.cartItems);
     this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
-       this.submitOrder.emit(this.invoice);
+      this.submitOrder.emit(this.invoice);
      });
+     this.cartService.emptyCart();
   }
-
+  
   updateUserStockpile() {
     // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
     // Annahme: Die Methode updateUserStockpile(stockpileId, orderItems) wird von der stockpileService-Klasse bereitgestellt.
 
-    this.stockpileService.updateUserStockpile(this.user.stockpileId, this.invoice.orderItems).subscribe(() => {
+    this.stockpileService.updateUserStockpile(this.authService.currentUser.id, this.cartService.cartItems).subscribe(() => {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
 
@@ -86,6 +88,7 @@ export class OrderCreateComponent {
       this.showOrderConfirmation();
     });
   }
+
   showOrderConfirmation() {
  
     this.orderConfirmation = 'Thank you for your business! The invoice has been sent to your inbox.';

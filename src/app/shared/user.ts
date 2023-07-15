@@ -8,7 +8,7 @@ export interface User {
     addressId?: number;
     methodOfPayment?: string;
     cartId?: number; 
-    stockpileId?: number;
+    //stockpileId?: number;
 }
 
 export interface StockpileItem {

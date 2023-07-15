@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
+import { AuthService } from '../services/auth.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 
@@ -19,7 +20,7 @@ export class ItemDetailsComponent implements OnInit {
   showItemForm = false;
   showCategoryForm = false; 
 
-  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router, private authService : AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -38,6 +39,8 @@ export class ItemDetailsComponent implements OnInit {
   saveNewItem(itemToBeEdited: Item) {
     console.log("Function saveNewItem reached!");
     console.log(itemToBeEdited.item_description);
+
+    itemToBeEdited.employee_id = this.authService.currentUser.employee_id;
 
     this.itemService.updateItem(itemToBeEdited);
 

@@ -4,6 +4,7 @@ import { StockpileItem } from '../shared/user';
 import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
 import { OrderItem } from '../shared/invoice';
+import { CartItem } from '../shared/cart-item';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,8 @@ export class StockpileService {
     return this.http.delete<void>(url + stockpileItemId);
   }
 
-  updateUserStockpile(stockpileId: number, orderItems: OrderItem[]): Observable<void> {
+  updateUserStockpile(userID: number, orderItems: CartItem[]): Observable<void> {
     const url = '/updateUserStockpile/';
-    return this.http.post<void>(url + stockpileId, orderItems); 
+    return this.http.post<void>(url + userID, orderItems); 
   }
-
 }

@@ -765,7 +765,7 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
 });
 
 app.post('/updateUserStockpile/:stockpileId', (req, res) => {
-    const stockpileId = req.params.stockpileId;
+    const customerId = req.params.stockpileId;
     const orderItems = req.body;
 
     const connection = mysql.createConnection({
@@ -787,19 +787,23 @@ app.post('/updateUserStockpile/:stockpileId', (req, res) => {
 
         // update userStockpile in Database
         for (const orderItem of orderItems) {
-            const query = 'UPDATE Stockpile SET quantity = quantity - ? WHERE stockpile_ID = ? AND item_ID = ?';
-            const values = [orderItem.quantity, stockpileId, orderItem.itemId];
+
+            const query = 'INSERT INTO stockpile(customer_ID, item_ID, quantity) VALUES (?, ?, ?)';
+
+            //const query = 'UPDATE Stockpile SET quantity = quantity - ? WHERE stockpile_ID = ? AND item_ID = ?';
+            const values = [customerId, orderItem.itemId, orderItem.quantity];
 
             connection.query(query, values, (error, result) => {
                 if (error) {
                     console.error('Error updating userStockpile:', error);
                     res.status(500).json({ error: 'Failed to update userStockpile' });
+                } else {
+                    console.log('Stockpile items were updated')
                 }
             });
         }
 
         connection.end(); 
-        res.sendStatus(200);
     });
 });
 
@@ -834,6 +838,7 @@ app.post('/reduceStock', (req, res) => {
                     console.error('Error updating stock:', error);
                     res.status(500).json({ error: 'Failed to update stock' });
                 } else {
+                    console.log('Successfully reduced stock');
                     handleItemChange();
                 }
             });

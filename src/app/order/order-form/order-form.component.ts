@@ -6,6 +6,7 @@ import { AddressService } from 'src/app/services/address-service/address.service
 import { User } from 'src/app/shared/user';
 import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
 import { ItemService } from 'src/app/services/item-service/item.service';
+import { StockpileService } from 'src/app/services/stockpile.service';
 
 @Component({
   selector: 'app-order-form',
@@ -57,7 +58,8 @@ export class OrderFormComponent {
   constructor(private authService: AuthService,  
     private addressService: AddressService,  
     private cartService: CartServiceService, 
-    private itemService: ItemService) {
+    private itemService: ItemService, 
+    private stockpileService : StockpileService) {
     this.user = this.authService.currentUser;
   }
 
@@ -89,8 +91,26 @@ export class OrderFormComponent {
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
     console.log(this.cartService.cartItems);
     this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
-       this.submitOrder.emit(this.invoice);
+      this.submitOrder.emit(this.invoice);
      });
+     this.cartService.emptyCart();
+     
+     
+     //Todo: entfernen, nur zum Testen hier! 
+     this.updateUserStockpile();
+  }
+  
+  updateUserStockpile() {
+    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
+    // Annahme: Die Methode updateUserStockpile(stockpileId, orderItems) wird von der stockpileService-Klasse bereitgestellt.
+
+    this.stockpileService.updateUserStockpile(this.authService.currentUser.id, this.cartService.cartItems).subscribe(() => {
+      // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
+      this.submitOrder.emit(this.invoice);
+
+      // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
+      //this.showOrderConfirmation();
+    });
   }
   */
 }
