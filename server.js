@@ -723,18 +723,18 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
         console.log('Connected to the database');
 
         const query = `
-            SELECT 
-                s.stockpile_ID,
-                i.item_name,
-                s.quantity,
-                i.best_before,
-                i.item_description,
-                c.category_name
-            FROM stockpile s
-            JOIN item i ON s.item_ID = i.item_ID
-            JOIN category_items ci ON i.item_ID = ci.ci_item_id
-            JOIN category c ON ci.ci_category_id = c.category_id
-            WHERE s.customer_ID = ?`;
+        SELECT DISTINCT
+        s.stockpile_ID,
+        i.item_name,
+        s.quantity,
+        i.best_before,
+        i.item_description,
+        c.category_name
+    FROM stockpile s
+    JOIN item i ON s.item_ID = i.item_ID
+    JOIN category_items ci ON i.item_ID = ci.ci_item_id
+    JOIN category c ON ci.ci_category_id = c.category_id
+    WHERE s.customer_ID = ?`;
 
         const values = [customerID];
 
@@ -745,19 +745,24 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
             } else {
                 console.log("Stockpile items successfully retrieved!");
 
-                const stockpileItems = results.map((result) => {
-                    const bestBeforeDate = new Date(result.best_before);
-                    
-                    return {
-                        id: result.stockpile_ID,
-                        name: result.item_name,
-                        quantity: result.quantity,
-                        bestBeforeDate: bestBeforeDate,
-                        product: result.item_description,
-                        category: result.category_name.split(',')[0].trim()
-                    };
+                const stockpileItems = [];
+                results.forEach((result) => { 
+                    const existingItem = stockpileItems.find((item) => item.id === result.stockpile_ID);
+                    if (existingItem) {
+                        existingItem.category += `, ${result.category_name.split(',')[0].trim()}`;
+                    } else {
+                        const bestBeforeDate = new Date(result.best_before);
+                        stockpileItems.push({
+                            id: result.stockpile_ID,
+                            name: result.item_name,
+                            quantity: result.quantity,
+                            bestBeforeDate: bestBeforeDate,
+                            product: result.item_description,
+                            category: result.category_name.split(',')[0].trim()
+                        });
+                    }
                 });
-
+                console.log(stockpileItems);
                 res.json(stockpileItems);
             }
         });
