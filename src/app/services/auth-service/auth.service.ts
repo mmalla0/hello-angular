@@ -3,7 +3,8 @@ import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-
+import { CartServiceService } from '../cart-service/cart-service.service';
+import { User } from '../../shared/user';
 
 export enum Zahlungsmethode {
   PAYPAL = 'paypal',
@@ -11,8 +12,6 @@ export enum Zahlungsmethode {
   DEBITKARTE = 'debitkarte',
   APPLEPAY = 'applepay',
 }
-
-import { User } from '../../shared/user';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +26,7 @@ export class AuthService {
 
   userType: string = 'unknown';
 
-  constructor(private http: HttpClient, private router: Router,  private toastr: ToastrService) {}
+  constructor(private http: HttpClient, private router: Router,  private toastr: ToastrService, private cartService : CartServiceService) {}
 
   updateUsersInLocalStorage() {
     const usersToSave = this.users.map((user: User) => {
@@ -88,6 +87,7 @@ export class AuthService {
     this.userLoggedIn.next(false);
     this.currentUser = null;
     this.userType = 'unknown';
+    this.cartService.emptyCart();
     this.toastr.success('Logged out', 'Success');
   }
 

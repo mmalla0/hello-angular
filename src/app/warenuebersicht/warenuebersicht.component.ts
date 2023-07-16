@@ -81,7 +81,7 @@ export class WarenuebersichtComponent implements OnInit {
   setUpItems(): void {
     this.itemService.getAllItems().subscribe({
       next: items => {
-        this.products = items.filter(item => item.stock !== 0);
+        this.products = items.filter(item => item.stock > 0); 
         this.filteredProducts = this.products;
         this.paginatedProducts = this.products;
         this.filterProducts();
