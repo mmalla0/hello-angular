@@ -19,10 +19,16 @@ export class ItemDetailsComponent implements OnInit {
   item: Item;
   showItemForm = false;
   showCategoryForm = false; 
+  isLoggedIn: boolean = false;
 
-  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router, private authService : AuthService) { }
+  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router, public authService : AuthService) { }
 
   ngOnInit() {
+
+    this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    })
+
     this.route.params.subscribe(params => {
       const itemId = +params['id']; // Convert the string ID to a number
       this.itemService.getItem(itemId).subscribe(item => {

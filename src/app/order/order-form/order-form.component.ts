@@ -84,17 +84,12 @@ export class OrderFormComponent {
     this.submitOrder.emit(this.invoice);
   }
 
-
-  //TODO entfernen, nur zum Testen hier!
-  
   updateStock() {
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
     console.log("Das sind die Artikel im Warenkorb, die nun vom Bestand reduziert werden sollen: " + this.cartService.cartItems);
     this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
       this.submitOrder.emit(this.invoice);
-     });
-     
-     
+     });     
      
      //Todo: entfernen, nur zum Testen hier! 
      this.updateUserStockpile();
@@ -110,6 +105,7 @@ export class OrderFormComponent {
       this.cartService.emptyCart();
       // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
       //this.showOrderConfirmation();
+      this.cartService.emptyCart();
     });
   }
   

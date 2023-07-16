@@ -21,7 +21,7 @@
         </ul>
     </div>
 
-    <div class="action-icons">
+    <div class="action-icons" *ngIf="isLoggedIn && authService.userType == 'employee'">
         <button class="edit-btn" (click)="editCurrentItem()"><i class="fas fa-edit"></i></button>
         <button class="delete-btn" (click)="deleteItem()"><i class="fas fa-trash"></i></button>
     </div>

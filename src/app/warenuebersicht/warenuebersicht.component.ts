@@ -49,13 +49,6 @@ export class WarenuebersichtComponent implements OnInit {
         this.setUpItems();
       });
     });
-
-    this.websocketService.connect().subscribe(() => {
-      this.websocketService.subscribeToCategoryChanges().subscribe(() => {
-        this.setUpCategories();
-        this.setUpItems();
-      });
-    });
   }
 
   setUpFilterValues() : void{

@@ -723,18 +723,18 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
         console.log('Connected to the database');
 
         const query = `
-            SELECT 
-                s.stockpile_ID,
-                i.item_name,
-                s.quantity,
-                i.best_before,
-                i.item_description,
-                c.category_name
-            FROM stockpile s
-            JOIN item i ON s.item_ID = i.item_ID
-            JOIN category_items ci ON i.item_ID = ci.ci_item_id
-            JOIN category c ON ci.ci_category_id = c.category_id
-            WHERE s.customer_ID = ?`;
+        SELECT DISTINCT
+        s.stockpile_ID,
+        i.item_name,
+        s.quantity,
+        i.best_before,
+        i.item_description,
+        c.category_name
+    FROM stockpile s
+    JOIN item i ON s.item_ID = i.item_ID
+    JOIN category_items ci ON i.item_ID = ci.ci_item_id
+    JOIN category c ON ci.ci_category_id = c.category_id
+    WHERE s.customer_ID = ?`;
 
         const values = [customerID];
 
@@ -745,19 +745,24 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
             } else {
                 console.log("Stockpile items successfully retrieved!");
 
-                const stockpileItems = results.map((result) => {
-                    const bestBeforeDate = new Date(result.best_before);
-                    
-                    return {
-                        id: result.stockpile_ID,
-                        name: result.item_name,
-                        quantity: result.quantity,
-                        bestBeforeDate: bestBeforeDate,
-                        product: result.item_description,
-                        category: result.category_name.split(',')[0].trim()
-                    };
+                const stockpileItems = [];
+                results.forEach((result) => { 
+                    const existingItem = stockpileItems.find((item) => item.id === result.stockpile_ID);
+                    if (existingItem) {
+                        existingItem.category += `, ${result.category_name.split(',')[0].trim()}`;
+                    } else {
+                        const bestBeforeDate = new Date(result.best_before);
+                        stockpileItems.push({
+                            id: result.stockpile_ID,
+                            name: result.item_name,
+                            quantity: result.quantity,
+                            bestBeforeDate: bestBeforeDate,
+                            product: result.item_description,
+                            category: result.category_name.split(',')[0].trim()
+                        });
+                    }
                 });
-
+                console.log(stockpileItems);
                 res.json(stockpileItems);
             }
         });
@@ -767,45 +772,89 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
 app.post('/updateUserStockpile/:stockpileId', (req, res) => {
     const customerId = req.params.stockpileId;
     const orderItems = req.body;
-
+  
     const connection = mysql.createConnection({
-        database: "23_IT_Gruppe5",
-        host: "195.37.176.178",
-        port: "20133",
-        user: "23_IT_Grp_5",
-        password: "JJQGNC8h79VkiSNmK}8I"
+      database: "23_IT_Gruppe5",
+      host: "195.37.176.178",
+      port: "20133",
+      user: "23_IT_Grp_5",
+      password: "JJQGNC8h79VkiSNmK}8I"
     });
-
+  
     connection.connect((err) => {
-        if (err) {
-            console.error('Error connecting to the database:', err.stack);
-            res.status(500).json({ error: 'Failed to connect to the database' });
+      if (err) {
+        console.error('Error connecting to the database:', err.stack);
+        res.status(500).json({ error: 'Failed to connect to the database' });
+        return;
+      }
+  
+      console.log('Connected to the database');
+  
+      let queryCount = 0; // Counter for completed queries
+  
+      // Check if entry exists for each order item
+      orderItems.forEach((orderItem) => {
+        const checkQuery = 'SELECT COUNT(*) AS count FROM stockpile WHERE customer_ID = ? AND item_ID = ?';
+        const checkValues = [customerId, orderItem.itemId];
+  
+        connection.query(checkQuery, checkValues, (checkError, checkResult) => {
+          if (checkError) {
+            console.error('Error checking for existing entry:', checkError);
+            res.status(500).json({ error: 'Failed to update userStockpile' });
             return;
-        }
-
-        console.log('Connected to the database');
-
-        // update userStockpile in Database
-        for (const orderItem of orderItems) {
-
-            const query = 'INSERT INTO stockpile(customer_ID, item_ID, quantity) VALUES (?, ?, ?)';
-
-            //const query = 'UPDATE Stockpile SET quantity = quantity - ? WHERE stockpile_ID = ? AND item_ID = ?';
-            const values = [customerId, orderItem.itemId, orderItem.quantity];
-
-            connection.query(query, values, (error, result) => {
-                if (error) {
-                    console.error('Error updating userStockpile:', error);
-                    res.status(500).json({ error: 'Failed to update userStockpile' });
-                } else {
-                    console.log('Stockpile items were updated')
-                }
+          }
+  
+          const count = checkResult[0].count;
+  
+          if (count > 0) {
+            // If entry exists, update the quantity
+            const updateQuery = 'UPDATE stockpile SET quantity = quantity + ? WHERE customer_ID = ? AND item_ID = ?';
+            const updateValues = [orderItem.quantity, customerId, orderItem.itemId];
+  
+            connection.query(updateQuery, updateValues, (updateError, updateResult) => {
+              if (updateError) {
+                console.error('Error updating userStockpile:', updateError);
+                res.status(500).json({ error: 'Failed to update userStockpile' });
+                return;
+              }
+  
+              queryCount++;
+  
+              // Check if all queries have completed
+              if (queryCount === orderItems.length) {
+                console.log('Stockpile items were updated');
+                res.json({ message: 'Stockpile items were updated' });
+                connection.end();
+              }
             });
-        }
-
-        connection.end(); 
+          } else {
+            // If entry doesn't exist, insert a new row
+            const insertQuery = 'INSERT INTO stockpile (customer_ID, item_ID, quantity) VALUES (?, ?, ?)';
+            const insertValues = [customerId, orderItem.itemId, orderItem.quantity];
+  
+            connection.query(insertQuery, insertValues, (insertError, insertResult) => {
+              if (insertError) {
+                console.error('Error inserting userStockpile:', insertError);
+                res.status(500).json({ error: 'Failed to update userStockpile' });
+                return;
+              }
+  
+              queryCount++;
+  
+              // Check if all queries have completed
+              if (queryCount === orderItems.length) {
+                console.log('Stockpile items were updated');
+                res.json({ message: 'Stockpile items were updated' });
+                connection.end();
+              }
+            });
+          }
+        });
+      });
     });
-});
+  });
+  
+  
 
 
 app.post('/reduceStock', (req, res) => {
@@ -847,6 +896,8 @@ app.post('/reduceStock', (req, res) => {
     });
 });
  
+
+
 // DELETE endpoint to delete a stockpile item
 app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
     const connection = mysql.createConnection({
@@ -870,7 +921,8 @@ app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
 
         const queryDisableFKCheck = 'SET FOREIGN_KEY_CHECKS = 0';
         const queryEnableFKCheck = 'SET FOREIGN_KEY_CHECKS = 1';
-        const queryDeleteStockpileItem = 'DELETE FROM stockpile WHERE stockpile_ID = ?';
+        const queryUpdateStockpileQuantity = 'UPDATE stockpile SET quantity = quantity - 1 WHERE stockpile_ID = ?';
+        const queryDeleteStockpileItem = 'DELETE FROM stockpile WHERE stockpile_ID = ? AND quantity = 0';
 
         connection.query(queryDisableFKCheck, (disableFKErr) => {
             if (disableFKErr) {
@@ -879,20 +931,40 @@ app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
                 return;
             }
 
-            connection.query(queryDeleteStockpileItem, stockpileId, (deleteErr, result) => {
-                if (deleteErr) {
-                    console.error('Error deleting stockpile item:', deleteErr);
-                    res.status(500).json({ error: 'Failed to delete stockpile item' });
-                } else if (result.affectedRows === 0) {
+            connection.query(queryUpdateStockpileQuantity, stockpileId, (updateErr, updateResult) => {
+                if (updateErr) {
+                    console.error('Error updating stockpile quantity:', updateErr);
+                    res.status(500).json({ error: 'Failed to update stockpile quantity' });
+                } else if (updateResult.affectedRows === 0) {
                     res.status(404).json({ error: 'Stockpile item not found' });
                 } else {
-                    console.log('Stockpile item deleted successfully');
-                    connection.query(queryEnableFKCheck, (enableFKErr) => {
-                        if (enableFKErr) {
-                            console.error('Error enabling foreign key check:', enableFKErr);
-                            res.status(500).json({ error: 'Failed to enable foreign key check' });
+                    console.log('Stockpile quantity updated successfully');
+                    connection.query(queryDeleteStockpileItem, stockpileId, (deleteErr, deleteResult) => {
+                        if (deleteErr) {
+                            console.error('Error deleting stockpile item:', deleteErr);
+                            res.status(500).json({ error: 'Failed to delete stockpile item' });
+                        } else if (deleteResult.affectedRows === 0) {
+                            console.log('Stockpile quantity is not zero, no need to delete the item');
+                            connection.query(queryEnableFKCheck, (enableFKErr) => {
+                                if (enableFKErr) {
+                                    console.error('Error enabling foreign key check:', enableFKErr);
+                                    res.status(500).json({ error: 'Failed to enable foreign key check' });
+                                } else {
+                                    const result = { message: 'Stockpile quantity updated successfully' };
+                                    res.status(200).json(result);
+                                }
+                            });
                         } else {
-                            res.sendStatus(200);
+                            console.log('Stockpile item deleted successfully');
+                            connection.query(queryEnableFKCheck, (enableFKErr) => {
+                                if (enableFKErr) {
+                                    console.error('Error enabling foreign key check:', enableFKErr);
+                                    res.status(500).json({ error: 'Failed to enable foreign key check' });
+                                } else {
+                                    const result = { message: 'Stockpile item deleted successfully' };
+                                    res.status(200).json(result);
+                                }
+                            });
                         }
                     });
                 }
@@ -900,6 +972,9 @@ app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
         });
     });
 });
+
+
+
 
 
 app.get('/getitem/:itemId', (req, res) => {

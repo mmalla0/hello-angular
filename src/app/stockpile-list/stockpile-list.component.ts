@@ -109,10 +109,13 @@ export class StockpileListComponent implements OnInit {
   }
 
   deleteStockpileItem(item: StockpileItem) {
-    this.stockpileService.deleteStockpileItem(item.id).subscribe(() => {
+    this.stockpileService.deleteStockpileItem(item.id).subscribe((response) => {
+      console.log(response);
+      
       // Item erfolgreich gelöscht, lade Stockpile neu
       this.loadStockpileItems();
     });
+    
   }
 
 }
