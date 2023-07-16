@@ -26,6 +26,8 @@ export class StockpileService {
 
   updateUserStockpile(userID: number, orderItems: CartItem[]): Observable<void> {
     const url = '/updateUserStockpile/';
+    console.log('userid', userID);
+    console.log('orderitems', orderItems);
     return this.http.post<void>(url + userID, orderItems); 
   }
 }
