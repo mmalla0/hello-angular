@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 export enum Zahlungsmethode {
   PAYPAL = 'paypal',
@@ -65,9 +67,9 @@ export class AuthService {
 
   userLoggedIn: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
-  userType: string; //*ngIf="this.authService.userType == 'customer' "
+  userType: string = 'unknown'; //*ngIf="this.authService.userType == 'customer' "
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router,  private toastr: ToastrService) {}
 
   updateUsersInLocalStorage() {
     const usersToSave = this.users.map((user: User) => {
@@ -88,32 +90,6 @@ export class AuthService {
     );
   }
 
-  addAddressToCustomer(data) {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    let options = { headers: headers };
-    return this.http.post<any>(
-      'http://localhost:8080/' + 'add-address',
-      data,
-      options
-    );
-  }
-
-  updateCustomerAdress(customerId: number, data) {              // data = Adresse
-    console.log("Diese CustomerId wird der Methode updateCustomer übergeben: ", customerId);
-    console.log("diese address_id soll der customer-Tabelle übergeben werden: ", data.address_id)
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    let options = { headers: headers };
-    return this.http.put<any>(
-      'http://localhost:8080/customer/' + customerId + '/address',
-      { address_id: data },
-      options
-    );
-  }
-
   loginCustomer(data): Observable<any> {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -126,6 +102,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.currentUser = response;
+          console.log(this.userType);
           this.userLoggedIn.next(true);
         })
     );
@@ -143,6 +120,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           this.currentUser = response;
+          console.log(this.userType);
           this.userLoggedIn.next(true); 
         })
     );
@@ -151,6 +129,8 @@ export class AuthService {
   logout() {
     this.userLoggedIn.next(false);
     this.currentUser = null;
+    this.userType = 'unknown';
+    this.toastr.success('Logged out', 'Success');
   }
 
   getCurrentUser(): User | null {

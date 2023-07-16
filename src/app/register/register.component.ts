@@ -109,7 +109,7 @@ export class RegisterComponent implements OnInit {
       } */
       this.authService.register2(userToRegister).subscribe(
         (res) => {
-          this.toastr.success('You have been succefully registed!', 'Success');
+          this.toastr.success('You have been successfully registed!', 'Success');
           this.address.customer_id = res.id;
           this.addAddressToCustomer();
           this.router.navigate(['/login']);
@@ -132,7 +132,7 @@ export class RegisterComponent implements OnInit {
     this.address.street_number = +this.form.get('streetNumber')?.value;
     this.address.zip_code = +this.form.get('zipCode')?.value;
 
-    this.authService.addAddressToCustomer(this.address).subscribe((res) => {
+    this.addressService.addAddressToCustomer(this.address).subscribe((res) => {
       this.updateCustomerAddress(this.address.customer_id, res.id);
       console.log(res);
     });

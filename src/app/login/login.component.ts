@@ -76,14 +76,14 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/landing']);
             this.authService.userLoggedIn.next(true);
             this.authService.currentUser = res;
-            this.toastr.success('Sie wurden angemeldet!', 'Erfolg');
+            this.toastr.success('Logged in', 'Success');
             this.authService.userType = 'employee';
           },
           (error) => {
             //Fehlermeldung
             this.toastr.error(
-              'Die E-Mail-Adresse oder das Passwort ist falsch!',
-              'Fehler'
+              'Email or password is wrong!',
+              'Error'
             );
           }
         );
@@ -106,14 +106,14 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/landing']);
             this.authService.userLoggedIn.next(true);
             this.authService.currentUser = res;
-            this.toastr.success('Sie wurden angemeldet!', 'Erfolg');
+            this.toastr.success('Logged in', 'Success');
             this.authService.userType = 'customer';
           },
           (error) => {
             //Fehlermeldung
             this.toastr.error(
-              'Die E-Mail-Adresse oder das Passwort ist falsch!',
-              'Fehler'
+              'Email or password is wrong!',
+              'Error'
             );
           }
         );
@@ -122,6 +122,6 @@ export class LoginComponent implements OnInit {
   }
 
   handleRegisterClicked() {
-    this.router.navigate(['/register']);
+    this.router.navigate(['/register'])
   }
 }

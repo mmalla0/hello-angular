@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, catchError, throwError } from 'rxjs';
 import { Item } from '../../shared/item';
-import { WebSocketSubject, webSocket } from 'rxjs/webSocket';
 import { CartItem } from 'src/app/shared/cart-item';
 import { ToastrService } from 'ngx-toastr';
 
@@ -11,14 +10,10 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class ItemService {
-
-  private webSocketSubject: WebSocketSubject<any>;
  
   private itemUpdated: Subject<Item> = new Subject<Item>();
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
-    this.webSocketSubject = webSocket('ws://localhost:8080/');
-  }
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
   
   private allItemsURL = 'landing'; 
   getAllItems(): Observable<Item[]> {
@@ -58,7 +53,6 @@ export class ItemService {
         console.log('Item deleted successfully');
       },
       (error) => {
-        // Handle error
         this.toastr.error('Failed to delete item', 'Error');
         console.error('Error deleting item:', error);
       }

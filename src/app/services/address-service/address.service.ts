@@ -26,7 +26,18 @@ export class AddressService {
     );
   }
 
-  
+  addAddressToCustomer(data) {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    let options = { headers: headers };
+    return this.http.post<any>(
+      'http://localhost:8080/' + 'add-address',
+      data,
+      options
+    );
+  }
+
   private getAddressURL = 'getAddress';
   getAddressById(id: number): Observable<Address> {
     const url = `${this.getAddressURL}/${id}`;

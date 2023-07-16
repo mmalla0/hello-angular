@@ -84,6 +84,11 @@
 
 }
 
+a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
 .user-type-select {
     display: flex;

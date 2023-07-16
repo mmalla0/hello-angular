@@ -140,4 +140,15 @@
 .checkbox-custom {
   vertical-align: middle; 
 }
+
+.product-form input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
   

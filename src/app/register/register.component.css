@@ -37,8 +37,16 @@
     margin-bottom: 10px;
 }
 
+a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
 .login-container .form-group {
     flex: 1;
+    margin-left: 10px;
+    margin-left: 10px;
 }
 
 .login-container .buttons {

@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input,  OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
 import { CartItem } from 'src/app/shared/cart-item';
+import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { WebsocketService } from 'src/app/websocket.service';
 
 @Component({
@@ -15,13 +17,14 @@ export class ItemListComponent implements OnInit{
   constructor(
     private cartService: CartServiceService,
     private router: Router,
+    private authService : AuthService,
+    private toastr: ToastrService,
     private websocketService: WebsocketService
   ) {}
 
   ngOnInit(): void {
     this.websocketService.connect().subscribe(frame => {
       console.log('WebSocket verbunden: ', frame);
-             //zum Testen: console.log(frame)
       // Verarbeitet den WebSocket-Stream und aktualisiert die Produktliste
       this.updateProductList(frame.body);
     });
@@ -59,10 +62,8 @@ export class ItemListComponent implements OnInit{
         parsedData[key.trim()] = value.trim();
       }
     }
-
     return parsedData;
   }
-
 
   removeItemFromCartClicked(itemIdToRemove: number) {
     this.cartService.removeItem(itemIdToRemove);
@@ -81,8 +82,12 @@ export class ItemListComponent implements OnInit{
   }
 
   onPurchaseClicked() {
+    console.log(this.authService.userType);
+    if(this.authService.userType == 'unknown' || this.authService.userType == 'employee'){
+      this.toastr.error('Please login to your customer account first to buy this item', 'Error');
+      this.router.navigateByUrl('/warenübersicht');
+      return;
+    }
     this.router.navigateByUrl('/order')
-    // TODO add the path to the purchase formular
-    // this.router.navigate([])
   }
 }

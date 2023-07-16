@@ -9,9 +9,7 @@ import { Item } from 'src/app/shared/item';
 })
 export class CartServiceService {
   cartItems: CartItem[] = [];
-  cartItemsChange: BehaviorSubject<CartItem[]> = new BehaviorSubject<
-    CartItem[]
-  >([]);
+  cartItemsChange: BehaviorSubject<CartItem[]> = new BehaviorSubject<CartItem[]>([]);
 
   constructor() {}
 
@@ -27,7 +25,6 @@ export class CartServiceService {
     if (itemIndexInCart === -1) {
       const item: CartItem = {
         itemId: itemToAdd.item_ID,
-      //  description: itemToAdd.description,
         quantity: 1,
         name: itemToAdd.item_name,
         price: itemToAdd.item_price,
