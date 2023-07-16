@@ -852,6 +852,8 @@ app.post('/reduceStock', (req, res) => {
     });
 });
  
+
+// DELETE endpoint to delete a stockpile item
 // DELETE endpoint to delete a stockpile item
 app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
     const connection = mysql.createConnection({
@@ -875,7 +877,8 @@ app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
 
         const queryDisableFKCheck = 'SET FOREIGN_KEY_CHECKS = 0';
         const queryEnableFKCheck = 'SET FOREIGN_KEY_CHECKS = 1';
-        const queryDeleteStockpileItem = 'DELETE FROM stockpile WHERE stockpile_ID = ?';
+        const queryUpdateStockpileQuantity = 'UPDATE stockpile SET quantity = quantity - 1 WHERE stockpile_ID = ?';
+        const queryDeleteStockpileItem = 'DELETE FROM stockpile WHERE stockpile_ID = ? AND quantity = 0';
 
         connection.query(queryDisableFKCheck, (disableFKErr) => {
             if (disableFKErr) {
@@ -884,20 +887,40 @@ app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
                 return;
             }
 
-            connection.query(queryDeleteStockpileItem, stockpileId, (deleteErr, result) => {
-                if (deleteErr) {
-                    console.error('Error deleting stockpile item:', deleteErr);
-                    res.status(500).json({ error: 'Failed to delete stockpile item' });
-                } else if (result.affectedRows === 0) {
+            connection.query(queryUpdateStockpileQuantity, stockpileId, (updateErr, updateResult) => {
+                if (updateErr) {
+                    console.error('Error updating stockpile quantity:', updateErr);
+                    res.status(500).json({ error: 'Failed to update stockpile quantity' });
+                } else if (updateResult.affectedRows === 0) {
                     res.status(404).json({ error: 'Stockpile item not found' });
                 } else {
-                    console.log('Stockpile item deleted successfully');
-                    connection.query(queryEnableFKCheck, (enableFKErr) => {
-                        if (enableFKErr) {
-                            console.error('Error enabling foreign key check:', enableFKErr);
-                            res.status(500).json({ error: 'Failed to enable foreign key check' });
+                    console.log('Stockpile quantity updated successfully');
+                    connection.query(queryDeleteStockpileItem, stockpileId, (deleteErr, deleteResult) => {
+                        if (deleteErr) {
+                            console.error('Error deleting stockpile item:', deleteErr);
+                            res.status(500).json({ error: 'Failed to delete stockpile item' });
+                        } else if (deleteResult.affectedRows === 0) {
+                            console.log('Stockpile quantity is not zero, no need to delete the item');
+                            connection.query(queryEnableFKCheck, (enableFKErr) => {
+                                if (enableFKErr) {
+                                    console.error('Error enabling foreign key check:', enableFKErr);
+                                    res.status(500).json({ error: 'Failed to enable foreign key check' });
+                                } else {
+                                    const result = { message: 'Stockpile quantity updated successfully' };
+                                    res.status(200).json(result);
+                                }
+                            });
                         } else {
-                            res.sendStatus(200);
+                            console.log('Stockpile item deleted successfully');
+                            connection.query(queryEnableFKCheck, (enableFKErr) => {
+                                if (enableFKErr) {
+                                    console.error('Error enabling foreign key check:', enableFKErr);
+                                    res.status(500).json({ error: 'Failed to enable foreign key check' });
+                                } else {
+                                    const result = { message: 'Stockpile item deleted successfully' };
+                                    res.status(200).json(result);
+                                }
+                            });
                         }
                     });
                 }
@@ -905,6 +928,9 @@ app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
         });
     });
 });
+
+
+
 
 
 app.get('/getitem/:itemId', (req, res) => {
