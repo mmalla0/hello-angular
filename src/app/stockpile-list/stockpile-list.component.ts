@@ -69,7 +69,7 @@ export class StockpileListComponent implements OnInit {
   groupItemsByCategory(items: StockpileItem[]): StockpileItemEntry[] {
     const itemEntries: StockpileItemEntry[] = [];
   
-    items.forEach(item => {
+    items.forEach(item => {console.log("Haltbarkeitsdatum: ", item.bestBeforeDate);
       const existingEntry = itemEntries.find(entry => entry.product.category === item.category);
       if (existingEntry) {
         const existingItem = existingEntry.items.find(existingItem => existingItem.product.id === item.id);
@@ -86,6 +86,7 @@ export class StockpileListComponent implements OnInit {
             name: item.name,
             category: item.category,
             bestBeforeDate: item.bestBeforeDate,
+            
             quantity: item.quantity,
             product: item.product // Ändern Sie 'products' in 'product'
           };
@@ -97,6 +98,7 @@ export class StockpileListComponent implements OnInit {
         }
       } else {
         const newEntry: StockpileItemEntry = {
+          
           product: item,
           bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
           name: item.name,
@@ -124,13 +126,14 @@ export class StockpileListComponent implements OnInit {
     });
   }
 
-  
-clearFilters() {
-  this.filterCategory = '';
-  this.loadStockpileItems();
+  clearFilters() {
+    this.filterCategory = '';
+    this.loadStockpileItems();
+  }
+
+sortByBestBeforeDate() {
+  this.sortStockpileItems();
 }
-
-
   sortStockpileItems() {
     this.stockpileItems.sort((a, b) => {
       const dateA = new Date(a.bestBeforeDate).getTime();

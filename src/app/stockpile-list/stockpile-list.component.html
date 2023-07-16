@@ -5,7 +5,9 @@
     <option *ngFor="let category of availableCategories" [value]="category">{{ category }}</option>
   </select>
   <button (click)="clearFilters()">Clear Filters</button>
+  <button (click)="sortByBestBeforeDate()">Sort by Best Before Date</button>
 </div>
+
 
 <div class="stockpile-list">
   <table class="stockpile-table">
@@ -21,7 +23,7 @@
       <ng-container *ngFor="let entry of stockpileItemEntries">
         <tr *ngFor="let bestBeforeDate of entry.bestBeforeDates">
           <td>{{ entry.product.name }}</td>
-          <td>{{ bestBeforeDate.date | date }}</td>
+          <td>{{ bestBeforeDate.date !== null ? (bestBeforeDate.date | date) : '-' }}</td>
           <td>{{ entry.product.quantity }} Products</td>
           <td>
             <button (click)="deleteStockpileItem(entry.product)" class="deleteItem">Delete Consumed Item</button>

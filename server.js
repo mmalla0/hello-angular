@@ -747,11 +747,11 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
 
                 const stockpileItems = [];
                 results.forEach((result) => { 
+                    const bestBeforeDate = result.best_before ? new Date(result.best_before) : '-';
                     const existingItem = stockpileItems.find((item) => item.id === result.stockpile_ID);
                     if (existingItem) {
                         existingItem.category += `, ${result.category_name.split(',')[0].trim()}`;
                     } else {
-                        const bestBeforeDate = new Date(result.best_before);
                         stockpileItems.push({
                             id: result.stockpile_ID,
                             name: result.item_name,
