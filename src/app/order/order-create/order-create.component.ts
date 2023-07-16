@@ -75,7 +75,7 @@ export class OrderCreateComponent {
     this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
       this.submitOrder.emit(this.invoice);
      });
-     this.cartService.emptyCart();
+     
   }
   
   updateUserStockpile() {
@@ -85,7 +85,7 @@ export class OrderCreateComponent {
     this.stockpileService.updateUserStockpile(this.authService.currentUser.id, this.cartService.cartItems).subscribe(() => {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
-
+      this.cartService.emptyCart();
       // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
       this.showOrderConfirmation();
     });
