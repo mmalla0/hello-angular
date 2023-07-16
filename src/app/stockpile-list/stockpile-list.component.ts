@@ -36,7 +36,7 @@ export class StockpileListComponent implements OnInit {
       this.stockpileService.getStockpileItems(currentUser.id).subscribe(items => {
         console.log("The stockpile retrieved by customer id: ", this.stockpileService.getStockpileItems(currentUser.id));
         this.stockpileItems = items;
-        this.stockpileItemEntries = this.groupItemsByProduct(items);
+        this.stockpileItemEntries = this.groupItemsByCategory(items);
         this.applyFilters(); 
         //this.groupStockpileItems();
       });
@@ -59,7 +59,7 @@ export class StockpileListComponent implements OnInit {
     });
   }*/
 
-  groupItemsByProduct(items: StockpileItem[]): StockpileItemEntry[] {
+  /*groupItemsByProduct(items: StockpileItem[]): StockpileItemEntry[] {
     const itemEntries: StockpileItemEntry[] = [];
   
     items.forEach(item => {
@@ -82,8 +82,48 @@ export class StockpileListComponent implements OnInit {
     });
   
     return itemEntries;
-  }
+  } */
 
+  groupItemsByCategory(items: StockpileItem[]): StockpileItemEntry[] {
+    const itemEntries: StockpileItemEntry[] = [];
+  
+    items.forEach(item => {
+      const existingEntry = itemEntries.find(entry => entry.product.category === item.category);
+      if (existingEntry) {
+        const existingItem = existingEntry.items.find(existingItem => existingItem.product.id === item.id);
+        if (existingItem) {
+          const existingBestBeforeDate = existingItem.bestBeforeDates.find(date => date.date.getTime() === new Date(item.bestBeforeDate).getTime());
+          if (existingBestBeforeDate) {
+            existingBestBeforeDate.count += 1;
+          } else {
+            existingItem.bestBeforeDates.push({ date: new Date(item.bestBeforeDate), count: 1 });
+          }
+        } else {
+          existingEntry.items.push({
+            product: item,
+            bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+            name: item.name
+          });
+        }
+      } else {
+        const newEntry: StockpileItemEntry = {
+          product: item,
+          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+          name: item.name,
+          items: [{
+            product: item,
+            bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+            name: item.name
+          }]
+        };
+        itemEntries.push(newEntry);
+      }
+    });
+  
+    return itemEntries;
+  }
+  
+  /* letzte halbwegs funktionierende Version
   applyFilters() {
     this.stockpileItems = this.stockpileItems.filter(item => {
       const nameMatch = !this.filterName || item.name.toLowerCase().includes(this.filterName.toLowerCase());
@@ -91,8 +131,28 @@ export class StockpileListComponent implements OnInit {
       const dateMatch = !this.filterDate || new Date(item.bestBeforeDate).toDateString() === this.filterDate.toDateString();
       return nameMatch && categoryMatch && dateMatch;
     });
-  }
+  }*/
   
+  applyFilters() {
+    this.stockpileItemEntries = this.stockpileItemEntries.filter(entry => {
+      // Filter auf den Eintrag selbst
+      const nameMatch = !this.filterName || entry.product.name.toLowerCase().includes(this.filterName.toLowerCase());
+      const categoryMatch = !this.filterCategory || entry.product.category.toLowerCase() === this.filterCategory.toLowerCase();
+      const dateMatch = !this.filterDate || entry.bestBeforeDates.some(date => new Date(date.date).toDateString() === this.filterDate.toDateString());
+  
+      // Filter auf die einzelnen Artikel innerhalb des Eintrags
+      entry.items = entry.items.filter(item => {
+        const itemMatch = !this.filterName || item.product.name.toLowerCase().includes(this.filterName.toLowerCase());
+        const categoryMatch = !this.filterCategory || item.product.category.toLowerCase() === this.filterCategory.toLowerCase();
+        const dateMatch = !this.filterDate || item.bestBeforeDates.some(date => new Date(date.date).toDateString() === this.filterDate.toDateString());
+        return itemMatch && categoryMatch && dateMatch;
+      });
+  
+      // Eintrag behalten, wenn der Eintrag selbst oder mindestens einer der Artikel den Filter erfüllt
+      return nameMatch && categoryMatch && dateMatch || entry.items.length > 0;
+    });
+  }
+
   clearFilters() {
     this.filterCategory = '';
     this.filterName = '';
