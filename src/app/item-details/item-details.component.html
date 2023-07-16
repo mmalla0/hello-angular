@@ -9,6 +9,7 @@
     <img [src]="'../assets/images/' + item.item_imgpath" [alt]="item.item_name" class="item-image">
 
 
+    
     <div class="item-details-content">
         <h3 class="item-name">{{ item.item_name }}</h3>
         <p class="item-price">Price: {{ item.item_price | currency }}</p>
@@ -19,10 +20,17 @@
         <ul class="categories-list">
             <li *ngFor="let category of item.categories" class="category">{{ category }}</li>
         </ul>
+        <br>
+        <div class="actionButtons" *ngIf="isLoggedIn && authService.userType == 'customer'">
+            <button class="add-to-cart-button green-button" (click)="onAddToCart(item)">Add To Cart</button>
+        </div>
     </div>
+    
 
     <div class="action-icons" *ngIf="isLoggedIn && authService.userType == 'employee'">
-        <button class="edit-btn" (click)="editCurrentItem()"><i class="fas fa-edit"></i></button>
-        <button class="delete-btn" (click)="deleteItem()"><i class="fas fa-trash"></i></button>
+            <button class="edit-btn" (click)="editCurrentItem()"><i class="fas fa-edit"></i></button>
+            <button class="delete-btn" (click)="deleteItem()"><i class="fas fa-trash"></i></button>
     </div>
+    
 </div>
+    
