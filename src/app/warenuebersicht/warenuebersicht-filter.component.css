@@ -7,7 +7,7 @@
 }
   
 .filter-background {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)), url('../../assets/images/shop.png');
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)), url('../../assets/images/spacesavers_header.jpg');
   background-size: cover;
   background-position: center;
   padding: 30px;
