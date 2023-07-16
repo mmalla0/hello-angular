@@ -3,13 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { AuthService } from '../services/auth.service';
+import { CartServiceService } from '../services/cart-service/cart-service.service';
+import { ToastrService } from 'ngx-toastr';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.css'],
+  styleUrls: ['./item-details.component.css', '../../global-styles.css'],
   animations: [
   
   ]
@@ -20,8 +22,14 @@ export class ItemDetailsComponent implements OnInit {
   showItemForm = false;
   showCategoryForm = false; 
   isLoggedIn: boolean = false;
+  selectedItems: Item[] = [];
 
-  constructor(private route: ActivatedRoute, private itemService: ItemService, private router: Router, public authService : AuthService) { }
+  constructor(private route: ActivatedRoute, 
+    private itemService: ItemService, 
+    private router: Router, 
+    public authService: AuthService, 
+    public cartService: CartServiceService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -63,8 +71,6 @@ export class ItemDetailsComponent implements OnInit {
   }
 
 
-
-
   deleteItem() {
     this.itemService.deleteItem(this.item.item_ID);
     
@@ -72,6 +78,12 @@ export class ItemDetailsComponent implements OnInit {
 
   hideProductForm() {
     this.showItemForm = false;
+  }
+
+  onAddToCart(product: Item): void {
+    this.selectedItems.push(product);
+    this.cartService.addItem(product);
+    this.toastr.success(product.item_name + ' has been added to cart.');
   }
 
 }

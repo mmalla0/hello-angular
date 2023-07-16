@@ -11,15 +11,7 @@ export enum Zahlungsmethode {
   DEBITKARTE = 'debitkarte',
   APPLEPAY = 'applepay',
 }
-/*
-export interface UserModel {
-  id?: number,
-  name?: string,
-  email: string,
-  password: string,
-  zahlungsmethode?: Zahlungsmethode
-}
-*/
+
 import { User } from '../shared/user';
 
 @Injectable({
@@ -29,45 +21,11 @@ export class AuthService {
 
   private users: User[] = []; 
 
-  /*
-  private users: User[] = [
-    {
-      id: 1,
-      //name: 'Admin',                       // TODO: name rausnehmen
-      email: 'admin@admin.com',
-      password: 'adminPassword123!',
-      // zahlungsmethode: Zahlungsmethode.KREDITKARTE
-
-      firstName: 'Ad',
-      lastName: 'min',
-      addressId: 1,
-      methodOfPayment: 'Cash',
-      cartId: 1,
-      stockpileId: 1,
-    },
-    {
-      id: 2,
-      // name: 'Maya Malla',                 // TODO: name rausnehmen
-      email: 'maya@gmail.com',
-      password: 'mayqapassword!',
-      // zahlungsmethode: Zahlungsmethode.APPLEPAY
-      firstName: 'Maya',
-      lastName: 'Malla',
-      addressId: 2,
-      methodOfPayment: 'Cash',
-      cartId: 2,
-      stockpileId: 2,
-    },
-  ];
-  */
-
   currentUser: User | null = null;
-
-  //usersUpdate: Subject<User[]> = new BehaviorSubject<User[]>(this.users);
 
   userLoggedIn: Subject<boolean> = new BehaviorSubject<boolean>(false);
 
-  userType: string = 'unknown'; //*ngIf="this.authService.userType == 'customer' "
+  userType: string = 'unknown';
 
   constructor(private http: HttpClient, private router: Router,  private toastr: ToastrService) {}
 

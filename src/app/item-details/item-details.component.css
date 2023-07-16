@@ -20,6 +20,7 @@
     margin-right: 20px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 100px rgba(249, 111, 93, 0.6);
     animation: wobble 10s ease-in-out infinite;
 
 }
@@ -72,25 +73,30 @@
 
 
 .item-details-content {
+    font-family: 'Courier New', monospace;
+    color: #73877B;
+    text-shadow: #0F0 1px 0 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: 10%;
+    box-shadow: 0 0 100px rgba(0, 255, 0, 0.4);
+    border-radius: 30%;
+    padding: 40px;
+    width: 40%;
 }
 
 .item-name {
     font-size: 24px;
-    color: #333;
     margin-bottom: 10px;
 }
 
 .item-price {
     font-size: 18px;
-    color: #666;
 }
 
 .item-description {
     font-size: 16px;
-    color: #444;
     margin-top: 10px;
 }
 
@@ -98,13 +104,11 @@
 .item-employee,
 .item-best-before {
     font-size: 14px;
-    color: #888;
     margin: 10px 0;
 }
 
 .item-categories {
     font-size: 16px;
-    color: #555;
     margin-top: 20px;
 }
 
@@ -116,6 +120,25 @@
 
 .category {
     font-size: 14px;
-    color: #777;
     margin-bottom: 5px;
 }
+
+.actionButtons{
+    display: block;
+    background-color: #f1f1f1;
+    padding-left: 50%;
+}
+
+.add-to-cart-button {
+    position: relative;
+    display: flex;
+    width: 150px;
+    height: 40px;
+    margin-top: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+
