@@ -10,9 +10,6 @@ import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-das
 import { OrderComponent } from './order/order.component';
 import { TesterComponent } from "./testing";
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { OrderFormComponent } from './order/order-form/order-form.component';
-
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },

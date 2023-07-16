@@ -31,7 +31,6 @@ import { StockpileService } from './services/stockpile.service';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { OrderComponent } from './order/order.component';
 
-
 @NgModule({
   declarations: [
     LandingPageComponent,
