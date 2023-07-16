@@ -3,20 +3,6 @@
 <app-stockpile-list></app-stockpile-list>
 <pre *ngIf="stockpileItemEntries">{{ stockpileItemEntries | json }}</pre>
 
-<!--
-<h2>Stockpile Item Summary</h2>
-
-<div>
-    <pre>{{ stockpileItemEntries | json }}</pre>
-  </div>
-  
-
-<ul>
-  <li *ngFor="let entry of stockpileItemEntries">
-    {{ entry.product.name }} - {{ entry.bestBeforeDates[0]?.date | date }} - {{ entry.bestBeforeDates.length }} Products
-  </li>
-</ul>
--->
 
   
 
