@@ -85,7 +85,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.formHatFehler = false;
 
-      //so war es in Main
       const userToRegister: any = {
         username: this.form.get('username')?.value,
         first_name: this.form.get('firstname')?.value,
@@ -95,18 +94,6 @@ export class RegisterComponent implements OnInit {
         paymentMethod: this.form.get('methodofpayment')?.value,
       };
 
-      /* const userToRegister: User = {
-        //name: this.form.get('name')?.value,
-        email: this.form.get('email')?.value.toLowerCase(),
-        password: this.form.get('password')?.value,
-        id: null,
-        firstName: '',                                  //TODO: Werte aus der Form holen
-        lastName: '',
-        addressId: 0,
-        methodOfPayment: '',
-        cartId: 0,
-        stockpileId: 0
-      } */
       this.authService.register2(userToRegister).subscribe(
         (res) => {
           this.toastr.success('You have been successfully registed!', 'Success');
