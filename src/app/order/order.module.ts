@@ -16,6 +16,11 @@ import { OrderFormComponent } from './order-form/order-form.component';
     CommonModule,
     OrderRoutingModule,
     FormsModule
+  ],
+  exports:[
+    OrderComponent,
+    OrderCreateComponent,
+    OrderFormComponent
   ]
 })
 export class OrderModule { }

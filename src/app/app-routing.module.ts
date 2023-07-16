@@ -8,11 +8,9 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
 import { CartComponent } from './cart/cart.component';
 import { StockpileDashboardComponent } from './stockpile-dashboard/stockpile-dashboard.component';
 import { OrderComponent } from './order/order.component';
+import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { TesterComponent } from "./testing";
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { OrderFormComponent } from './order/order-form/order-form.component';
-
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -23,6 +21,7 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'stockpile', component: StockpileDashboardComponent },
   { path: 'order', component: OrderComponent },
+  { path: 'order/create', component: OrderCreateComponent },
   { path: 'testing', component: TesterComponent},
   { path: 'items/:id', component: ItemDetailsComponent },
   // Nutzer zur Hauptseite weiterleiten

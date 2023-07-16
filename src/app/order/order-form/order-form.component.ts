@@ -44,18 +44,16 @@ export class OrderFormComponent implements OnInit{
   }
 
   getAddressById() {
-    this.addressService.getAddressById(this.authService.currentUser.id).subscribe(
-      (address: Address) => {
+    this.addressService.getAddressById(this.authService.currentUser.id).subscribe({
+      next: (address: Address) => {
         this.invoice.address = address;
       },
-      (error) => {
+      error: (error: unknown) => {
         console.error('Failed to retrieve address:', error);
       }
-    );
+    });
   }
 
   @Output() submitOrder = new EventEmitter<Invoice>();
-
-
   
 }

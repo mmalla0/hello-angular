@@ -30,7 +30,6 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AuthService } from './services/auth-service/auth.service';
 import { StockpileService } from './services/stockpile.service';
 
-
 @NgModule({
   declarations: [
     LandingPageComponent,
