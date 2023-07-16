@@ -20,7 +20,6 @@
         <tr *ngFor="let bestBeforeDate of entry.bestBeforeDates">
           <td>{{ entry.product.name }}</td>
           <td>{{ bestBeforeDate.date | date }}</td>
-          <!--td>{{ bestBeforeDate.count }} Products</td-->
           <td>{{ entry.product.quantity }} Products</td>
           <td>
             <button (click)="deleteStockpileItem(entry.product)" class="deleteItem">Delete Consumed Item</button>
