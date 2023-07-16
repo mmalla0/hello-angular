@@ -772,45 +772,89 @@ app.get('/getStockpileByCustomerID/:customerID', (req, res) => {
 app.post('/updateUserStockpile/:stockpileId', (req, res) => {
     const customerId = req.params.stockpileId;
     const orderItems = req.body;
-
+  
     const connection = mysql.createConnection({
-        database: "23_IT_Gruppe5",
-        host: "195.37.176.178",
-        port: "20133",
-        user: "23_IT_Grp_5",
-        password: "JJQGNC8h79VkiSNmK}8I"
+      database: "23_IT_Gruppe5",
+      host: "195.37.176.178",
+      port: "20133",
+      user: "23_IT_Grp_5",
+      password: "JJQGNC8h79VkiSNmK}8I"
     });
-
+  
     connection.connect((err) => {
-        if (err) {
-            console.error('Error connecting to the database:', err.stack);
-            res.status(500).json({ error: 'Failed to connect to the database' });
+      if (err) {
+        console.error('Error connecting to the database:', err.stack);
+        res.status(500).json({ error: 'Failed to connect to the database' });
+        return;
+      }
+  
+      console.log('Connected to the database');
+  
+      let queryCount = 0; // Counter for completed queries
+  
+      // Check if entry exists for each order item
+      orderItems.forEach((orderItem) => {
+        const checkQuery = 'SELECT COUNT(*) AS count FROM stockpile WHERE customer_ID = ? AND item_ID = ?';
+        const checkValues = [customerId, orderItem.itemId];
+  
+        connection.query(checkQuery, checkValues, (checkError, checkResult) => {
+          if (checkError) {
+            console.error('Error checking for existing entry:', checkError);
+            res.status(500).json({ error: 'Failed to update userStockpile' });
             return;
-        }
-
-        console.log('Connected to the database');
-
-        // update userStockpile in Database
-        for (const orderItem of orderItems) {
-
-            const query = 'INSERT INTO stockpile(customer_ID, item_ID, quantity) VALUES (?, ?, ?)';
-
-            //const query = 'UPDATE Stockpile SET quantity = quantity - ? WHERE stockpile_ID = ? AND item_ID = ?';
-            const values = [customerId, orderItem.itemId, orderItem.quantity];
-
-            connection.query(query, values, (error, result) => {
-                if (error) {
-                    console.error('Error updating userStockpile:', error);
-                    res.status(500).json({ error: 'Failed to update userStockpile' });
-                } else {
-                    console.log('Stockpile items were updated')
-                }
+          }
+  
+          const count = checkResult[0].count;
+  
+          if (count > 0) {
+            // If entry exists, update the quantity
+            const updateQuery = 'UPDATE stockpile SET quantity = quantity + ? WHERE customer_ID = ? AND item_ID = ?';
+            const updateValues = [orderItem.quantity, customerId, orderItem.itemId];
+  
+            connection.query(updateQuery, updateValues, (updateError, updateResult) => {
+              if (updateError) {
+                console.error('Error updating userStockpile:', updateError);
+                res.status(500).json({ error: 'Failed to update userStockpile' });
+                return;
+              }
+  
+              queryCount++;
+  
+              // Check if all queries have completed
+              if (queryCount === orderItems.length) {
+                console.log('Stockpile items were updated');
+                res.json({ message: 'Stockpile items were updated' });
+                connection.end();
+              }
             });
-        }
-
-        connection.end(); 
+          } else {
+            // If entry doesn't exist, insert a new row
+            const insertQuery = 'INSERT INTO stockpile (customer_ID, item_ID, quantity) VALUES (?, ?, ?)';
+            const insertValues = [customerId, orderItem.itemId, orderItem.quantity];
+  
+            connection.query(insertQuery, insertValues, (insertError, insertResult) => {
+              if (insertError) {
+                console.error('Error inserting userStockpile:', insertError);
+                res.status(500).json({ error: 'Failed to update userStockpile' });
+                return;
+              }
+  
+              queryCount++;
+  
+              // Check if all queries have completed
+              if (queryCount === orderItems.length) {
+                console.log('Stockpile items were updated');
+                res.json({ message: 'Stockpile items were updated' });
+                connection.end();
+              }
+            });
+          }
+        });
+      });
     });
-});
+  });
+  
+  
 
 
 app.post('/reduceStock', (req, res) => {
