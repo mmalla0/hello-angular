@@ -14,8 +14,7 @@ export class StockpileListComponent implements OnInit {
   stockpileItemEntries: StockpileItemEntry[] = [];
   stockpileItems: StockpileItem[];
   filterCategory: string;
-  filterName: string;
-  filterDate: Date;
+  availableCategories: string[] = ['Food', 'Health', 'Toys', 'Science', 'Electronics', 'Tools', 'Fashion', 'Art'];
 
   constructor(
     private authService: AuthService, 
@@ -27,7 +26,6 @@ export class StockpileListComponent implements OnInit {
   }
 
   loadStockpileItems() {
-
     console.log("I am in loadStockpileItems");
     const currentUser: User | null = this.authService.getCurrentUser();
     console.log("The current user is: ", currentUser);
@@ -37,27 +35,11 @@ export class StockpileListComponent implements OnInit {
         console.log("The stockpile retrieved by customer id: ", this.stockpileService.getStockpileItems(currentUser.id));
         this.stockpileItems = items;
         this.stockpileItemEntries = this.groupItemsByProduct(items);
-        this.applyFilters(); 
-        //this.groupStockpileItems();
+        this.applyFilter(); 
+        this.sortStockpileItems();
       });
     }
   }
-
-  /*
-  groupStockpileItems() {
-    this.stockpileItemEntries = [];
-    this.stockpileItems.forEach(item => {
-      const existingEntry = this.stockpileItemEntries.find(entry => entry.bestBeforeDates[0]?.date.getTime() === item.bestBeforeDate.getTime());
-      if (existingEntry) {
-        existingEntry.bestBeforeDates[0].count += 1;
-      } else {
-        this.stockpileItemEntries.push({
-          product: item,
-          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }]
-        });
-      }
-    });
-  }*/
 
   groupItemsByProduct(items: StockpileItem[]): StockpileItemEntry[] {
     const itemEntries: StockpileItemEntry[] = [];
@@ -84,20 +66,77 @@ export class StockpileListComponent implements OnInit {
     return itemEntries;
   }
 
-  applyFilters() {
-    this.stockpileItems = this.stockpileItems.filter(item => {
-      const nameMatch = !this.filterName || item.name.toLowerCase().includes(this.filterName.toLowerCase());
-      const categoryMatch = !this.filterCategory || item.category.toLowerCase() === this.filterCategory.toLowerCase();
-      const dateMatch = !this.filterDate || new Date(item.bestBeforeDate).toDateString() === this.filterDate.toDateString();
-      return nameMatch && categoryMatch && dateMatch;
+  groupItemsByCategory(items: StockpileItem[]): StockpileItemEntry[] {
+    const itemEntries: StockpileItemEntry[] = [];
+  
+    items.forEach(item => {
+      const existingEntry = itemEntries.find(entry => entry.product.category === item.category);
+      if (existingEntry) {
+        const existingItem = existingEntry.items.find(existingItem => existingItem.product.id === item.id);
+        if (existingItem) {
+          const existingBestBeforeDate = existingItem.bestBeforeDates.find(date => date.date.getTime() === new Date(item.bestBeforeDate).getTime());
+          if (existingBestBeforeDate) {
+            existingBestBeforeDate.count += 1;
+          } else {
+            existingItem.bestBeforeDates.push({ date: new Date(item.bestBeforeDate), count: 1 });
+          }
+        } else {
+          const newItem: StockpileItem = {
+            id: item.id,
+            name: item.name,
+            category: item.category,
+            bestBeforeDate: item.bestBeforeDate,
+            quantity: item.quantity,
+            product: item.product // Ändern Sie 'products' in 'product'
+          };
+          existingEntry.items.push({
+            product: newItem,
+            bestBeforeDates: [{ date: new Date(newItem.bestBeforeDate), count: 1 }],
+            name: newItem.name
+          });
+        }
+      } else {
+        const newEntry: StockpileItemEntry = {
+          product: item,
+          bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+          name: item.name,
+          items: [{
+            product: item,
+            bestBeforeDates: [{ date: new Date(item.bestBeforeDate), count: 1 }],
+            name: item.name
+          }]
+        };
+        itemEntries.push(newEntry);
+      }
     });
+  
+    return itemEntries;
   }
   
-  clearFilters() {
-    this.filterCategory = '';
-    this.filterName = '';
-    this.filterDate = null;
-    this.loadStockpileItems();
+  applyFilter() {
+    const categoryFilter = this.filterCategory ? this.filterCategory.toLowerCase() : '';
+  
+    this.stockpileItemEntries = this.groupItemsByCategory(this.stockpileItems);
+  
+    this.stockpileItemEntries = this.stockpileItemEntries.filter(entry => {
+      const productCategory = entry.product.category.toLowerCase();
+      return categoryFilter === '' || productCategory.includes(categoryFilter);
+    });
+  }
+
+  
+clearFilters() {
+  this.filterCategory = '';
+  this.loadStockpileItems();
+}
+
+
+  sortStockpileItems() {
+    this.stockpileItems.sort((a, b) => {
+      const dateA = new Date(a.bestBeforeDate).getTime();
+      const dateB = new Date(b.bestBeforeDate).getTime();
+      return dateA - dateB;
+    });
   }
 
   getDaysRemaining(item: StockpileItem): number {
