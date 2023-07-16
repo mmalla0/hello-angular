@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { OrderModule } from './order/order.module';
+import { OrderRoutingModule } from './order/order-routing.module';
 import { AddressListComponent } from './address-list/address-list.component';
 import { AddressListItemComponent } from './address-list-item/address-list-item.component';
 import { CartComponent } from './cart/cart.component';
@@ -23,13 +25,10 @@ import { LandingPageComponent } from './landingpage/landing-page.component';
 import { StockItemDetailsComponent } from './stock-item-details/stock-item-details.component';
 import { ToastrModule } from 'ngx-toastr';
 import { TesterComponent } from "./testing";
-import { OrderFormComponent } from './order/order-form/order-form.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
 import { AuthService } from './services/auth-service/auth.service';
 import { StockpileService } from './services/stockpile.service';
-import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { OrderComponent } from './order/order.component';
 
 
 @NgModule({
@@ -50,9 +49,6 @@ import { OrderComponent } from './order/order.component';
     WarenuebersichtComponent,
     LandingPageComponent,
     StockItemDetailsComponent,
-    OrderFormComponent,
-    OrderCreateComponent,
-    OrderComponent,
     TesterComponent,
     CategoryDetailComponent,
     ItemDetailsComponent,
@@ -61,6 +57,8 @@ import { OrderComponent } from './order/order.component';
     RouterModule,
     BrowserModule,
     AppRoutingModule,
+    OrderModule,
+    OrderRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,

@@ -16,8 +16,7 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 })
 
 export class OrderCreateComponent {
-  @Output() submitOrder = new EventEmitter<Invoice>();
-  
+
   invoice: Invoice = {
     id: 0,
     user: undefined,
@@ -71,29 +70,36 @@ export class OrderCreateComponent {
 
   updateStock() {
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
-    console.log(this.cartService.cartItems);
+    console.log("Das sind die Artikel im Warenkorb, die nun vom Bestand reduziert werden sollen: " + this.cartService.cartItems);
     this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
       this.submitOrder.emit(this.invoice);
-     });
-     this.cartService.emptyCart();
+    });
+    
+    
+    
+    //Todo: entfernen, nur zum Testen hier! 
+    this.updateUserStockpile();
   }
-  
-  updateUserStockpile() {
-    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // Annahme: Die Methode updateUserStockpile(stockpileId, orderItems) wird von der stockpileService-Klasse bereitgestellt.
 
+  updateUserStockpile() {
+    // die currentUser.id wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
+    // Annahme: Die Methode updateUserStockpile(usereId, cartItems) wird von der stockpileService-Klasse bereitgestellt.
+    console.log("Jetzt wird der Stockpile upgedatet mit den folgenden items: " + this.cartService.cartItems + " für folgende UserId: " + this.authService.currentUser.id);
     this.stockpileService.updateUserStockpile(this.authService.currentUser.id, this.cartService.cartItems).subscribe(() => {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
-
+      this.cartService.emptyCart();
       // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
-      this.showOrderConfirmation();
+      //this.showOrderConfirmation();
     });
   }
 
   showOrderConfirmation() {
- 
     this.orderConfirmation = 'Thank you for your business! The invoice has been sent to your inbox.';
   }
+
+  @Output() submitOrder = new EventEmitter<Invoice>();
 }
+  
+
 
