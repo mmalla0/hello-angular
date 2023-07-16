@@ -8,18 +8,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import {Item} from '../shared/item';
 
 
-/*interface Item {
-  item_ID: number;
-  item_name: string;
-  item_description: string;
-  item_price: number;
-  stock: number;
-  employee_id: number;
-  best_before: string;
-  item_imgpath: string;
-  categories: string[];
-} */
-
 interface Image {
   imgitemID: number;
   img_url: string;
@@ -49,21 +37,6 @@ interface Image {
 
 export class LandingPageComponent implements OnInit {
 
-
-  /*images: string[] = [
-    '../assets/images/spacesuite.jpg',
-    '../assets/images/virtualpet_cat.jpg',
-    '../assets/images/alien_painting.jpg',
-    '../assets/images/healing_nanobots.jpg'
-  ];
-  activeImageIndex = 0;
-  products: Item[] = [
-    { item_name: 'Spacetronics Starsuit', price: 200000.99, link: '/items/1' },
-    { item_name: 'VirtuCare Pets - CatBot Edition', price: 99.99, link: '/items/2' },
-    { item_name: 'Floatescending - Art by Ydra', price: 300.99, link: '/items/3' },
-    { item_name: 'MediReady NanoBots', price: 50.99, link: '/items/4' }
-  ]; */
-
   activeImageIndex = 0;
 
   items: Item[] = [];
@@ -83,12 +56,7 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     this.getItems();
     this.autoChangeImages();
-    //this.authService.userLoggedIn.subscribe((loggedIn: boolean) => {
-      //this.isLoggedIn = loggedIn;
-    //})
-    this.selectedCategory = "No filter";
-    //this.selectedCategoryItems = this.getRandomItems(3);
-    
+    this.selectedCategory = "No filter";    
   }
 
 
@@ -101,8 +69,6 @@ export class LandingPageComponent implements OnInit {
       // Get random items from the list
       this.randomItems = this.getRandomItems(3);
 
-      // Assign random items to the component property
-      // this.items = randomItems;
     });
   }
 
@@ -120,18 +86,6 @@ export class LandingPageComponent implements OnInit {
 
     return randomItems;
   }
-
- /* handleLoginClicked() {
-    this.router.navigate(['/login'])
-  }
-
-  handleRegisterClicked() {
-    this.router.navigate(['/register'])
-  }
-
-  handleLogoutClicked() {
-    this.authService.logout()
-  } */
 
   autoChangeImages() {
     this.autoChangeInterval = setInterval(() => {
