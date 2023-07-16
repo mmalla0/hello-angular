@@ -18,7 +18,7 @@ export interface UserModel {
   zahlungsmethode?: Zahlungsmethode
 }
 */
-import { User } from '../shared/user';
+import { User } from '../../shared/user';
 
 @Injectable({
   providedIn: 'root',

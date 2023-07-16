@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { Invoice } from 'src/app/shared/invoice';
 import { Address } from 'src/app/shared/address';
 import { AddressService } from 'src/app/services/address-service/address.service';
@@ -86,14 +86,14 @@ export class OrderFormComponent {
 
 
   //TODO entfernen, nur zum Testen hier!
-  /*
+  
   updateStock() {
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
-    console.log(this.cartService.cartItems);
+    console.log("Das sind die Artikel im Warenkorb, die nun vom Bestand reduziert werden sollen: " + this.cartService.cartItems);
     this.itemService.reduceStock(this.cartService.cartItems).subscribe(() => {
       this.submitOrder.emit(this.invoice);
      });
-     this.cartService.emptyCart();
+     
      
      
      //Todo: entfernen, nur zum Testen hier! 
@@ -101,16 +101,16 @@ export class OrderFormComponent {
   }
   
   updateUserStockpile() {
-    // die this.user.stockpileId wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
-    // Annahme: Die Methode updateUserStockpile(stockpileId, orderItems) wird von der stockpileService-Klasse bereitgestellt.
-
+    // die currentUser.id wird benutzt, um die entsprechende Vorratslager-Datensatz zu identifizieren
+    // Annahme: Die Methode updateUserStockpile(usereId, cartItems) wird von der stockpileService-Klasse bereitgestellt.
+    console.log("Jetzt wird der Stockpile upgedatet mit den folgenden items: " + this.cartService.cartItems + " für folgende UserId: " + this.authService.currentUser.id);
     this.stockpileService.updateUserStockpile(this.authService.currentUser.id, this.cartService.cartItems).subscribe(() => {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
-
+      this.cartService.emptyCart();
       // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
       //this.showOrderConfirmation();
     });
   }
-  */
+  
 }

@@ -7,7 +7,7 @@ import { StockpileService } from 'src/app/services/stockpile.service';
 import { User } from 'src/app/shared/user';
 import { UserService } from 'src/app/services/user.service';
 import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-order-create',
@@ -53,8 +53,10 @@ export class OrderCreateComponent {
 
   handleFormSubmit(invoice: Invoice) {
     // Schritt 1: Erstellung der Rechnung als PDF
+    console.log("Rechnung wird mit folgenden Daten erstellt: " + invoice);
     this.pdfService.createInvoicePDF(invoice).subscribe((pdfData) => {
       // Schritt 2: Versenden der E-Mail mit der Rechnung als Anhang
+      console.log("Rechnung wird an folgende Adresse versendet: " + this.userService.getEmailAddress());
       const emailAddress: string = this.userService.getEmailAddress() ;
       this.emailService
         .sendEmailWithAttachment(emailAddress, 'Rechnung', 'Siehe Anhang', pdfData)

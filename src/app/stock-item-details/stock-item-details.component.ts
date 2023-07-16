@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Item } from '../shared/item';
 import { FileUploadService } from '../services/file-upload-service/file-upload.service';
 import { CategoryService } from '../services/category-service/category.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth-service/auth.service';
 
 
 @Component({
