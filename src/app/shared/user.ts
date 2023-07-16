@@ -15,7 +15,7 @@ export interface StockpileItem {
     name: string;
     quantity: number;
     bestBeforeDate: Date;
-    product: string;
+    product: unknown;
     category: string;
 }
 

@@ -53,6 +53,7 @@ export class OrderCreateComponent {
 
   handleFormSubmit(invoice: Invoice) {
     // Schritt 1: Erstellung der Rechnung als PDF
+    console.log("Jetzt wird die PDF erstellt");
     this.pdfService.createInvoicePDF(invoice).subscribe((pdfData) => {
       // Schritt 2: Versenden der E-Mail mit der Rechnung als Anhang
       const emailAddress: string = this.userService.getEmailAddress() ;
@@ -60,6 +61,7 @@ export class OrderCreateComponent {
         .sendEmailWithAttachment(emailAddress, 'Rechnung', 'Siehe Anhang', pdfData)
         .subscribe(() => {
           // Schritt 3: Aktualisierung des Warenbestands in der Datenbank
+          console.log("jetzt wird der Stock angepasst");
           this.updateStock();
           //Schritt 4: Aktualisierung des persönlichen Stockpiles des Users
           this.updateUserStockpile();

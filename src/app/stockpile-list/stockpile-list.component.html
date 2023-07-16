@@ -5,9 +5,7 @@
     <option *ngFor="let category of availableCategories" [value]="category">{{ category }}</option>
   </select>
   <button (click)="clearFilters()">Clear Filters</button>
-  <button (click)="sortByBestBeforeDate()">Sort by Best Before Date</button>
 </div>
-
 
 <div class="stockpile-list">
   <table class="stockpile-table">

@@ -33,41 +33,46 @@ wss.on('connection', (ws) => {
 
 // configure e-mail transporter
 const transporter = nodemailer.createTransport({
-    // configuration options for e-mail transporter (SMTP configurations for example)
-  });
-  
-  // Route for sending the e-mail
-  app.post('/send-email', (req, res) => {
-    const { from, to, subject, text } = req.body;
-  
-    // create e-mail
-    const mailOptions = {
-      from: from,
-      to: to,
-      subject: subject,
-      text: text,
-    };
-        // check if attachment exists
-    if (attachment) {
-        mailOptions.attachments = [
-        {
-            filename: attachment.filename,
-            content: attachment.content
-        }
-        ];
+    service: 'gmail',
+    auth: {
+      user: 'spacesaversshop@gmail.com', // Absender-E-Mail-Adresse
+      pass: '4spacesavers!' // Passwort für die Absender-E-Mail-Adresse
     }
-  
-    // send e-mail
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error('Error while trying to send the e-mail:', error);
-        res.status(500).send('Error while trying to send the e-mail');
-      } else {
-        console.log('Email has been sent!:', info.response);
-        res.status(200).send('Email has been sent!');
-      }
-    });
   });
+  
+// Route for sending the e-mail
+app.post('/send-email', (req, res) => {
+const { from, to, subject, text, attachment } = req.body;
+
+// create e-mail
+const mailOptions = {
+    from: from,
+    to: to,
+    subject: subject,
+    text: text,
+};
+console.log('Email will be send to', from);
+    // check if attachment exists
+if (attachment) {
+    mailOptions.attachments = [
+    {
+        filename: attachment.filename,
+        content: attachment.content
+    }
+    ];
+}
+
+// send e-mail
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+    console.error('Error while trying to send the e-mail:', error);
+    res.status(500).send('Error while trying to send the e-mail');
+    } else {
+    console.log('Email has been sent!:', info.response);
+    res.status(200).send('Email has been sent!');
+    }
+});
+});
   
 
 function handleItemChange() {

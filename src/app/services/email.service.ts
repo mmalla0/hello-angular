@@ -17,7 +17,7 @@ export class EmailService {
       subject: subject,
       text: text,
     };
-    const url = `/sendEmail`;
+    const url = `/send-email`;
     return this.http.post<void>(url, emailData);
   }
 
@@ -32,7 +32,7 @@ export class EmailService {
         content: pdfData
       }]
     };
-    const url = `/sendEmail`;
+    const url = `/send-email`;
     return this.http.post<void>(url, emailData);
   }
   

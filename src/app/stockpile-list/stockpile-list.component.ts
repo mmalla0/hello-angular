@@ -35,8 +35,8 @@ export class StockpileListComponent implements OnInit {
         console.log("The stockpile retrieved by customer id: ", this.stockpileService.getStockpileItems(currentUser.id));
         this.stockpileItems = items;
         this.stockpileItemEntries = this.groupItemsByProduct(items);
-        this.applyFilter(); 
         this.sortStockpileItems();
+        this.applyFilter(); 
       });
     }
   }
@@ -130,16 +130,14 @@ export class StockpileListComponent implements OnInit {
     this.filterCategory = '';
     this.loadStockpileItems();
   }
-
-sortByBestBeforeDate() {
-  this.sortStockpileItems();
-}
+  
   sortStockpileItems() {
     this.stockpileItems.sort((a, b) => {
       const dateA = new Date(a.bestBeforeDate).getTime();
       const dateB = new Date(b.bestBeforeDate).getTime();
       return dateA - dateB;
     });
+    this.stockpileItemEntries = this.groupItemsByProduct(this.stockpileItems);
   }
 
   getDaysRemaining(item: StockpileItem): number {
