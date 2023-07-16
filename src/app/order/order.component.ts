@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Invoice } from '../shared/invoice';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-order',
@@ -7,11 +10,12 @@ import { Invoice } from '../shared/invoice';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent {
-  orderConfirmation: string;
+  constructor(private router: Router, private toastr: ToastrService){}
 
   handleOrderCompleted(invoice: Invoice) {
     // Aktionen ausführen, wenn eine Bestellung abgeschlossen wurde
-    this.orderConfirmation = 'Bestellung abgeschlossen! Vielen Dank!';
+    this.toastr.success('Order completed. Thank you very much!', 'Success');
     console.log(invoice);
+    this.router.navigate(['/warenübersicht'])   
   }
 }

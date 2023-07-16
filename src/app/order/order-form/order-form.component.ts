@@ -29,32 +29,6 @@ export class OrderFormComponent {
   user: User | null = null;
   userAddress: string | undefined;
 
-/* Katharinas Version
-  constructor(
-    private authService: AuthService,
-    private userService: UserService 
-  ) {}
-
-  ngOnInit() {
-    this.user = this.authService.getCurrentUser();
-    if (this.user) {
-      this.invoice.methodOfPayment = this.user.methodOfPayment;
-    }
-  }
-
-  getUserAddress()  {
-    if (this.user) {
-      console.log('User addressId:', this.user.addressId);
-      this.userService.getAddressById(this.user.addressId).subscribe({
-        next: (address: string) => {
-          this.userAddress = address;
-        },
-        error: (error: any) => {
-          console.error('Error retrieving user address:', error);
-        }
-      });
-    }
-*/
   constructor(private authService: AuthService,  
     private addressService: AddressService,  
     private cartService: CartServiceService, 
@@ -84,8 +58,6 @@ export class OrderFormComponent {
     this.submitOrder.emit(this.invoice);
   }
 
-
- 
   updateStock() {
     //Logik zum Aktualisieren des Warenbestands in der Datenbank 
     console.log(this.cartService.cartItems);
@@ -93,7 +65,6 @@ export class OrderFormComponent {
       this.submitOrder.emit(this.invoice);
      });     
      
-     //Todo: entfernen, nur zum Testen hier! 
      this.updateUserStockpile();
   }
   
@@ -105,8 +76,6 @@ export class OrderFormComponent {
       // Schritt 4: Emitting des Bestellereignisses, um es an die Elternkomponenten weiterzugeben
       this.submitOrder.emit(this.invoice);
 
-      // Schritt 5: Anzeigen der Bestellbestätigung im Browser (z. B. durch Ändern eines Statusfeldes)
-      //this.showOrderConfirmation();
       this.cartService.emptyCart();
     });
   }
