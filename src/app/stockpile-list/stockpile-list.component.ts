@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StockpileService } from 'src/app/services/stockpile.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { StockpileItem } from '../shared/user';
 import { User } from '../shared/user';
 import { StockpileItemEntry } from '../shared/stockpile-item-entry';

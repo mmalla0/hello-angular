@@ -7,7 +7,7 @@ import { StockpileService } from 'src/app/services/stockpile.service';
 import { User } from 'src/app/shared/user';
 import { UserService } from 'src/app/services/user.service';
 import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-order-create',

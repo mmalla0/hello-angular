@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth-service/auth.service';
 import { CartServiceService } from '../services/cart-service/cart-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { trigger, state, style, animate, transition } from '@angular/animations';

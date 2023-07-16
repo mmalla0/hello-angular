@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Item } from '../shared/item';
 import { ItemService } from '../services/item-service/item.service';
 import { WebsocketService } from '../../app/websocket.service';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth-service/auth.service';
 
 
 @Component({

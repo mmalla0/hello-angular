@@ -2,7 +2,7 @@ import { Component, Input,  OnInit  } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartServiceService } from 'src/app/services/cart-service/cart-service.service';
 import { CartItem } from 'src/app/shared/cart-item';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { WebsocketService } from 'src/app/websocket.service';
 

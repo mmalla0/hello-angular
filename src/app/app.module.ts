@@ -26,7 +26,7 @@ import { TesterComponent } from "./testing";
 import { OrderFormComponent } from './order/order-form/order-form.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { AuthService } from './services/auth.service';
+import { AuthService } from './services/auth-service/auth.service';
 import { StockpileService } from './services/stockpile.service';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { OrderComponent } from './order/order.component';

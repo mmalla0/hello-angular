@@ -12,7 +12,7 @@ export enum Zahlungsmethode {
   APPLEPAY = 'applepay',
 }
 
-import { User } from '../shared/user';
+import { User } from '../../shared/user';
 
 @Injectable({
   providedIn: 'root',

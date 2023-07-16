@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { Invoice } from 'src/app/shared/invoice';
 import { Address } from 'src/app/shared/address';
 import { AddressService } from 'src/app/services/address-service/address.service';
