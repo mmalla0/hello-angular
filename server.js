@@ -897,7 +897,7 @@ app.post('/reduceStock', (req, res) => {
 });
  
 
-// DELETE endpoint to delete a stockpile item
+
 // DELETE endpoint to delete a stockpile item
 app.delete('/deleteStockpileItem/:stockpileId', (req, res) => {
     const connection = mysql.createConnection({
